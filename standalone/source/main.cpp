@@ -1,5 +1,5 @@
-#include <greeter/greeter.h>
 #include <fractions/version.h>
+#include <greeter/greeter.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
