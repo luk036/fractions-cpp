@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <fractions/fractions.h>
+#include <greeter/greeter.h>
 #include <fractions/version.h>
 
 #include <string>
