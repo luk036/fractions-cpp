@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>fractions::Fraction struct | Fractions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Fractions</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="fractions_8hpp.html">&lt;fractions/fractions.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Z&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacefractions.html">fractions</a>::<wbr/></span>Fraction <span class="m-thin">struct</span>
+        </h1>
+        <p><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Z</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#comparison-operators">Comparison operators</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a46b2abd11fa134072850673d2a1a7ea6" class="m-doc">Fraction</a>(</span><span class="m-doc-wrap">Z numer,
+              Z denom) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a></span>
+            </dt>
+            <dd>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afbe82e9f6f44d860a557a218e8f11be6" class="m-doc">normalize</a>(</span><span class="m-doc-wrap">) -&gt; Z -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>normalize to a canonical form</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#addd05eb4f16bfb6e61fa0aaa65ac6b73" class="m-doc">normalize1</a>(</span><span class="m-doc-wrap">) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void</span>
+            </dt>
+            <dd>normalize to a canonical form</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5d6cd83354a0c16de1f94845f127e060" class="m-doc">normalize2</a>(</span><span class="m-doc-wrap">) -&gt; Z -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>normalize to a canonical form</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6cb3528eb0d60279877899e91a2804ee" class="m-doc">Fraction</a>(</span><span class="m-doc-wrap">Z&amp;&amp; numer) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1c7cfec50ee8f1bc823bb9d4433bb1df" class="m-doc">Fraction</a>(</span><span class="m-doc-wrap">const Z&amp; numer) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</dd>
+            <dt id="a9a886c5fb0a47f9ed01a6ba9eac1ed54">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9a886c5fb0a47f9ed01a6ba9eac1ed54" class="m-doc-self">Fraction</a>(</span><span class="m-doc-wrap">) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a></span>
+            </dt>
+            <dd>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58154c9596266162ac40bf8c57548b66" class="m-doc">numer</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const Z &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a469ea3175a981a9f2308cb8b7ad09715" class="m-doc">denom</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const Z &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad0d4a43c863d4b85399fb3059c330bda" class="m-doc">cross</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; Z -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>cross product</dd>
+            <dt id="ae29c9d6d8a30143a5fa10bd7c3053b64">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae29c9d6d8a30143a5fa10bd7c3053b64" class="m-doc-self">reciprocal</a>(</span><span class="m-doc-wrap">) -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void</span>
+            </dt>
+            <dd>reciprocal</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4fc4a47ff33106acfb4aadd7e8ce4425" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>multiply and assign</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a30071cbecaf349f1670262346a57b939" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">Z rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>multiply and assign</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7932c548e510ae208111eba2ea68245c" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>divide and assign</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aadc829d630c714bbecfd93f061717f29" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">Z rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>divide and assign</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a01e7c279c2163d868b9b8edeeb7b7182" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Negate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae722941284828fe2e53154b2f123543c" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Add.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a67d5eea6be778e5b35b4c55f7636418e" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) const -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Subtract.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3dd818016ac87d538923ae885f417b4f" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const Z&amp; i) const -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ace3ca76dce8bb521ada3ea5055f52aed" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a42da4b52c5516a63509f3b482a385e5b" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5c84d7b02a303c367925cbd969fbb0d4" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const Z&amp; i) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4068f65764538a9078e86d7840f23a71" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) -&gt; Fraction &amp; -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="ac64271bf1f790a74bc3ce50efb8b9a6b">
+              Z <a href="#ac64271bf1f790a74bc3ce50efb8b9a6b" class="m-doc-self">_numer</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="adb4b64824c773e3d6b7f419b4d78b999">
+              Z <a href="#adb4b64824c773e3d6b7f419b4d78b999" class="m-doc-self">_denom</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="comparison-operators">
+          <h2><a href="#comparison-operators">Comparison operators</a></h2>
+<p>==, !=, &lt;, &gt;, &lt;=, &gt;= etc.</p>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a25e5fec43adde4cecf303ec96a7ffeba" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8c4eb64657116e16bef5c41541b11824" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a55427b4208ebdb0137ab99576358e8d4" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than or euqal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a69797b86c22a291356e246dfa452cb4d" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than or equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a356cd5f8646e86ee5ff40271845ff5a0" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa33035759cb601a2fd22170b8c4ecd44" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than or equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a737edcd05cd915eb59330dba11afc921" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than or equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3575d65407771fb6a913552cfd3fc6c0" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const Z&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aff0fbff9d4b5f814d509b26369b9b7fa" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const Z&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ce86accf3d15e04c963c928c46b407e" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a73eed7d10ed487cd88768fe82d274efe" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa61e94a096024b591a88c12c867fc932" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6cacc3c804bb9c00bde86db3f3d1d6e1" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a62358e863fd080bc2bfa2323cbef7d6c" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8cdc4714a8faaac27dfecf298902b51e" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Less than or equal to.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9fe89de37c98c79cf7a6d64b36dd1276" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Greater than or euqal to.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa75a93b34ef19928af8c5a2d3b8abdc4" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>multiply</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a472496ea39376383cf4a1d46a607010f" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const Z&amp; rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>multiply</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a415c58454a3235eca22b869562ddc0dd" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>multiply</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af518f322e5d932840e27238af758acb8" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>divide</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9b53e2af4dad174d2ef4862ff0852045" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const Z&amp; rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>divide</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa78cf6a9de10ebbc6f36220235ed2147" class="m-doc">operator/</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>divide</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3001b3a351ff6b34c77134455ecbe437" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> frac,
+              const Z&amp; i) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Add.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac92f00b00ee419bae5578882e823a52a" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const Z&amp; i,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> frac) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Add.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4acdb15f2b4266c664077e8b81087fb7" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const Z&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ada02190f68bf9934e4cb8f7900e1637c" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac399a6da70959378753751dea75b186b" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aacfef41fbee681507c2725924bad22cf" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename _Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae98c788cab3edde96a4d944a71de0c66" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">_Stream&amp; os,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; _Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a46b2abd11fa134072850673d2a1a7ea6"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46b2abd11fa134072850673d2a1a7ea6" class="m-doc-self">Fraction</a>(</span><span class="m-doc-wrap">Z numer,
+              Z denom)</span></span>
+            </h3>
+            <p>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>denom&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afbe82e9f6f44d860a557a218e8f11be6"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbe82e9f6f44d860a557a218e8f11be6" class="m-doc-self">normalize</a>(</span><span class="m-doc-wrap">) -&gt; Z</span></span>
+            </h3>
+            <p>normalize to a canonical form</p>
+<p>denominator is always non-negative and co-prime with numerator</p>
+          </div></section>
+          <section class="m-doc-details" id="addd05eb4f16bfb6e61fa0aaa65ac6b73"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#addd05eb4f16bfb6e61fa0aaa65ac6b73" class="m-doc-self">normalize1</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>normalize to a canonical form</p>
+<p>denominator is always non-negative</p>
+          </div></section>
+          <section class="m-doc-details" id="a5d6cd83354a0c16de1f94845f127e060"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5d6cd83354a0c16de1f94845f127e060" class="m-doc-self">normalize2</a>(</span><span class="m-doc-wrap">) -&gt; Z</span></span>
+            </h3>
+            <p>normalize to a canonical form</p>
+<p>denominator is always co-prime with numerator</p>
+          </div></section>
+          <section class="m-doc-details" id="a6cb3528eb0d60279877899e91a2804ee"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6cb3528eb0d60279877899e91a2804ee" class="m-doc-self">Fraction</a>(</span><span class="m-doc-wrap">Z&amp;&amp; numer) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1c7cfec50ee8f1bc823bb9d4433bb1df"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1c7cfec50ee8f1bc823bb9d4433bb1df" class="m-doc-self">Fraction</a>(</span><span class="m-doc-wrap">const Z&amp; numer) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Construct a new <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a58154c9596266162ac40bf8c57548b66"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a58154c9596266162ac40bf8c57548b66" class="m-doc-self">numer</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const Z &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const Z&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a469ea3175a981a9f2308cb8b7ad09715"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a469ea3175a981a9f2308cb8b7ad09715" class="m-doc-self">denom</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const Z &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const Z&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad0d4a43c863d4b85399fb3059c330bda"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad0d4a43c863d4b85399fb3059c330bda" class="m-doc-self">cross</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; Z</span></span>
+            </h3>
+            <p>cross product</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Z</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4fc4a47ff33106acfb4aadd7e8ce4425"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4fc4a47ff33106acfb4aadd7e8ce4425" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <p>multiply and assign</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a30071cbecaf349f1670262346a57b939"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a30071cbecaf349f1670262346a57b939" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">Z rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <p>multiply and assign</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7932c548e510ae208111eba2ea68245c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7932c548e510ae208111eba2ea68245c" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <p>divide and assign</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aadc829d630c714bbecfd93f061717f29"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aadc829d630c714bbecfd93f061717f29" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">Z rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <p>divide and assign</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01e7c279c2163d868b9b8edeeb7b7182"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01e7c279c2163d868b9b8edeeb7b7182" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; Fraction</span></span>
+            </h3>
+            <p>Negate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae722941284828fe2e53154b2f123543c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae722941284828fe2e53154b2f123543c" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; Fraction</span></span>
+            </h3>
+            <p>Add.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a67d5eea6be778e5b35b4c55f7636418e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a67d5eea6be778e5b35b4c55f7636418e" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) const -&gt; Fraction</span></span>
+            </h3>
+            <p>Subtract.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3dd818016ac87d538923ae885f417b4f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3dd818016ac87d538923ae885f417b4f" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const Z&amp; i) const -&gt; Fraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">i&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ace3ca76dce8bb521ada3ea5055f52aed"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ace3ca76dce8bb521ada3ea5055f52aed" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a42da4b52c5516a63509f3b482a385e5b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a42da4b52c5516a63509f3b482a385e5b" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5c84d7b02a303c367925cbd969fbb0d4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c84d7b02a303c367925cbd969fbb0d4" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const Z&amp; i) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">i&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4068f65764538a9078e86d7840f23a71"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4068f65764538a9078e86d7840f23a71" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) -&gt; Fraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a25e5fec43adde4cecf303ec96a7ffeba"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a25e5fec43adde4cecf303ec96a7ffeba" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8c4eb64657116e16bef5c41541b11824"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8c4eb64657116e16bef5c41541b11824" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Greater than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a55427b4208ebdb0137ab99576358e8d4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a55427b4208ebdb0137ab99576358e8d4" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Greater than or euqal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a69797b86c22a291356e246dfa452cb4d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a69797b86c22a291356e246dfa452cb4d" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Less than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a356cd5f8646e86ee5ff40271845ff5a0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a356cd5f8646e86ee5ff40271845ff5a0" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Greater than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa33035759cb601a2fd22170b8c4ecd44"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa33035759cb601a2fd22170b8c4ecd44" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Less than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a737edcd05cd915eb59330dba11afc921"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a737edcd05cd915eb59330dba11afc921" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const Z&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <p>Greater than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3575d65407771fb6a913552cfd3fc6c0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3575d65407771fb6a913552cfd3fc6c0" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const Z&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aff0fbff9d4b5f814d509b26369b9b7fa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff0fbff9d4b5f814d509b26369b9b7fa" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const Z&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Less than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2ce86accf3d15e04c963c928c46b407e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ce86accf3d15e04c963c928c46b407e" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Less than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a73eed7d10ed487cd88768fe82d274efe"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a73eed7d10ed487cd88768fe82d274efe" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa61e94a096024b591a88c12c867fc932"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa61e94a096024b591a88c12c867fc932" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Equal to</p>
+          </div></section>
+          <section class="m-doc-details" id="a6cacc3c804bb9c00bde86db3f3d1d6e1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6cacc3c804bb9c00bde86db3f3d1d6e1" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Less than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a62358e863fd080bc2bfa2323cbef7d6c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62358e863fd080bc2bfa2323cbef7d6c" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Greater than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8cdc4714a8faaac27dfecf298902b51e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cdc4714a8faaac27dfecf298902b51e" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Less than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9fe89de37c98c79cf7a6d64b36dd1276"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />Fraction&lt;Z&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9fe89de37c98c79cf7a6d64b36dd1276" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <p>Greater than or euqal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa75a93b34ef19928af8c5a2d3b8abdc4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa75a93b34ef19928af8c5a2d3b8abdc4" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>multiply</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a472496ea39376383cf4a1d46a607010f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a472496ea39376383cf4a1d46a607010f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const Z&amp; rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>multiply</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a415c58454a3235eca22b869562ddc0dd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a415c58454a3235eca22b869562ddc0dd" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>multiply</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af518f322e5d932840e27238af758acb8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af518f322e5d932840e27238af758acb8" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>divide</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9b53e2af4dad174d2ef4862ff0852045"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b53e2af4dad174d2ef4862ff0852045" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> lhs,
+              const Z&amp; rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>divide</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa78cf6a9de10ebbc6f36220235ed2147"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa78cf6a9de10ebbc6f36220235ed2147" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const Z&amp; lhs,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> rhs) -&gt; Fraction</span></span>
+            </h3>
+            <p>divide</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3001b3a351ff6b34c77134455ecbe437"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3001b3a351ff6b34c77134455ecbe437" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> frac,
+              const Z&amp; i) -&gt; Fraction</span></span>
+            </h3>
+            <p>Add.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>i&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac92f00b00ee419bae5578882e823a52a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac92f00b00ee419bae5578882e823a52a" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const Z&amp; i,
+              <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a> frac) -&gt; Fraction</span></span>
+            </h3>
+            <p>Add.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">i&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4acdb15f2b4266c664077e8b81087fb7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4acdb15f2b4266c664077e8b81087fb7" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const Z&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">c&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ada02190f68bf9934e4cb8f7900e1637c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ada02190f68bf9934e4cb8f7900e1637c" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">c&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac399a6da70959378753751dea75b186b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac399a6da70959378753751dea75b186b" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">c&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aacfef41fbee681507c2725924bad22cf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aacfef41fbee681507c2725924bad22cf" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">int&amp;&amp; c,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; Fraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">c&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Fraction&lt;Z&gt;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae98c788cab3edde96a4d944a71de0c66"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Z&gt;
+                template&lt;typename _Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae98c788cab3edde96a4d944a71de0c66" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">_Stream&amp; os,
+              const <a href="structfractions_1_1_fraction.html" class="m-doc">Fraction</a>&amp; frac) -&gt; _Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">_Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>os&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>_Stream&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Fractions. Created with <a href="https://doxygen.org/">Doxygen</a> 1.10.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
