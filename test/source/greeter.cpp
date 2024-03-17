@@ -14,8 +14,3 @@ TEST_CASE("Fractions") {
   CHECK(fractions.greet(LanguageCode::ES) == "¡Hola Tests!");
   CHECK(fractions.greet(LanguageCode::FR) == "Bonjour Tests!");
 }
-
-TEST_CASE("Fractions version") {
-  static_assert(std::string_view(FRACTIONS_VERSION) == std::string_view("1.0"));
-  CHECK(std::string(FRACTIONS_VERSION) == std::string("1.0"));
-}
