@@ -4,9 +4,10 @@
  *  This is a C++ Library header.
  */
 
-#include <numeric>
+// #include <numeric>
 #include <type_traits>
 #include <utility>
+#include "fractions/fractions.hpp"
 
 // #include "common_concepts.h"
 
@@ -121,7 +122,7 @@ namespace fractions {
      */
     CONSTEXPR14 auto normalize() -> Z {
       this->normalize1();
-      return this->normalize2();
+      return this->reduce();
     }
 
     /**
@@ -140,7 +141,7 @@ namespace fractions {
      * and denominator coprime. The gcd of the numerator and denominator
      * is computed and used to divide out any common factors.
      */
-    CONSTEXPR14 auto normalize2() -> Z {
+    CONSTEXPR14 auto reduce() -> Z {
       Z common = gcd(this->_numer, this->_denom);
       if (common == Z(1) || common == Z(0)) {
         return common;
@@ -227,7 +228,7 @@ namespace fractions {
       auto lhs2{lhs};
       auto rhs2{rhs};
       std::swap(lhs2._denom, rhs2);
-      lhs2.normalize2();
+      lhs2.reduce();
       return lhs2._numer < lhs2._denom * rhs2;
     }
 
@@ -249,7 +250,7 @@ namespace fractions {
       auto lhs2{lhs};
       auto rhs2{rhs};
       std::swap(lhs2._denom, rhs2);
-      lhs2.normalize2();
+      lhs2.reduce();
       return lhs2._numer < lhs2._denom * rhs2;
     }
 
@@ -271,7 +272,7 @@ namespace fractions {
       auto lhs2{lhs};
       auto rhs2{rhs};
       std::swap(rhs2._denom, lhs2);
-      rhs2.normalize2();
+      rhs2.reduce();
       return rhs2._denom * lhs2 < rhs2._numer;
     }
 
@@ -308,8 +309,8 @@ namespace fractions {
       auto lhs2{lhs};
       auto rhs2{rhs};
       std::swap(lhs2._denom, rhs2._numer);
-      lhs2.normalize2();
-      rhs2.normalize2();
+      lhs2.reduce();
+      rhs2.reduce();
       return lhs2._numer * rhs2._denom == lhs2._denom * rhs2._numer;
     }
 
@@ -331,8 +332,8 @@ namespace fractions {
       auto lhs2{lhs};
       auto rhs2{rhs};
       std::swap(lhs2._denom, rhs2._numer);
-      lhs2.normalize2();
-      rhs2.normalize2();
+      lhs2.reduce();
+      rhs2.reduce();
       return lhs2._numer * rhs2._denom < lhs2._denom * rhs2._numer;
     }
 
@@ -469,8 +470,8 @@ namespace fractions {
      */
     CONSTEXPR14 auto operator*=(Fraction rhs) -> Fraction & {
       std::swap(this->_numer, rhs._numer);
-      this->normalize2();
-      rhs.normalize2();
+      this->reduce();
+      rhs.reduce();
       this->_numer *= rhs._numer;
       this->_denom *= rhs._denom;
       return *this;
@@ -501,7 +502,7 @@ namespace fractions {
      */
     CONSTEXPR14 auto operator*=(Z rhs) -> Fraction & {
       std::swap(this->_numer, rhs);
-      this->normalize2();
+      this->reduce();
       this->_numer *= rhs;
       return *this;
     }
@@ -543,7 +544,7 @@ namespace fractions {
     CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction & {
       std::swap(this->_denom, rhs._numer);
       this->normalize();
-      rhs.normalize2();
+      rhs.reduce();
       this->_numer *= rhs._denom;
       this->_denom *= rhs._numer;
       return *this;
@@ -674,57 +675,165 @@ namespace fractions {
      * @param rhs The integer to subtract.
      * @return A new Fraction containing the difference.
      */
-    CONSTEXPR14 auto operator-(const Z &rhs) const -> Fraction { return *this + (-rhs); }
+    CONSTEXPR14 auto operator-(const Z &rhs) const -> Fraction { return *this -= rhs; }
 
     /**
-     * @brief
+     * Adds another Fraction to this Fraction.
      *
-     * @param[in] rhs
-     * @return Fraction
-     */
-    CONSTEXPR14 auto operator+=(const Fraction &rhs) -> Fraction & { return *this -= (-rhs); }
-
-    /**
-     * @brief
+     * If the denominators are equal, simply add the numerators.
+     * Otherwise, find the greatest common divisor of both denominators,
+     * multiply the numerators by the denominator over the gcd,
+     * add the new numerators,
+     * multiply by the product of the original denominators,
+     * and reduce to lowest terms.
      *
-     * @param[in] rhs
-     * @return Fraction
+     * @param[in] rhs The Fraction to add.
+     * @return A reference to this Fraction after adding.
      */
-    CONSTEXPR14 auto operator-=(const Fraction &rhs) -> Fraction & {
+    CONSTEXPR14 auto operator+=(const Fraction &rhs) -> Fraction & {
       if (this->_denom == rhs._denom) {
-        this->_numer -= rhs._numer;
-        this->normalize2();
+        this->_numer += rhs._numer;
+        this->reduce();
         return *this;
       }
 
       auto other{rhs};
       std::swap(this->_denom, other._numer);
-      auto common_n = this->normalize2();
-      auto common_d = other.normalize2();
+      auto common_n = this->reduce();
+      auto common_d = other.reduce();
       std::swap(this->_denom, other._numer);
-      this->_numer = this->cross(other);
+      this->_numer = this->_numer * other._denom + this->_denom * other._numer;
+      ;
       this->_denom *= other._denom;
       std::swap(this->_denom, common_d);
-      this->normalize2();
+      this->reduce();
       this->_numer *= common_n;
       this->_denom *= common_d;
-      this->normalize2();
+      this->reduce();
       return *this;
     }
 
     /**
-     * @brief
+     * Subtracts another Fraction from this Fraction.
      *
-     * @param[in] i
-     * @return Fraction
+     * If the denominators are equal, simply subtract the numerators.
+     * Otherwise, find the greatest common divisor of both denominators,
+     * multiply the numerators by the denominator over the gcd,
+     * subtract the new numerators,
+     * multiply by the product of the original denominators,
+     * and reduce to lowest terms.
+     *
+     * @param rhs The Fraction to subtract.
+     * @return A reference to this Fraction after subtracting.
      */
-    CONSTEXPR14 auto operator+=(const Z &i) -> Fraction & { return *this -= (-i); }
+    CONSTEXPR14 auto operator-=(const Fraction &rhs) -> Fraction & {
+      if (this->_denom == rhs._denom) {
+        this->_numer -= rhs._numer;
+        this->reduce();
+        return *this;
+      }
+
+      auto other{rhs};
+      std::swap(this->_denom, other._numer);
+      auto common_n = this->reduce();
+      auto common_d = other.reduce();
+      std::swap(this->_denom, other._numer);
+      this->_numer = this->cross(other);
+      this->_denom *= other._denom;
+      std::swap(this->_denom, common_d);
+      this->reduce();
+      this->_numer *= common_n;
+      this->_denom *= common_d;
+      this->reduce();
+      return *this;
+    }
 
     /**
-     * @brief
+     * Adds a Z (integer) to this Fraction.
      *
-     * @param[in] rhs
-     * @return Fraction
+     * If the denominator is 1, simply add to the numerator.
+     * Otherwise, multiply the Z by the denominator and add to the numerator.
+     * Then, reduce to lowest terms.
+     *
+     * @param[in] rhs The Z (integer) to add.
+     * @return A reference to this Fraction after adding.
+     */
+    CONSTEXPR14 auto operator+=(const Z &rhs) -> Fraction & {
+      if (this->_denom == Z(1)) {
+        this->_numer += rhs;
+        return *this;
+      }
+
+      auto other{rhs};
+      std::swap(this->_denom, other);
+      auto common_n = this->reduce();
+      std::swap(this->_denom, other);
+      this->_numer += other * this->_denom;
+      this->_numer *= common_n;
+      this->reduce();
+      return *this;
+    }
+
+    /**
+     * Increments this Fraction by 1.
+     *
+     * Adds 1 to this Fraction by calling operator+=() with
+     * a Z (integer) value of 1.
+     *
+     * @return A reference to this Fraction after incrementing.
+     */
+    CONSTEXPR14 auto operator++() -> Fraction & {
+      *this += Z(1);
+      return *this;
+    }
+
+    /**
+     * Decrements this Fraction by 1.
+     *
+     * Subtracts 1 from this Fraction by calling operator-=() with
+     * a Z (integer) value of 1.
+     *
+     * @return A reference to this Fraction after decrementing.
+     */
+    CONSTEXPR14 auto operator--() -> Fraction & {
+      *this -= Z(1);
+      return *this;
+    }
+
+    /**
+     * Post-increment operator.
+     *
+     * Makes a copy of this Fraction, increments the copy,
+     * and returns the copy.
+     */
+    CONSTEXPR14 auto operator++(int) -> Fraction {
+      auto tmp{*this};
+      ++(*this);
+      return tmp;
+    }
+
+    /**
+     * Post-decrement operator.
+     *
+     * Makes a copy of this Fraction, decrements the copy,
+     * and returns the copy.
+     */
+    CONSTEXPR14 auto operator--(int) -> Fraction {
+      auto tmp{*this};
+      --(*this);
+      return tmp;
+    }
+
+
+    /**
+     * Subtracts an integer from this fraction.
+     *
+     * If the denominator is 1, simply subtract from the numerator.
+     * Otherwise, multiply the integer by the denominator and subtract from the numerator.
+     * Then, reduce to lowest terms.
+     *
+     * @param rhs The integer to subtract.
+     * @return A reference to this fraction after subtracting.
      */
     CONSTEXPR14 auto operator-=(const Z &rhs) -> Fraction & {
       if (this->_denom == Z(1)) {
@@ -734,63 +843,79 @@ namespace fractions {
 
       auto other{rhs};
       std::swap(this->_denom, other);
-      auto common_n = this->normalize2();
+      auto common_n = this->reduce();
       std::swap(this->_denom, other);
       this->_numer -= other * this->_denom;
       this->_numer *= common_n;
-      this->normalize2();
+      this->reduce();
       return *this;
     }
 
     /**
-     * @brief
+     * Subtracts a Z integer from this Fraction.
      *
-     * @param[in] c
-     * @param[in] frac
-     * @return Fraction
+     * Subtracts the integer c from this Fraction frac.
+     * Returns the result as a new Fraction.
+     *
+     * @param c The integer to subtract.
+     * @param frac The Fraction to subtract from.
+     * @return A new Fraction containing the difference.
      */
     friend CONSTEXPR14 auto operator-(const Z &c, const Fraction &frac) -> Fraction {
       return c + (-frac);
     }
 
     /**
-     * @brief
+     * Adds an integer to a Fraction.
      *
-     * @param[in] c
-     * @param[in] frac
-     * @return Fraction
+     * This friend function allows adding an integer and a Fraction by
+     * converting the integer to a Fraction and delegating to the
+     * Fraction += operator.
+     *
+     * @param c The integer to add.
+     * @param frac The Fraction to add to.
+     * @return A new Fraction containing the sum.
      */
     friend CONSTEXPR14 auto operator+(int &&c, const Fraction &frac) -> Fraction {
       return frac + Z(c);
     }
 
     /**
-     * @brief
+     * Subtracts an integer from a Fraction.
      *
-     * @param[in] c
-     * @param[in] frac
-     * @return Fraction
+     * This allows subtracting an integer from a Fraction by first
+     * converting the integer to a Fraction.
+     *
+     * @param c The integer to subtract.
+     * @param frac The Fraction to subtract from.
+     * @return A new Fraction containing the difference.
      */
     friend CONSTEXPR14 auto operator-(int &&c, const Fraction &frac) -> Fraction {
-      return (-frac) + Z(c);
+      return Z(c) - frac;
     }
 
     /**
-     * @brief
+     * Multiplies an integer by a Fraction.
      *
-     * @param[in] c
-     * @param[in] frac
-     * @return Fraction<Z>
+     * This friend function converts the integer to a Fraction and
+     * delegates to the Fraction *= operator to perform the
+     * multiplication.
+     *
+     * @param c The integer value to multiply.
+     * @param frac The Fraction to multiply.
+     * @return A new Fraction containing the product.
      */
     friend CONSTEXPR14 auto operator*(int &&c, const Fraction &frac) -> Fraction {
       return frac * Z(c);
     }
 
     /**
-     * @brief
+     * Overloads the stream output operator to print a Fraction to a stream.
+     *
+     * This allows printing a Fraction to an output stream in the format
+     * "(numerator/denominator)".
      *
      * @tparam _Stream
-     * @tparam Z
      * @param[in] os
      * @param[in] frac
      * @return _Stream&
@@ -801,8 +926,4 @@ namespace fractions {
       return os;
     }
   };
-
-  // For template deduction
-  // typename{Z} Fraction(const Z &, const Z &) noexcept -> Fraction<Z>;
-
 }  // namespace fractions
