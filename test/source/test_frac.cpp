@@ -47,7 +47,7 @@ TEST_CASE("Fraction<int> neg") {
 TEST_CASE("Fraction<int> abs") {
   const auto a = Fraction<int>{-3, 4};
   CHECK_EQ(abs(a), Fraction<int>{3, 4});
-} 
+}
 
 TEST_CASE("Fraction<int> less than") {
   const auto a = Fraction<int>{3, 4};
@@ -173,7 +173,6 @@ TEST_CASE("Fraction<int>::operator* with zero numerator and non-zero denominator
   const auto a = Fraction<int>{0, 1};
   CHECK(a * a == a);
 }
-
 
 TEST_CASE("Fraction") {
   const auto a = 3U;
