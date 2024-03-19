@@ -221,14 +221,15 @@ namespace fractions {
      * @return True if lhs == rhs, false otherwise.
      */
     friend CONSTEXPR14 auto operator==(const Fraction &lhs, const Z &rhs) -> bool {
-      if (lhs._denom == Z(1) || rhs == Z(0)) {
-        return lhs._numer == rhs;
-      }
-      auto lhs2{lhs};
-      auto rhs2{rhs};
-      std::swap(lhs2._denom, rhs2);
-      lhs2.reduce();
-      return lhs2._numer < lhs2._denom * rhs2;
+      return lhs._numer == rhs && lhs._denom == Z(1);
+      // if (lhs._denom == Z(1) || rhs == Z(0)) {
+      //   return lhs._numer == rhs;
+      // }
+      // auto lhs2{lhs};
+      // auto rhs2{rhs};
+      // std::swap(lhs2._denom, rhs2);
+      // lhs2.reduce();
+      // return lhs2._numer == lhs2._denom * rhs2;
     }
 
     /**
@@ -302,15 +303,16 @@ namespace fractions {
      * @return True if lhs == rhs, false otherwise.
      */
     friend CONSTEXPR14 auto operator==(const Fraction &lhs, const Fraction &rhs) -> bool {
-      if (lhs._denom == rhs._denom) {
-        return lhs._numer == rhs._numer;
-      }
-      auto lhs2{lhs};
-      auto rhs2{rhs};
-      std::swap(lhs2._denom, rhs2._numer);
-      lhs2.reduce();
-      rhs2.reduce();
-      return lhs2._numer * rhs2._denom == lhs2._denom * rhs2._numer;
+      return lhs._numer == rhs._numer && lhs._denom == rhs._denom;
+      // if (lhs._denom == rhs._denom) {
+      //   return lhs._numer == rhs._numer;
+      // }
+      // auto lhs2{lhs};
+      // auto rhs2{rhs};
+      // std::swap(lhs2._denom, rhs2._numer);
+      // lhs2.reduce();
+      // rhs2.reduce();
+      // return lhs2._numer * rhs2._denom == lhs2._denom * rhs2._numer;
     }
 
     /**
@@ -822,7 +824,6 @@ namespace fractions {
       --(*this);
       return tmp;
     }
-
 
     /**
      * Subtracts an integer from this fraction.
