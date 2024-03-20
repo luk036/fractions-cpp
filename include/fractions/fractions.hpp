@@ -110,6 +110,7 @@ namespace fractions {
      *
      * @param[in] numer The numerator
      * @param[in] denom The denominator
+     *
      */
     CONSTEXPR14 Fraction(Z numer, Z denom) : _numer{std::move(numer)}, _denom{std::move(denom)} {
       this->normalize();

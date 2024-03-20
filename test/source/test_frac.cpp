@@ -190,20 +190,20 @@ TEST_CASE("Fraction") {
 }
 
 TEST_CASE("Fraction Special Cases") {
-  const auto p = Fraction<int>{3, 4};
+  const auto posf = Fraction<int>{3, 4};
   const auto inf = Fraction<int>{1, 0};
   const auto nan = Fraction<int>{0, 0};
   const auto zero = Fraction<int>{0, 1};
 
   CHECK(-inf < zero);
   CHECK(zero < inf);
-  CHECK(-inf < p);
-  CHECK(p < inf);
+  CHECK(-inf < posf);
+  CHECK(posf < inf);
   CHECK(inf == inf);
   CHECK(-inf < inf);
-  CHECK(inf == inf * p);
+  CHECK(inf == inf * posf);
   CHECK(inf == inf * inf);
-  CHECK(inf == p / zero);
+  CHECK(inf == posf / zero);
   CHECK(inf == inf / zero);
   CHECK(nan == nan);
   CHECK(nan == inf * zero);
@@ -213,6 +213,6 @@ TEST_CASE("Fraction Special Cases") {
   CHECK(nan == nan * nan);
   CHECK(inf == inf + inf);
   CHECK(nan == inf - inf);
-  CHECK(inf - p == inf);
-  CHECK(-inf + p == -inf);
+  CHECK(inf - posf == inf);
+  CHECK(-inf + posf == -inf);
 }
