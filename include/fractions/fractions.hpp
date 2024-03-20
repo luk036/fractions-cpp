@@ -42,12 +42,20 @@ namespace fractions {
    */
   template <typename T> CONSTEXPR14 auto abs(const T &a) ->
       typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
-    return (a < T(0)) ? -a : a;
+    return (a < 0) ? -a : a;
   }
 
   /**
    * Computes the greatest common divider (GCD) of two integers recursively
    * using Euclid's algorithm.
+   *
+   * Example:
+   * 
+   * ```
+   * gcd_recur(12, 8) = 4
+   * gcd_recur(12, 4) = 4
+   * gcd_recur(4, 4) = 4
+   * ```
    *
    * @tparam _Mn The integer type.
    * @param __m The first integer.
@@ -64,6 +72,14 @@ namespace fractions {
   /**
    * Computes the greatest common divider (GCD) of two integers recursively using Euclid's
    * algorithm.
+   *
+   * Example:
+   * 
+   * ```
+   * gcd(0, 8) = 8
+   * gcd(12, 4) = 4
+   * gcd(4, 4) = 4
+   * ```
    *
    * @tparam _Mn The integer type.
    * @param __m The first integer.
@@ -97,6 +113,13 @@ namespace fractions {
   /**
    * @brief Fraction
    *
+   * Example:
+   *
+   * ```
+   * Fraction<int> f(1, 2);
+   * f.numer() = 1;
+   * f.denom() = 2;
+   * ```
    * @tparam T
    */
   template <typename T> struct Fraction {
@@ -108,6 +131,10 @@ namespace fractions {
      *
      * Normalizes the fraction after construction.
      *
+     * Example:
+     * ```
+     * Fraction<int> f(1, 2); // f = 1/2
+     * ```
      * @param[in] numer The numerator
      * @param[in] denom The denominator
      *
@@ -121,16 +148,17 @@ namespace fractions {
      * is always non-negative and co-prime with the numerator.
      */
     CONSTEXPR14 auto normalize() -> T {
-      this->normalize1();
+      this->keep_denom_positive();
       return this->reduce();
     }
 
     /**
      * Normalizes the fraction by making the denominator positive.
      * If the denominator is negative, both numerator and denominator are negated.
+     * This ensures the denominator is always positive.
      */
-    CONSTEXPR14 void normalize1() {
-      if (this->_denom < T(0)) {
+    CONSTEXPR14 void keep_denom_positive() {
+      if (this->_denom < 0) {
         this->_numer = -this->_numer;
         this->_denom = -this->_denom;
       }
@@ -140,10 +168,16 @@ namespace fractions {
      * Normalizes the fraction to a canonical form by making the numerator
      * and denominator coprime. The gcd of the numerator and denominator
      * is computed and used to divide out any common factors.
+     *
+     * Example:
+     * ```
+     * Fraction<int> f(2, 6); // f = 1/3
+     * f.reduce();
+     * ```
      */
     CONSTEXPR14 auto reduce() -> T {
       T common = gcd(this->_numer, this->_denom);
-      if (common == T(1) || common == T(0)) {
+      if (common == 1 || common == 0) {
         return common;
       }
       this->_numer /= common;
@@ -156,15 +190,25 @@ namespace fractions {
      *
      * The denominator is initialized to 1.
      *
+     * Example:
+     * ```
+     * Fraction<int> f(2); // f = 2/1
+     * assert(f.numer() == 2 && f.denom() == 1);
+     * ```
      * @param[in] numer The numerator.
      */
-    CONSTEXPR14 explicit Fraction(T &&numer) : _numer{std::move(numer)}, _denom(T(1)) {}
+    CONSTEXPR14 explicit Fraction(T &&numer) : _numer{std::move(numer)}, _denom(1) {}
 
     /**
      * Constructs a new Fraction object from the given numerator.
      *
      * The denominator is initialized to 1.
      *
+     * Example:
+     * ```
+     * Fraction<int> f(2); // f = 2/1
+     * assert(f == Fraction<int>(2, 1));
+     * ```
      * @param[in] numer The numerator.
      */
     CONSTEXPR14 explicit Fraction(const T &numer) : _numer{numer}, _denom(1) {}
@@ -172,6 +216,12 @@ namespace fractions {
     /**
      * Constructs a new Fraction object with numerator initialized to 0 and denominator initialized
      * to 1.
+     * 
+     * Example:
+     * ```
+     * Fraction<int> f; // f = 0/1
+     * assert(f.numer() == 0);
+     * ```
      */
     CONSTEXPR14 Fraction() : _numer(0), _denom(1) {}
 
@@ -199,6 +249,7 @@ namespace fractions {
      * the two fractions as the entries on the diagonal.
      *
      * Example:
+     *
      *   cross(Fraction(1,2), Fraction(3,4)) = -1
      *   cross(Fraction(1,2), Fraction(1,2)) = 0
      *   cross(Fraction(1,2), Fraction(-1,2)) = 0
@@ -252,7 +303,7 @@ namespace fractions {
      * @return True if lhs < rhs, false otherwise.
      */
     friend CONSTEXPR14 auto operator<(const Fraction &lhs, const T &rhs) -> bool {
-      if (lhs._denom == T(1) || rhs == T(0)) {
+      if (lhs._denom == 1 || rhs == 0) {
         return lhs._numer < rhs;
       }
       auto lhs2{lhs};
@@ -279,7 +330,7 @@ namespace fractions {
      * @return True if lhs < rhs, false otherwise.
      */
     friend CONSTEXPR14 auto operator<(const T &lhs, const Fraction &rhs) -> bool {
-      if (rhs._denom == T(1) || lhs == T(0)) {
+      if (rhs._denom == 1 || lhs == 0) {
         return lhs < rhs._numer;
       }
       auto lhs2{lhs};
@@ -471,7 +522,7 @@ namespace fractions {
      */
     CONSTEXPR14 void reciprocal() {
       std::swap(this->_numer, this->_denom);
-      this->normalize1();
+      this->keep_denom_positive();
     }
 
     /**
@@ -639,8 +690,8 @@ namespace fractions {
         return Fraction(this->_numer + rhs._numer, this->_denom);
       }
       const auto common = gcd(this->_denom, rhs._denom);
-      if (common == T(0)) {
-        return Fraction(rhs._denom * this->_numer + this->_denom * rhs._numer, T(0));
+      if (common == 0) {
+        return Fraction(rhs._denom * this->_numer + this->_denom * rhs._numer, 0);
       }
       const auto l = this->_denom / common;
       const auto r = rhs._denom / common;
@@ -774,7 +825,7 @@ namespace fractions {
      * @return A reference to this Fraction after adding.
      */
     CONSTEXPR14 auto operator+=(const T &rhs) -> Fraction & {
-      if (this->_denom == T(1)) {
+      if (this->_denom == 1) {
         this->_numer += rhs;
         return *this;
       }
@@ -798,7 +849,7 @@ namespace fractions {
      * @return A reference to this Fraction after incrementing.
      */
     CONSTEXPR14 auto operator++() -> Fraction & {
-      *this += T(1);
+      *this += 1;
       return *this;
     }
 
@@ -811,7 +862,7 @@ namespace fractions {
      * @return A reference to this Fraction after decrementing.
      */
     CONSTEXPR14 auto operator--() -> Fraction & {
-      *this -= T(1);
+      *this -= 1;
       return *this;
     }
 
@@ -850,7 +901,7 @@ namespace fractions {
      * @return A reference to this fraction after subtracting.
      */
     CONSTEXPR14 auto operator-=(const T &rhs) -> Fraction & {
-      if (this->_denom == T(1)) {
+      if (this->_denom == 1) {
         this->_numer -= rhs;
         return *this;
       }
@@ -891,7 +942,7 @@ namespace fractions {
      * @return A new Fraction containing the sum.
      */
     friend CONSTEXPR14 auto operator+(int &&c, const Fraction &frac) -> Fraction {
-      return frac + T(c);
+      return frac + c;
     }
 
     /**
@@ -905,7 +956,7 @@ namespace fractions {
      * @return A new Fraction containing the difference.
      */
     friend CONSTEXPR14 auto operator-(int &&c, const Fraction &frac) -> Fraction {
-      return T(c) - frac;
+      return c - frac;
     }
 
     /**
@@ -920,7 +971,7 @@ namespace fractions {
      * @return A new Fraction containing the product.
      */
     friend CONSTEXPR14 auto operator*(int &&c, const Fraction &frac) -> Fraction {
-      return frac * T(c);
+      return frac * c;
     }
 
     /**
