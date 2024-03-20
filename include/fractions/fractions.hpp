@@ -97,11 +97,11 @@ namespace fractions {
   /**
    * @brief Fraction
    *
-   * @tparam Z
+   * @tparam T
    */
-  template <typename Z> struct Fraction {
-    Z _numer;
-    Z _denom;
+  template <typename T> struct Fraction {
+    T _numer; /// numerator
+    T _denom; /// denominator
 
     /**
      * Constructs a new Fraction object from the given numerator and denominator.
@@ -112,7 +112,7 @@ namespace fractions {
      * @param[in] denom The denominator
      *
      */
-    CONSTEXPR14 Fraction(Z numer, Z denom) : _numer{std::move(numer)}, _denom{std::move(denom)} {
+    CONSTEXPR14 Fraction(T numer, T denom) : _numer{std::move(numer)}, _denom{std::move(denom)} {
       this->normalize();
     }
 
@@ -120,7 +120,7 @@ namespace fractions {
      * Normalizes the fraction to a canonical form where the denominator
      * is always non-negative and co-prime with the numerator.
      */
-    CONSTEXPR14 auto normalize() -> Z {
+    CONSTEXPR14 auto normalize() -> T {
       this->normalize1();
       return this->reduce();
     }
@@ -130,7 +130,7 @@ namespace fractions {
      * If the denominator is negative, both numerator and denominator are negated.
      */
     CONSTEXPR14 void normalize1() {
-      if (this->_denom < Z(0)) {
+      if (this->_denom < T(0)) {
         this->_numer = -this->_numer;
         this->_denom = -this->_denom;
       }
@@ -141,9 +141,9 @@ namespace fractions {
      * and denominator coprime. The gcd of the numerator and denominator
      * is computed and used to divide out any common factors.
      */
-    CONSTEXPR14 auto reduce() -> Z {
-      Z common = gcd(this->_numer, this->_denom);
-      if (common == Z(1) || common == Z(0)) {
+    CONSTEXPR14 auto reduce() -> T {
+      T common = gcd(this->_numer, this->_denom);
+      if (common == T(1) || common == T(0)) {
         return common;
       }
       this->_numer /= common;
@@ -158,7 +158,7 @@ namespace fractions {
      *
      * @param[in] numer The numerator.
      */
-    CONSTEXPR14 explicit Fraction(Z &&numer) : _numer{std::move(numer)}, _denom(Z(1)) {}
+    CONSTEXPR14 explicit Fraction(T &&numer) : _numer{std::move(numer)}, _denom(T(1)) {}
 
     /**
      * Constructs a new Fraction object from the given numerator.
@@ -167,7 +167,7 @@ namespace fractions {
      *
      * @param[in] numer The numerator.
      */
-    CONSTEXPR14 explicit Fraction(const Z &numer) : _numer{numer}, _denom(1) {}
+    CONSTEXPR14 explicit Fraction(const T &numer) : _numer{numer}, _denom(1) {}
 
     /**
      * Constructs a new Fraction object with numerator initialized to 0 and denominator initialized
@@ -180,14 +180,14 @@ namespace fractions {
      *
      * @return A const reference to the numerator.
      */
-    CONSTEXPR14 auto numer() const noexcept -> const Z & { return _numer; }
+    CONSTEXPR14 auto numer() const noexcept -> const T & { return _numer; }
 
     /**
      * Gets the denominator of the fraction.
      *
      * @return A const reference to the denominator.
      */
-    CONSTEXPR14 auto denom() const noexcept -> const Z & { return _denom; }
+    CONSTEXPR14 auto denom() const noexcept -> const T & { return _denom; }
 
     /**
      * Computes the cross product of this fraction and another fraction.
@@ -198,10 +198,15 @@ namespace fractions {
      * This can be used to compute the determinant of a 2x2 matrix with
      * the two fractions as the entries on the diagonal.
      *
+     * Example:
+     *   cross(Fraction(1,2), Fraction(3,4)) = -1
+     *   cross(Fraction(1,2), Fraction(1,2)) = 0
+     *   cross(Fraction(1,2), Fraction(-1,2)) = 0
+     *
      * @param[in] rhs The right-hand fraction to compute the cross product with.
      * @return The computed cross product.
      */
-    CONSTEXPR14 auto cross(const Fraction &rhs) const -> Z {
+    CONSTEXPR14 auto cross(const Fraction &rhs) const -> T {
       return this->_numer * rhs._denom - this->_denom * rhs._numer;
     }
 
@@ -217,20 +222,17 @@ namespace fractions {
      * The fraction is considered equal if its normalized value matches the
      * integer when the denominator is 1.
      *
+     * Example:
+     *   Fraction(1, 1) == 1 -> true
+     *   Fraction(1, 2) == 2 -> false
+     *   Fraction(1, 2) == 3 -> false
+     *
      * @param lhs The left hand side fraction to compare.
      * @param rhs The right hand side integer to compare.
      * @return True if lhs == rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator==(const Fraction &lhs, const Z &rhs) -> bool {
-      return lhs._numer == rhs && lhs._denom == Z(1);
-      // if (lhs._denom == Z(1) || rhs == Z(0)) {
-      //   return lhs._numer == rhs;
-      // }
-      // auto lhs2{lhs};
-      // auto rhs2{rhs};
-      // std::swap(lhs2._denom, rhs2);
-      // lhs2.reduce();
-      // return lhs2._numer == lhs2._denom * rhs2;
+    friend CONSTEXPR14 auto operator==(const Fraction &lhs, const T &rhs) -> bool {
+      return lhs._numer == rhs && lhs._denom == 1;
     }
 
     /**
@@ -240,12 +242,17 @@ namespace fractions {
      * The fraction is considered less if its normalized value is less than
      * the integer when the denominator is 1.
      *
+     * Example:
+     *   Fraction(1, 1) < 1 -> false
+     *   Fraction(1, 2) < 2 -> true
+     *   Fraction(1, 2) < 3 -> true
+     *
      * @param lhs The left hand side fraction to compare.
      * @param rhs The right hand side integer to compare.
      * @return True if lhs < rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator<(const Fraction &lhs, const Z &rhs) -> bool {
-      if (lhs._denom == Z(1) || rhs == Z(0)) {
+    friend CONSTEXPR14 auto operator<(const Fraction &lhs, const T &rhs) -> bool {
+      if (lhs._denom == T(1) || rhs == T(0)) {
         return lhs._numer < rhs;
       }
       auto lhs2{lhs};
@@ -262,12 +269,17 @@ namespace fractions {
      * The fraction is considered greater if its normalized value is greater than
      * the integer when the denominator is 1.
      *
+     * Example:
+     *   1 < Fraction(1, 1) -> false
+     *   2 < Fraction(1, 2) -> false
+     *   3 < Fraction(7, 2) -> true
+     *
      * @param lhs The left hand side integer to compare.
      * @param rhs The right hand side fraction to compare.
      * @return True if lhs < rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator<(const Z &lhs, const Fraction &rhs) -> bool {
-      if (rhs._denom == Z(1) || lhs == Z(0)) {
+    friend CONSTEXPR14 auto operator<(const T &lhs, const Fraction &rhs) -> bool {
+      if (rhs._denom == T(1) || lhs == T(0)) {
         return lhs < rhs._numer;
       }
       auto lhs2{lhs};
@@ -284,11 +296,16 @@ namespace fractions {
      * Equality is checked by comparing the integer to the normalized value
      * of the fraction.
      *
+     * Example:
+     *   1 == Fraction(1, 1) -> true
+     *   2 == Fraction(1, 2) -> false
+     *   3 == Fraction(7, 2) -> false
+     *
      * @param lhs The left hand side integer to compare.
      * @param rhs The right hand side fraction to compare.
      * @return True if lhs == rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator==(const Z &lhs, const Fraction &rhs) -> bool {
+    friend CONSTEXPR14 auto operator==(const T &lhs, const Fraction &rhs) -> bool {
       return rhs == lhs;
     }
 
@@ -299,21 +316,17 @@ namespace fractions {
      * false otherwise. Equality is checked by normalizing both fractions
      * to a common denominator and comparing the numerators.
      *
+     * Example:
+     *   Fraction(1, 1) == Fraction(1, 1) -> true
+     *   Fraction(1, 2) == Fraction(2, 4) -> true
+     *   Fraction(1, 2) == Fraction(3, 4) -> false
+     *
      * @param lhs The left hand side fraction to compare.
      * @param rhs The right hand side fraction to compare.
      * @return True if lhs == rhs, false otherwise.
      */
     friend CONSTEXPR14 auto operator==(const Fraction &lhs, const Fraction &rhs) -> bool {
       return lhs._numer == rhs._numer && lhs._denom == rhs._denom;
-      // if (lhs._denom == rhs._denom) {
-      //   return lhs._numer == rhs._numer;
-      // }
-      // auto lhs2{lhs};
-      // auto rhs2{rhs};
-      // std::swap(lhs2._denom, rhs2._numer);
-      // lhs2.reduce();
-      // rhs2.reduce();
-      // return lhs2._numer * rhs2._denom == lhs2._denom * rhs2._numer;
     }
 
     /**
@@ -382,71 +395,71 @@ namespace fractions {
     CONSTEXPR14 auto operator<=(const Fraction &rhs) const -> bool { return !(rhs < *this); }
 
     /**
-     * Compares this fraction to another Z integer for greater than.
+     * Compares this fraction to another T integer for greater than.
      *
      * @param rhs The right hand side fraction to compare.
-     * @returns True if this fraction is greater than the other Z integer,
+     * @returns True if this fraction is greater than the other T integer,
      * false otherwise.
      */
-    CONSTEXPR14 auto operator>(const Z &rhs) const -> bool { return rhs < *this; }
+    CONSTEXPR14 auto operator>(const T &rhs) const -> bool { return rhs < *this; }
 
     /**
-     * Compares this fraction to another Z integer for less than or equal to.
+     * Compares this fraction to another T integer for less than or equal to.
      *
      * @param rhs The right hand side fraction to compare.
-     * @returns True if this fraction is less than or equal to the other Z integer,
+     * @returns True if this fraction is less than or equal to the other T integer,
      * false otherwise.
      */
-    CONSTEXPR14 auto operator<=(const Z &rhs) const -> bool { return !(rhs < *this); }
+    CONSTEXPR14 auto operator<=(const T &rhs) const -> bool { return !(rhs < *this); }
 
     /**
-     * Compares this fraction to another Z integer for greater than or equal to.
+     * Compares this fraction to another T integer for greater than or equal to.
      *
      * @param rhs The right hand side fraction to compare.
-     * @returns True if this fraction is greater than or equal to the other Z integer,
+     * @returns True if this fraction is greater than or equal to the other T integer,
      * false otherwise.
      */
-    CONSTEXPR14 auto operator>=(const Z &rhs) const -> bool { return !(*this < rhs); }
+    CONSTEXPR14 auto operator>=(const T &rhs) const -> bool { return !(*this < rhs); }
 
     /**
-     * Compares a Z integer to a Fraction for greater than.
+     * Compares a T integer to a Fraction for greater than.
      *
-     * This is a friend function that allows comparing a Z integer on the left
+     * This is a friend function that allows comparing a T integer on the left
      * hand side to a Fraction on the right hand side.
      *
-     * @param lhs The Z integer on the left hand side.
+     * @param lhs The T integer on the left hand side.
      * @param rhs The Fraction on the right hand side.
      * @return True if lhs is greater than rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator>(const Z &lhs, const Fraction &rhs) -> bool {
+    friend CONSTEXPR14 auto operator>(const T &lhs, const Fraction &rhs) -> bool {
       return rhs < lhs;
     }
 
     /**
-     * Compares a Z integer to a Fraction for less than or equal to.
+     * Compares a T integer to a Fraction for less than or equal to.
      *
-     * This is a friend function that allows comparing a Z integer on the left
+     * This is a friend function that allows comparing a T integer on the left
      * hand side to a Fraction on the right hand side.
      *
-     * @param lhs The Z integer on the left hand side.
+     * @param lhs The T integer on the left hand side.
      * @param rhs The Fraction on the right hand side.
      * @return True if lhs is less than or equal to rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator<=(const Z &lhs, const Fraction &rhs) -> bool {
+    friend CONSTEXPR14 auto operator<=(const T &lhs, const Fraction &rhs) -> bool {
       return !(rhs < lhs);
     }
 
     /**
-     * Compares a Z integer to a Fraction for greater than or equal to.
+     * Compares a T integer to a Fraction for greater than or equal to.
      *
-     * This is a friend function that allows comparing a Z integer on the left
+     * This is a friend function that allows comparing a T integer on the left
      * hand side to a Fraction on the right hand side.
      *
-     * @param lhs The Z integer on the left hand side.
+     * @param lhs The T integer on the left hand side.
      * @param rhs The Fraction on the right hand side.
      * @return True if lhs is greater than or equal to rhs, false otherwise.
      */
-    friend CONSTEXPR14 auto operator>=(const Z &lhs, const Fraction &rhs) -> bool {
+    friend CONSTEXPR14 auto operator>=(const T &lhs, const Fraction &rhs) -> bool {
       return !(lhs < rhs);
     }
 
@@ -502,7 +515,7 @@ namespace fractions {
      * @param rhs The integer to multiply.
      * @return A reference to this Fraction after multiplication.
      */
-    CONSTEXPR14 auto operator*=(Z rhs) -> Fraction & {
+    CONSTEXPR14 auto operator*=(T rhs) -> Fraction & {
       std::swap(this->_numer, rhs);
       this->reduce();
       this->_numer *= rhs;
@@ -519,7 +532,7 @@ namespace fractions {
      * @param rhs The right hand integer to multiply.
      * @return A new Fraction containing the result of the multiplication.
      */
-    friend CONSTEXPR14 auto operator*(Fraction lhs, const Z &rhs) -> Fraction { return lhs *= rhs; }
+    friend CONSTEXPR14 auto operator*(Fraction lhs, const T &rhs) -> Fraction { return lhs *= rhs; }
 
     /**
      * Multiplies the Fraction rhs by the integer lhs.
@@ -531,7 +544,7 @@ namespace fractions {
      * @param rhs The right hand Fraction to multiply.
      * @return A new Fraction containing the result of the multiplication.
      */
-    friend CONSTEXPR14 auto operator*(const Z &lhs, Fraction rhs) -> Fraction { return rhs *= lhs; }
+    friend CONSTEXPR14 auto operator*(const T &lhs, Fraction rhs) -> Fraction { return rhs *= lhs; }
 
     /**
      * Divides this Fraction by the given Fraction rhs and assigns the result to this Fraction.
@@ -573,7 +586,7 @@ namespace fractions {
      * @param rhs The integer to divide this Fraction by.
      * @return A reference to this Fraction after dividing by rhs.
      */
-    CONSTEXPR14 auto operator/=(Z rhs) -> Fraction & {
+    CONSTEXPR14 auto operator/=(T rhs) -> Fraction & {
       std::swap(this->_denom, rhs);
       this->normalize();
       this->_denom *= rhs;
@@ -587,7 +600,7 @@ namespace fractions {
      * @param[in] rhs
      * @return A Fraction after division.
      */
-    friend CONSTEXPR14 auto operator/(Fraction lhs, const Z &rhs) -> Fraction { return lhs /= rhs; }
+    friend CONSTEXPR14 auto operator/(Fraction lhs, const T &rhs) -> Fraction { return lhs /= rhs; }
 
     /**
      * Divides the integer lhs by the Fraction rhs.
@@ -598,7 +611,7 @@ namespace fractions {
      * @param[in] rhs
      * @return A Fraction after division.
      */
-    friend CONSTEXPR14 auto operator/(const Z &lhs, Fraction rhs) -> Fraction {
+    friend CONSTEXPR14 auto operator/(const T &lhs, Fraction rhs) -> Fraction {
       rhs.reciprocal();
       return rhs *= lhs;
     }
@@ -626,8 +639,8 @@ namespace fractions {
         return Fraction(this->_numer + rhs._numer, this->_denom);
       }
       const auto common = gcd(this->_denom, rhs._denom);
-      if (common == Z(0)) {
-        return Fraction(rhs._denom * this->_numer + this->_denom * rhs._numer, Z(0));
+      if (common == T(0)) {
+        return Fraction(rhs._denom * this->_numer + this->_denom * rhs._numer, T(0));
       }
       const auto l = this->_denom / common;
       const auto r = rhs._denom / common;
@@ -655,7 +668,7 @@ namespace fractions {
      * @param rhs The integer to add.
      * @return A new Fraction containing the sum.
      */
-    friend CONSTEXPR14 auto operator+(Fraction lhs, const Z &rhs) -> Fraction { return lhs += rhs; }
+    friend CONSTEXPR14 auto operator+(Fraction lhs, const T &rhs) -> Fraction { return lhs += rhs; }
 
     /**
      * Adds an integer to a Fraction.
@@ -666,7 +679,7 @@ namespace fractions {
      * @param rhs The integer to add.
      * @return A new Fraction containing the sum.
      */
-    friend CONSTEXPR14 auto operator+(const Z &lhs, Fraction rhs) -> Fraction { return rhs += lhs; }
+    friend CONSTEXPR14 auto operator+(const T &lhs, Fraction rhs) -> Fraction { return rhs += lhs; }
 
     /**
      * Subtracts an integer from this Fraction.
@@ -677,7 +690,7 @@ namespace fractions {
      * @param rhs The integer to subtract.
      * @return A new Fraction containing the difference.
      */
-    CONSTEXPR14 auto operator-(const Z &rhs) const -> Fraction { return *this -= rhs; }
+    CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction { return *this -= rhs; }
 
     /**
      * Adds another Fraction to this Fraction.
@@ -751,17 +764,17 @@ namespace fractions {
     }
 
     /**
-     * Adds a Z (integer) to this Fraction.
+     * Adds a T (integer) to this Fraction.
      *
      * If the denominator is 1, simply add to the numerator.
-     * Otherwise, multiply the Z by the denominator and add to the numerator.
+     * Otherwise, multiply the T by the denominator and add to the numerator.
      * Then, reduce to lowest terms.
      *
-     * @param[in] rhs The Z (integer) to add.
+     * @param[in] rhs The T (integer) to add.
      * @return A reference to this Fraction after adding.
      */
-    CONSTEXPR14 auto operator+=(const Z &rhs) -> Fraction & {
-      if (this->_denom == Z(1)) {
+    CONSTEXPR14 auto operator+=(const T &rhs) -> Fraction & {
+      if (this->_denom == T(1)) {
         this->_numer += rhs;
         return *this;
       }
@@ -780,12 +793,12 @@ namespace fractions {
      * Increments this Fraction by 1.
      *
      * Adds 1 to this Fraction by calling operator+=() with
-     * a Z (integer) value of 1.
+     * a T (integer) value of 1.
      *
      * @return A reference to this Fraction after incrementing.
      */
     CONSTEXPR14 auto operator++() -> Fraction & {
-      *this += Z(1);
+      *this += T(1);
       return *this;
     }
 
@@ -793,12 +806,12 @@ namespace fractions {
      * Decrements this Fraction by 1.
      *
      * Subtracts 1 from this Fraction by calling operator-=() with
-     * a Z (integer) value of 1.
+     * a T (integer) value of 1.
      *
      * @return A reference to this Fraction after decrementing.
      */
     CONSTEXPR14 auto operator--() -> Fraction & {
-      *this -= Z(1);
+      *this -= T(1);
       return *this;
     }
 
@@ -836,8 +849,8 @@ namespace fractions {
      * @param rhs The integer to subtract.
      * @return A reference to this fraction after subtracting.
      */
-    CONSTEXPR14 auto operator-=(const Z &rhs) -> Fraction & {
-      if (this->_denom == Z(1)) {
+    CONSTEXPR14 auto operator-=(const T &rhs) -> Fraction & {
+      if (this->_denom == T(1)) {
         this->_numer -= rhs;
         return *this;
       }
@@ -853,7 +866,7 @@ namespace fractions {
     }
 
     /**
-     * Subtracts a Z integer from this Fraction.
+     * Subtracts a T integer from this Fraction.
      *
      * Subtracts the integer c from this Fraction frac.
      * Returns the result as a new Fraction.
@@ -862,7 +875,7 @@ namespace fractions {
      * @param frac The Fraction to subtract from.
      * @return A new Fraction containing the difference.
      */
-    friend CONSTEXPR14 auto operator-(const Z &c, const Fraction &frac) -> Fraction {
+    friend CONSTEXPR14 auto operator-(const T &c, const Fraction &frac) -> Fraction {
       return c + (-frac);
     }
 
@@ -878,7 +891,7 @@ namespace fractions {
      * @return A new Fraction containing the sum.
      */
     friend CONSTEXPR14 auto operator+(int &&c, const Fraction &frac) -> Fraction {
-      return frac + Z(c);
+      return frac + T(c);
     }
 
     /**
@@ -892,7 +905,7 @@ namespace fractions {
      * @return A new Fraction containing the difference.
      */
     friend CONSTEXPR14 auto operator-(int &&c, const Fraction &frac) -> Fraction {
-      return Z(c) - frac;
+      return T(c) - frac;
     }
 
     /**
@@ -907,7 +920,7 @@ namespace fractions {
      * @return A new Fraction containing the product.
      */
     friend CONSTEXPR14 auto operator*(int &&c, const Fraction &frac) -> Fraction {
-      return frac * Z(c);
+      return frac * T(c);
     }
 
     /**
