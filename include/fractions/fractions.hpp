@@ -50,7 +50,7 @@ namespace fractions {
    * using Euclid's algorithm.
    *
    * Example:
-   * 
+   *
    * ```
    * gcd_recur(12, 8) = 4
    * gcd_recur(12, 4) = 4
@@ -74,7 +74,7 @@ namespace fractions {
    * algorithm.
    *
    * Example:
-   * 
+   *
    * ```
    * gcd(0, 8) = 8
    * gcd(12, 4) = 4
@@ -123,8 +123,8 @@ namespace fractions {
    * @tparam T
    */
   template <typename T> struct Fraction {
-    T _numer; /// numerator
-    T _denom; /// denominator
+    T _numer;  /// numerator
+    T _denom;  /// denominator
 
     /**
      * Constructs a new Fraction object from the given numerator and denominator.
@@ -216,7 +216,7 @@ namespace fractions {
     /**
      * Constructs a new Fraction object with numerator initialized to 0 and denominator initialized
      * to 1.
-     * 
+     *
      * Example:
      * ```
      * Fraction<int> f; // f = 0/1
