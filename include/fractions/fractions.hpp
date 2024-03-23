@@ -843,13 +843,12 @@ namespace fractions {
     /**
      * Increments this Fraction by 1.
      *
-     * Adds 1 to this Fraction by calling operator+=() with
-     * a T (integer) value of 1.
+     * Adds 1 to this Fraction
      *
      * @return A reference to this Fraction after incrementing.
      */
     CONSTEXPR14 auto operator++() -> Fraction & {
-      *this += 1;
+      this->_numer += this->_denom;
       return *this;
     }
 
@@ -862,7 +861,7 @@ namespace fractions {
      * @return A reference to this Fraction after decrementing.
      */
     CONSTEXPR14 auto operator--() -> Fraction & {
-      *this -= 1;
+      this->_numer -= this->_denom;
       return *this;
     }
 
