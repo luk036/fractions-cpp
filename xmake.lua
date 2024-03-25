@@ -2,7 +2,7 @@ set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest 2.4.9", {alias = "doctest"})
-add_requires("fmt 7.1.3", {alias = "fmt"})
+add_requires("fmt 9.1.0", {alias = "fmt"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
