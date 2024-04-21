@@ -177,11 +177,10 @@ namespace fractions {
      */
     CONSTEXPR14 auto reduce() -> T {
       T common = gcd(this->_numer, this->_denom);
-      if (common == 1 || common == 0) {
-        return common;
+      if (common != 1 && common != 0) {
+        this->_numer /= common;
+        this->_denom /= common;
       }
-      this->_numer /= common;
-      this->_denom /= common;
       return common;
     }
 
@@ -685,18 +684,18 @@ namespace fractions {
      * Then adds the numerators and returns a new Fraction with the result.
      * Handles zero denominators by returning a Fraction with a zero denominator.
      */
-    CONSTEXPR14 auto operator+(const Fraction &rhs) const -> Fraction {
-      if (this->_denom == rhs._denom) {
-        return Fraction(this->_numer + rhs._numer, this->_denom);
+    CONSTEXPR14 auto operator+(const Fraction &other) const -> Fraction {
+      if (this->_denom == other._denom) {
+        return Fraction(this->_numer + other._numer, this->_denom);
       }
-      const auto common = gcd(this->_denom, rhs._denom);
+      const auto common = gcd(this->_denom, other._denom);
       if (common == 0) {
-        return Fraction(rhs._denom * this->_numer + this->_denom * rhs._numer, 0);
+        return Fraction(other._denom * this->_numer + this->_denom * other._numer, 0);
       }
       const auto l = this->_denom / common;
-      const auto r = rhs._denom / common;
+      const auto r = other._denom / common;
       auto d = this->_denom * r;
-      auto n = r * this->_numer + l * rhs._numer;
+      auto n = r * this->_numer + l * other._numer;
       return Fraction(std::move(n), std::move(d));
     }
 
@@ -769,7 +768,6 @@ namespace fractions {
       auto common_d = other.reduce();
       std::swap(this->_denom, other._numer);
       this->_numer = this->_numer * other._denom + this->_denom * other._numer;
-      ;
       this->_denom *= other._denom;
       std::swap(this->_denom, common_d);
       this->reduce();

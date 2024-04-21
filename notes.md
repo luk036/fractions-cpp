@@ -1,6 +1,7 @@
 Sure, here's an example of a generic Fraction class in C++ that accepts different negative integer types, along with a corresponding test module:
 
 Fraction.h
+
 ```cpp
 #include <iostream>
 #include <type_traits>
@@ -40,7 +41,9 @@ private:
     T den_;
 };
 ```
+
 FractionTest.cpp
+
 ```
 #include <gtest/gtest.h>
 #include "Fraction.h"
@@ -98,6 +101,7 @@ TEST(FractionTest, NegativeNumbers) {
     EXPECT_EQ(sum.getDen(), 2);
 }
 ```
+
 In this implementation, we've made the `Fraction` class generic over an integer type `T`. We've also updated the constructor to take two parameters of type `T` and `T` respectively. Additionally, we've updated the `reduce` method to return a `Fraction` object with the reduced numerator and denominator.
 
 In the test module, we've written six test cases that exercise the different methods of the `Fraction` class, just like in the previous example. However, this time we've used the `int` type to create the fractions.
