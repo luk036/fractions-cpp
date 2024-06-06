@@ -982,8 +982,8 @@ namespace fractions {
      * @param[in] frac
      * @return _Stream&
      */
-    template <typename _Stream> friend auto operator<<(_Stream &os, const Fraction &frac)
-        -> _Stream & {
+    template <typename _Stream>
+    friend auto operator<<(_Stream &os, const Fraction &frac) -> _Stream & {
       os << "(" << frac.numer() << "/" << frac.denom() << ")";
       return os;
     }
