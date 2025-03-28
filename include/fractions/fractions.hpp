@@ -755,7 +755,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A new Fraction containing the difference.
          */
-        CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction { return *this -= rhs; }
+        CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction { return Fraction(*this) -= rhs; }
 
         /**
          * Adds another Fraction to this Fraction.
@@ -912,7 +912,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A reference to this fraction after subtracting.
          */
-        CONSTEXPR14 auto operator-=(const T &rhs) -> Fraction & {
+        inline auto operator-=(const T &rhs) -> Fraction & {
             if (this->_denom == 1) {
                 this->_numer -= rhs;
                 return *this;
