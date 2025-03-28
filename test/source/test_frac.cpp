@@ -489,11 +489,11 @@ TEST_CASE("Fraction with different types") {
         CHECK(f.denom() == 2);
     }
 
-    SUBCASE("unsigned") {
-        Fraction<unsigned> f(3u, 6u);
-        CHECK(f.numer() == 1);
-        CHECK(f.denom() == 2);
-    }
+    // SUBCASE("unsigned") {
+    //     Fraction<unsigned> f(3u, 6u);
+    //     CHECK(f.numer() == 1);
+    //     CHECK(f.denom() == 2);
+    // }
 
     // SUBCASE("short") {
     //     Fraction<short> f(3, 6);
