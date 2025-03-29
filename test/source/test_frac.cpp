@@ -217,7 +217,6 @@ TEST_CASE("Fraction Special Cases") {
     CHECK(-inf + posf == -inf);
 }
 
-
 TEST_CASE("abs function") {
     SUBCASE("unsigned types") {
         CHECK(abs(5u) == 5u);
@@ -416,25 +415,25 @@ TEST_CASE("Fraction arithmetic operations") {
         Fraction<int> f(1, 2);
         f += quarter;
         CHECK(f == three_quarters);
-        
+
         f -= half;
         CHECK(f == quarter);
-        
+
         f *= two;
         CHECK(f == half);
-        
+
         f /= half;
         CHECK(f == one);
-        
+
         f += 1;
         CHECK(f == two);
-        
+
         f -= 1;
         CHECK(f == one);
-        
+
         f *= 2;
         CHECK(f == two);
-        
+
         f /= 2;
         CHECK(f == one);
     }
@@ -460,7 +459,7 @@ TEST_CASE("Fraction utility methods") {
         CHECK(half == Fraction<int>(2, 1));
         half.reciprocal();
         CHECK(half == Fraction<int>(1, 2));
-        
+
         negative_half.reciprocal();
         CHECK(negative_half == Fraction<int>(-2, 1));
     }
@@ -475,7 +474,7 @@ TEST_CASE("Fraction utility methods") {
         Fraction<int> f(2, -4);
         CHECK(f.numer() == -1);
         CHECK(f.denom() == 2);
-        
+
         f = Fraction<int>(-2, -4);
         CHECK(f.numer() == 1);
         CHECK(f.denom() == 2);

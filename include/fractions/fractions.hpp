@@ -755,7 +755,9 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A new Fraction containing the difference.
          */
-        CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction { return Fraction(*this) -= rhs; }
+        CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction {
+            return Fraction(*this) -= rhs;
+        }
 
         /**
          * Adds another Fraction to this Fraction.
@@ -997,8 +999,8 @@ namespace fractions {
          * @param[in] frac
          * @return _Stream&
          */
-        template <typename _Stream> friend auto operator<<(_Stream &os, const Fraction &frac)
-            -> _Stream & {
+        template <typename _Stream>
+        friend auto operator<<(_Stream &os, const Fraction &frac) -> _Stream & {
             os << "(" << frac.numer() << "/" << frac.denom() << ")";
             return os;
         }
