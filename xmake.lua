@@ -1,7 +1,7 @@
 set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("doctest 2.4.11", {alias = "doctest"})
+add_requires("doctest", {alias = "doctest"})
 add_requires("fmt", {alias = "fmt"})
 
 if is_mode("coverage") then
@@ -25,6 +25,7 @@ target("test_frac")
     add_includedirs("include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("doctest", "fmt")
+    add_tests("default")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
