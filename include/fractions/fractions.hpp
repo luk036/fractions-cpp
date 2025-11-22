@@ -25,6 +25,20 @@ namespace fractions {
      * @tparam T The type of the input parameter.
      * @param[in] a The input value.
      * @return The absolute value of the input.
+     *
+     * ```svgbob
+     *    +---+    abs()    +---+
+     *    | 5 |  ------>    | 5 |
+     *    +---+             +---+
+     *    
+     *    +----+    abs()    +---+
+     *    | -5 |  ------>    | 5 |
+     *    +----+             +---+
+     *    
+     *    +---+    abs()    +---+
+     *    | 0 |  ------>    | 0 |
+     *    +---+             +---+
+     * ```
      */
     template <typename T> CONSTEXPR14 auto abs(const T &a) ->
         typename std::enable_if<std::is_unsigned<T>::value, T>::type {
@@ -60,6 +74,19 @@ namespace fractions {
      * @param __m The first integer.
      * @param __n The second integer.
      * @return The GCD of __m and __n.
+     *
+     * ```svgbob
+     *    gcd(48, 18) 
+     *         |
+     *         v
+     *    gcd(18, 12) 
+     *         |
+     *         v
+     *    gcd(12, 6) 
+     *         |
+     *         v
+     *    gcd(6, 0) = 6
+     * ```
      */
     template <typename _Mn> CONSTEXPR14 auto gcd_recur(const _Mn &__m, const _Mn &__n) -> _Mn {
         if (__n == 0) {
@@ -101,6 +128,18 @@ namespace fractions {
      * @param __m The first integer.
      * @param __n The second integer.
      * @return The least common multiple of __m and __n.
+     *
+     * ```svgbob
+     *    lcm(4, 6) = 12
+     *    
+     *    4 = 2^2
+     *    6 = 2^1 * 3^1
+     *    lcm = 2^2 * 3^1 = 12
+     *    
+     *    +-----+       +-----+       +--------+
+     *    |  4  |  lcm  |  6  |  =   |   12   |
+     *    +-----+       +-----+       +--------+
+     * ```
      */
     template <typename _Mn> CONSTEXPR14 auto lcm(const _Mn &__m, const _Mn &__n) -> _Mn {
         if (__m == 0 || __n == 0) {
@@ -120,6 +159,17 @@ namespace fractions {
      * f.denom() = 2;
      * ```
      * @tparam T
+     *
+     * ```svgbob
+     *    +-------+
+     *    |  a    |    =  Fraction<T>
+     *    | ---   |
+     *    |  b    |
+     *    +-------+
+     *    
+     *    a = numerator
+     *    b = denominator
+     * ```
      */
     template <typename T> struct Fraction {
         T _numer;  /// numerator
@@ -137,6 +187,17 @@ namespace fractions {
          * @param[in] numer The numerator
          * @param[in] denom The denominator
          *
+         * ```svgbob
+         *    numer = 6, denom = 8
+         *         |
+         *         v
+         *    +-------+
+         *    |  6    |     normalize()      +-------+
+         *    | ---   |  ---------------->   |  3    |
+         *    |  8    |                      | ---   |
+         *    +-------+                      |  4    |
+         *                                   +-------+
+         * ```
          */
         CONSTEXPR14 Fraction(T numer, T denom)
             : _numer{std::move(numer)}, _denom{std::move(denom)} {
@@ -146,6 +207,20 @@ namespace fractions {
         /**
          * Normalizes the fraction to a canonical form where the denominator
          * is always non-negative and co-prime with the numerator.
+         *
+         * ```svgbob
+         *    +-------+    normalize()    +-------+
+         *    |  6    |  -------------->  |  3    |
+         *    | ---   |                  | ---   |
+         *    |  8    |                  |  4    |
+         *    +-------+                  +-------+
+         *    
+         *    +-------+    normalize()    +-------+
+         *    |  -3   |  -------------->  |  3    |
+         *    | ---   |                  | ---   |
+         *    |  -4   |                  |  4    |
+         *    +-------+                  +-------+
+         * ```
          */
         CONSTEXPR14 auto normalize() -> T {
             this->keep_denom_positive();
@@ -255,6 +330,20 @@ namespace fractions {
          *
          * @param[in] rhs The right-hand fraction to compute the cross product with.
          * @return The computed cross product.
+         *
+         * ```svgbob
+         *    a     c
+         *   --- x ---  =  a*d - b*c
+         *    b     d
+         *    
+         *    +-------+     +-------+
+         *    |  a    |     |  c    |
+         *    | ---   |  x  | ---   |  =  a*d - b*c
+         *    |  b    |     |  d    |
+         *    +-------+     +-------+
+         *    
+         *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
+         * ```
          */
         CONSTEXPR14 auto cross(const Fraction &rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
@@ -518,6 +607,20 @@ namespace fractions {
         /**
          * @brief Inverts the numerator and denominator of the fraction to calculate
          * its reciprocal.
+         *
+         * ```svgbob
+         *    +-------+    reciprocal()    +-------+
+         *    |  a    |   ---------->     |  b    |
+         *    | ---   |                   | ---   |
+         *    |  b    |                   |  a    |
+         *    +-------+                   +-------+
+         *    
+         *    +-------+    reciprocal()    +-------+
+         *    |  2    |   ---------->     |  3    |
+         *    | ---   |                   | ---   |
+         *    |  3    |                   |  2    |
+         *    +-------+                   +-------+
+         * ```
          */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
@@ -533,6 +636,31 @@ namespace fractions {
          *
          * @param rhs The Fraction to multiply.
          * @return A reference to this Fraction after multiplication.
+         *
+         * ```svgbob
+         *    a     c     a*c
+         *   --- * --- = -----
+         *    b     d     b*d
+         *    
+         *    +-------+     +-------+     +---------+
+         *    |  a    |     |  c    |     |   a*c   |
+         *    | ---   |  *  | ---   |  =  |  -----  |
+         *    |  b    |     |  d    |     |   b*d   |
+         *    +-------+     +-------+     +---------+
+         *    
+         *    +-------+     +-------+     +-------+
+         *    |  1    |     |  2    |     |  2    |
+         *    | ---   |  *  | ---   |  =  | ---   |
+         *    |  2    |     |  3    |     |  6    |
+         *    +-------+     +-------+     +-------+
+         *    
+         *         normalize
+         *    +-------+ ----------> +-------+
+         *    |  2    |             |  1    |
+         *    | ---   |             | ---   |
+         *    |  6    |             |  3    |
+         *    +-------+             +-------+
+         * ```
          */
         CONSTEXPR14 auto operator*=(Fraction rhs) -> Fraction & {
             std::swap(this->_numer, rhs._numer);
@@ -611,6 +739,24 @@ namespace fractions {
          *
          * @param rhs The Fraction to divide by.
          * @return A reference to this Fraction after division.
+         *
+         * ```svgbob
+         *    a     c     a     d     a*d
+         *   --- / --- = --- * --- = -----
+         *    b     d     b     c     b*c
+         *    
+         *    +-------+     +-------+     +-------+     +---------+
+         *    |  a    |     |  c    |     |  a    |     |   a*d   |
+         *    | ---   |  /  | ---   |  =  | ---   |  *  |  -----  |
+         *    |  b    |     |  d    |     |  b    |     |   b*c   |
+         *    +-------+     +-------+     +-------+     +---------+
+         *    
+         *    +-------+     +-------+     +-------+
+         *    |  1    |     |  2    |     |  3    |
+         *    | ---   |  /  | ---   |  =  | ---   |
+         *    |  2    |     |  3    |     |  4    |
+         *    +-------+     +-------+     +-------+
+         * ```
          */
         CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction & {
             std::swap(this->_denom, rhs._numer);
@@ -691,6 +837,24 @@ namespace fractions {
          * Finds the lowest common denominator and converts both Fractions to it.
          * Then adds the numerators and returns a new Fraction with the result.
          * Handles zero denominators by returning a Fraction with a zero denominator.
+         *
+         * ```svgbob
+         *    a     c     a*d + b*c
+         *   --- + --- = ---------
+         *    b     d       b*d
+         *    
+         *    +-------+     +-------+     +-----------+
+         *    |  a    |     |  c    |     | a*d+b*c   |
+         *    | ---   |  +  | ---   |  =  | ------    |
+         *    |  b    |     |  d    |     |  b*d      |
+         *    +-------+     +-------+     +-----------+
+         *    
+         *    +-------+     +-------+     +-------+
+         *    |  1    |     |  1    |     |  5    |
+         *    | ---   |  +  | ---   |  =  | ---   |
+         *    |  2    |     |  3    |     |  6    |
+         *    +-------+     +-------+     +-------+
+         * ```
          */
         CONSTEXPR14 auto operator+(const Fraction &other) const -> Fraction {
             if (this->_denom == other._denom) {
