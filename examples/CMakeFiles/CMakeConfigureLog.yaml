@@ -166,19 +166,19 @@ events:
       - "CMakeLists.txt:6 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /data/data/com.termux/files/usr/bin/c++ 
-      Build flags: 
-      Id flags:  
-      
+      Compiler: /data/data/com.termux/files/usr/bin/c++
+      Build flags:
+      Id flags:
+
       The output was:
       0
-      
-      
+
+
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
-      
+
       The CXX compiler identification is Clang, found in:
         /data/data/com.termux/files/home/github/cpp/fractions-cpp/examples/CMakeFiles/4.1.2/CompilerIdCXX/a.out
-      
+
   -
     kind: "find-v1"
     backtrace:
@@ -698,7 +698,7 @@ events:
       cached: true
       stdout: |
         Change Dir: '/data/data/com.termux/files/home/github/cpp/fractions-cpp/examples/CMakeFiles/CMakeScratch/TryCompile-guFGsg'
-        
+
         Run Build Command(s): /data/data/com.termux/files/usr/bin/cmake -E env VERBOSE=1 /data/data/com.termux/files/usr/bin/make -f Makefile cmTC_c0cb0/fast
         /data/data/com.termux/files/usr/bin/make  -f CMakeFiles/cmTC_c0cb0.dir/build.make CMakeFiles/cmTC_c0cb0.dir/build
         make[1]: Entering directory '/data/data/com.termux/files/home/github/cpp/fractions-cpp/examples/CMakeFiles/CMakeScratch/TryCompile-guFGsg'
@@ -729,7 +729,7 @@ events:
          "/data/data/com.termux/files/usr/bin/ld.lld" --sysroot=/data/data/com.termux/files/usr/bin/../.. -EL --fix-cortex-a53-843419 -z now -z relro -z max-page-size=16384 --no-rosegment --hash-style=gnu -rpath=/data/data/com.termux/files/usr/bin/../../usr/lib --eh-frame-hdr -m aarch64linux -pie -dynamic-linker /system/bin/linker64 -o cmTC_c0cb0 /data/data/com.termux/files/usr/bin/../../usr/lib/crtbegin_dynamic.o -L/data/data/com.termux/files/usr/bin/../../usr/lib -L/system/lib64 CMakeFiles/cmTC_c0cb0.dir/CMakeCXXCompilerABI.cpp.o -lc++_shared /data/data/com.termux/files/usr/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl -lm -lc /data/data/com.termux/files/usr/lib/clang/21/lib/linux/libclang_rt.builtins-aarch64-android.a -l:libunwind.a -ldl /data/data/com.termux/files/usr/bin/../../usr/lib/crtend_android.o
         /data/data/com.termux/files/usr/bin/c++ -O2 -g -DNDEBUG  -v CMakeFiles/cmTC_c0cb0.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_c0cb0
         make[1]: Leaving directory '/data/data/com.termux/files/home/github/cpp/fractions-cpp/examples/CMakeFiles/CMakeScratch/TryCompile-guFGsg'
-        
+
       exitCode: 0
   -
     kind: "message-v1"
@@ -751,8 +751,8 @@ events:
         collapse include dir [/data/data/com.termux/files/usr/bin/../../usr/include/aarch64-linux-android] ==> [/data/data/com.termux/files/usr/include/aarch64-linux-android]
         collapse include dir [/data/data/com.termux/files/usr/bin/../../usr/include] ==> [/data/data/com.termux/files/usr/include]
         implicit include dirs: [/data/data/com.termux/files/usr/include/c++/v1;/data/data/com.termux/files/usr/lib/clang/21/include;/data/data/com.termux/files/usr/include/aarch64-linux-android;/data/data/com.termux/files/usr/include]
-      
-      
+
+
   -
     kind: "message-v1"
     backtrace:
@@ -836,8 +836,8 @@ events:
         implicit objs: [/data/data/com.termux/files/usr/lib/crtbegin_dynamic.o;/data/data/com.termux/files/usr/lib/crtend_android.o]
         implicit dirs: [/data/data/com.termux/files/usr/lib;/system/lib64]
         implicit fwks: []
-      
-      
+
+
   -
     kind: "message-v1"
     backtrace:
