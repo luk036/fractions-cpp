@@ -55,7 +55,7 @@ namespace fractions {
      */
     template <typename T> CONSTEXPR14 auto abs(const T &a) ->
         typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
-        return (a < 0) ? -a : a;
+        return (a < 0) ? static_cast<T>(-a) : a;
     }
 
     /**
@@ -234,8 +234,8 @@ namespace fractions {
          */
         CONSTEXPR14 void keep_denom_positive() {
             if (this->_denom < 0) {
-                this->_numer = -this->_numer;
-                this->_denom = -this->_denom;
+                this->_numer = static_cast<T>(-this->_numer);
+                this->_denom = static_cast<T>(-this->_denom);
             }
         }
 
