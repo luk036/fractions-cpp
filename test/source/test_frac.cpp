@@ -175,13 +175,13 @@ TEST_CASE("Fraction<int>::operator* with zero numerator and non-zero denominator
 }
 
 TEST_CASE("Fraction") {
-    const auto a = 3U;
-    const auto b = 4U;
-    const auto c = 5U;
-    const auto d = 6U;
+    const auto val_a = 3U;
+    const auto val_b = 4U;
+    const auto val_c = 5U;
+    const auto val_d = 6U;
 
-    const auto p = Fraction<int>{a, b};
-    const auto q = Fraction<int>{c, d};
+    const auto p = Fraction<int>{val_a, val_b};
+    const auto q = Fraction<int>{val_c, val_d};
 
     CHECK(p == Fraction<int>(30U, 40U));
     CHECK(p + q == Fraction<int>(19U, 12U));

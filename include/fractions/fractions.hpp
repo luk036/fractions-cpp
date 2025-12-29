@@ -40,9 +40,9 @@ namespace fractions {
      *    +---+             +---+
      * ```
      */
-    template <typename T> CONSTEXPR14 auto abs(const T &a) ->
+    template <typename T> CONSTEXPR14 auto abs(const T &val_a) ->
         typename std::enable_if<std::is_unsigned<T>::value, T>::type {
-        return a;
+        return val_a;
     }
 
     /**
@@ -50,12 +50,12 @@ namespace fractions {
      * Returns the input if it is positive, otherwise returns the negation of the input.
      *
      * @tparam T The type of the input parameter.
-     * @param[in] a The input value.
+     * @param[in] val_a The input value.
      * @return The absolute value of the input.
      */
-    template <typename T> CONSTEXPR14 auto abs(const T &a) ->
+    template <typename T> CONSTEXPR14 auto abs(const T &val_a) ->
         typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
-        return (a < 0) ? static_cast<T>(-a) : a;
+        return (val_a < 0) ? static_cast<T>(-val_a) : val_a;
     }
 
     /**
@@ -864,11 +864,11 @@ namespace fractions {
             if (common == 0) {
                 return Fraction(other._denom * this->_numer + this->_denom * other._numer, 0);
             }
-            const auto l = this->_denom / common;
-            const auto r = other._denom / common;
-            auto d = this->_denom * r;
-            auto n = r * this->_numer + l * other._numer;
-            return Fraction(std::move(n), std::move(d));
+            const auto left = this->_denom / common;
+            const auto right = other._denom / common;
+            auto denom = this->_denom * right;
+            auto numer = right * this->_numer + left * other._numer;
+            return Fraction(std::move(numer), std::move(denom));
         }
 
         /**
@@ -1096,15 +1096,15 @@ namespace fractions {
         /**
          * Subtracts a T integer from this Fraction.
          *
-         * Subtracts the integer c from this Fraction frac.
+         * Subtracts the integer val from this Fraction frac.
          * Returns the result as a new Fraction.
          *
-         * @param c The integer to subtract.
+         * @param val The integer to subtract.
          * @param frac The Fraction to subtract from.
          * @return A new Fraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(const T &c, const Fraction &frac) -> Fraction {
-            return c + (-frac);
+        friend CONSTEXPR14 auto operator-(const T &val, const Fraction &frac) -> Fraction {
+            return val + (-frac);
         }
 
         /**
@@ -1114,12 +1114,12 @@ namespace fractions {
          * converting the integer to a Fraction and delegating to the
          * Fraction += operator.
          *
-         * @param c The integer to add.
+         * @param val The integer to add.
          * @param frac The Fraction to add to.
          * @return A new Fraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(int &&c, const Fraction &frac) -> Fraction {
-            return frac + c;
+        friend CONSTEXPR14 auto operator+(int &&val, const Fraction &frac) -> Fraction {
+            return frac + val;
         }
 
         /**
@@ -1128,12 +1128,12 @@ namespace fractions {
          * This allows subtracting an integer from a Fraction by first
          * converting the integer to a Fraction.
          *
-         * @param c The integer to subtract.
+         * @param val The integer to subtract.
          * @param frac The Fraction to subtract from.
          * @return A new Fraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(int &&c, const Fraction &frac) -> Fraction {
-            return c - frac;
+        friend CONSTEXPR14 auto operator-(int &&val, const Fraction &frac) -> Fraction {
+            return val - frac;
         }
 
         /**
@@ -1143,12 +1143,12 @@ namespace fractions {
          * delegates to the Fraction *= operator to perform the
          * multiplication.
          *
-         * @param c The integer value to multiply.
+         * @param val The integer value to multiply.
          * @param frac The Fraction to multiply.
          * @return A new Fraction containing the product.
          */
-        friend CONSTEXPR14 auto operator*(int &&c, const Fraction &frac) -> Fraction {
-            return frac * c;
+        friend CONSTEXPR14 auto operator*(int &&val, const Fraction &frac) -> Fraction {
+            return frac * val;
         }
 
         /**
@@ -1162,10 +1162,10 @@ namespace fractions {
          * @param[in] frac
          * @return _Stream&
          */
-        template <typename _Stream> friend auto operator<<(_Stream &os, const Fraction &frac)
+        template <typename _Stream> friend auto operator<<(_Stream &out_stream, const Fraction &frac)
             -> _Stream & {
-            os << "(" << frac.numer() << "/" << frac.denom() << ")";
-            return os;
+            out_stream << "(" << frac.numer() << "/" << frac.denom() << ")";
+            return out_stream;
         }
     };
 }  // namespace fractions

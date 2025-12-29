@@ -47,17 +47,17 @@ TEST_CASE("Fraction with mixed types") {
 }
 
 TEST_CASE("Stream insertion") {
-    Fraction<int> f(3, 4);
+    Fraction<int> frac(3, 4);
     std::stringstream ss;
-    ss << f;
+    ss << frac;
     CHECK(ss.str() == "(3/4)");
 }
 
 
 
 TEST_CASE("Large numbers") {
-    Fraction<long long> f1(1000000000000LL, 2000000000000LL);
-    f1.normalize();
-    CHECK(f1.numer() == 1);
-    CHECK(f1.denom() == 2);
+    Fraction<long long> frac1(1000000000000LL, 2000000000000LL);
+    frac1.normalize();
+    CHECK(frac1.numer() == 1);
+    CHECK(frac1.denom() == 2);
 }
