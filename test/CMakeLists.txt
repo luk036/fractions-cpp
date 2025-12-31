@@ -17,6 +17,12 @@ include(../cmake/CPM.cmake)
 
 CPMAddPackage("gh:doctest/doctest@2.4.11")
 CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
+CPMAddPackage(
+  NAME RapidCheck
+  GITHUB_REPOSITORY emil-e/rapidcheck
+  GIT_TAG master
+  OPTIONS "RAPIDCHECK_BUILD_EXAMPLES=OFF" "RAPIDCHECK_BUILD_TESTS=OFF"
+)
 
 if(TEST_INSTALLED_VERSION)
   find_package(Fractions REQUIRED)
@@ -28,7 +34,8 @@ endif()
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} doctest::doctest Fractions::Fractions)
+target_link_libraries(${PROJECT_NAME} doctest::doctest Fractions::Fractions rapidcheck)
+target_include_directories(${PROJECT_NAME} PRIVATE ${RapidCheck_SOURCE_DIR}/include)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 
 # enable compiler warnings

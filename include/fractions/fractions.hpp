@@ -668,6 +668,7 @@ namespace fractions {
             rhs.reduce();
             this->_numer *= rhs._numer;
             this->_denom *= rhs._denom;
+            this->normalize();
             return *this;
         }
 
@@ -699,6 +700,7 @@ namespace fractions {
             std::swap(this->_numer, rhs);
             this->reduce();
             this->_numer *= rhs;
+            this->normalize();
             return *this;
         }
 
@@ -759,11 +761,18 @@ namespace fractions {
          * ```
          */
         CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction & {
+            // Special case: 0/0 = 0/1 (zero divided by zero is zero)
+            if (this->_numer == 0 && rhs._numer == 0) {
+                this->_numer = 0;
+                this->_denom = 1;
+                return *this;
+            }
             std::swap(this->_denom, rhs._numer);
             this->normalize();
             rhs.reduce();
             this->_numer *= rhs._denom;
             this->_denom *= rhs._numer;
+            this->normalize();
             return *this;
         }
 
@@ -858,17 +867,23 @@ namespace fractions {
          */
         CONSTEXPR14 auto operator+(const Fraction &other) const -> Fraction {
             if (this->_denom == other._denom) {
-                return Fraction(this->_numer + other._numer, this->_denom);
+                Fraction result(this->_numer + other._numer, this->_denom);
+                result.normalize();
+                return result;
             }
             const auto common = gcd(this->_denom, other._denom);
             if (common == 0) {
-                return Fraction(other._denom * this->_numer + this->_denom * other._numer, 0);
+                Fraction result(other._denom * this->_numer + this->_denom * other._numer, 0);
+                result.normalize();
+                return result;
             }
             const auto left = this->_denom / common;
             const auto right = other._denom / common;
             auto denom = this->_denom * right;
             auto numer = right * this->_numer + left * other._numer;
-            return Fraction(std::move(numer), std::move(denom));
+            Fraction result(std::move(numer), std::move(denom));
+            result.normalize();
+            return result;
         }
 
         /**

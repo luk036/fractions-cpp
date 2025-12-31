@@ -1,9 +1,11 @@
 set_languages("c++20")
+add_repositories("local-repo", "$(projectdir)/packages")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt", {alias = "fmt"})
 add_requires("spdlog", {alias = "spdlog"})
+
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
@@ -25,7 +27,12 @@ target("test_frac")
     set_kind("binary")
     add_includedirs("include", {public = true})
     add_files("test/source/*.cpp")
+    add_files("packages/rapidcheck/src/*.cpp")
+    add_files("packages/rapidcheck/src/detail/*.cpp")
+    add_files("packages/rapidcheck/src/gen/*.cpp")
+    add_files("packages/rapidcheck/src/gen/detail/*.cpp")
     add_packages("doctest", "fmt", "spdlog")
+    add_includedirs("packages/rapidcheck/include", {public = true})
     add_tests("default")
 
 target("spdlog_example")
