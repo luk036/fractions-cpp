@@ -15,8 +15,12 @@ if is_plat("linux") then
     set_warnings("all")
     add_cxflags("-Wconversion", {force = true})
     add_cxflags("-Wno-unused-command-line-argument", {force = true})
-    -- add_sysincludedirs(os.getenv("PREFIX") .. "/include/c++/v1", {public = true})
-    -- add_sysincludedirs(os.getenv("PREFIX") .. "/include", {public = true})
+    -- Check if we're on Termux/Android
+    local termux_prefix = os.getenv("PREFIX")
+    if termux_prefix then
+        add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
+        add_sysincludedirs(termux_prefix .. "/include", {public = true})
+    end
 elseif is_plat("windows") then
     add_cxflags("/W4 /WX /wd4819 /wd4996 /wd4530", {force = true})
 end
@@ -26,13 +30,11 @@ end
 target("test_frac")
     set_kind("binary")
     add_includedirs("include", {public = true})
-    add_files("test/source/*.cpp")
-    add_files("packages/rapidcheck/src/*.cpp")
-    add_files("packages/rapidcheck/src/detail/*.cpp")
-    add_files("packages/rapidcheck/src/gen/*.cpp")
-    add_files("packages/rapidcheck/src/gen/detail/*.cpp")
+    add_files("test/source/main.cpp")
+    add_files("test/source/test_frac.cpp")
+    add_files("test/source/test_frac_extended.cpp")
+    add_files("test/source/test_frac_stress.cpp")
     add_packages("doctest", "fmt", "spdlog")
-    add_includedirs("packages/rapidcheck/include", {public = true})
     add_tests("default")
 
 target("spdlog_example")

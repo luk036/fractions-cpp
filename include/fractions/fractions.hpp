@@ -763,7 +763,7 @@ namespace fractions {
         CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction & {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
             if (this->_numer == 0 && rhs._numer == 0) {
-                this->_numer = 0;
+                // this->_numer = 0;
                 this->_denom = 1;
                 return *this;
             }
