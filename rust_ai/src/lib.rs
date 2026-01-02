@@ -4,18 +4,10 @@ use std::hash::{Hash, Hasher};
 use std::ops::*;
 use std::str::FromStr;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum SpecialValue {
-    PositiveInfinity,
-    NegativeInfinity,
-    NaN,
-}
-
 #[derive(Debug, Clone, Copy)]
 pub struct Fraction {
     numerator: i128,
     denominator: i128,
-    special: Option<SpecialValue>,
 }
 
 impl PartialEq for Fraction {
@@ -27,7 +19,7 @@ impl PartialEq for Fraction {
 
         // Both infinities with same sign are equal
         if self.is_infinite() && other.is_infinite() {
-            return self.special == other.special;
+            return self.numerator == other.numerator;
         }
 
         // If one is infinite and the other is not, they're not equal
@@ -48,20 +40,17 @@ impl Fraction {
             if numerator == 0 {
                 Fraction {
                     numerator: 0,
-                    denominator: 1,
-                    special: Some(SpecialValue::NaN),
+                    denominator: 0,
                 }
             } else if numerator > 0 {
                 Fraction {
-                    numerator: 0,
-                    denominator: 1,
-                    special: Some(SpecialValue::PositiveInfinity),
+                    numerator: 1,
+                    denominator: 0,
                 }
             } else {
                 Fraction {
-                    numerator: 0,
-                    denominator: 1,
-                    special: Some(SpecialValue::NegativeInfinity),
+                    numerator: -1,
+                    denominator: 0,
                 }
             }
         } else {
@@ -69,7 +58,6 @@ impl Fraction {
             Fraction {
                 numerator: num,
                 denominator: den,
-                special: None,
             }
         }
     }
@@ -78,43 +66,33 @@ impl Fraction {
         Fraction {
             numerator: n,
             denominator: 1,
-            special: None,
         }
     }
 
     pub fn infinity(sign: bool) -> Self {
         Fraction {
-            numerator: 0,
-            denominator: 1,
-            special: if sign {
-                Some(SpecialValue::PositiveInfinity)
-            } else {
-                Some(SpecialValue::NegativeInfinity)
-            },
+            numerator: if sign { 1 } else { -1 },
+            denominator: 0,
         }
     }
 
     pub fn nan() -> Self {
         Fraction {
             numerator: 0,
-            denominator: 1,
-            special: Some(SpecialValue::NaN),
+            denominator: 0,
         }
     }
 
     pub fn is_finite(&self) -> bool {
-        self.special.is_none()
+        self.denominator != 0
     }
 
     pub fn is_infinite(&self) -> bool {
-        matches!(
-            self.special,
-            Some(SpecialValue::PositiveInfinity) | Some(SpecialValue::NegativeInfinity)
-        )
+        self.denominator == 0 && self.numerator != 0
     }
 
     pub fn is_nan(&self) -> bool {
-        matches!(self.special, Some(SpecialValue::NaN))
+        self.denominator == 0 && self.numerator == 0
     }
 
     pub fn from_float(f: f64) -> Self {
@@ -145,7 +123,6 @@ impl Fraction {
         Fraction {
             numerator: num,
             denominator: den,
-            special: None,
         }
     }
 
@@ -250,13 +227,11 @@ impl Fraction {
             Ok(Fraction {
                 numerator: p1,
                 denominator: q1,
-                special: None,
             })
         } else {
             Ok(Fraction {
                 numerator: p0 + k * p1,
                 denominator: q0 + k * q1,
-                special: None,
             })
         }
     }
@@ -281,7 +256,7 @@ impl Fraction {
         let g = gcd(da, db);
         if g == 1 {
             let (num, den) = Self::reduce(na * db + da * nb, da * db);
-            return Fraction { numerator: num, denominator: den, special: None };
+            return Fraction { numerator: num, denominator: den };
         }
 
         let s = da / g;
@@ -290,10 +265,10 @@ impl Fraction {
 
         if g2 == 1 {
             let (num, den) = Self::reduce(t, s * db);
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         } else {
             let (num, den) = Self::reduce(t / g2, s * (db / g2));
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         }
     }
 
@@ -304,11 +279,7 @@ impl Fraction {
         }
         if self.is_infinite() && other.is_infinite() {
             // Same sign infinities cancel to NaN
-            if (self.special == Some(SpecialValue::PositiveInfinity)
-                && other.special == Some(SpecialValue::PositiveInfinity))
-                || (self.special == Some(SpecialValue::NegativeInfinity)
-                    && other.special == Some(SpecialValue::NegativeInfinity))
-            {
+            if self.numerator == other.numerator {
                 return Self::nan();
             }
             // Different signs keep the larger infinity
@@ -326,7 +297,7 @@ impl Fraction {
         let g = gcd(da, db);
         if g == 1 {
             let (num, den) = Self::reduce(na * db - da * nb, da * db);
-            return Fraction { numerator: num, denominator: den, special: None };
+            return Fraction { numerator: num, denominator: den };
         }
 
         let s = da / g;
@@ -335,10 +306,10 @@ impl Fraction {
 
         if g2 == 1 {
             let (num, den) = Self::reduce(t, s * db);
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         } else {
             let (num, den) = Self::reduce(t / g2, s * (db / g2));
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         }
     }
 
@@ -354,9 +325,9 @@ impl Fraction {
             }
             // Determine sign
             let sign_positive = if self.is_infinite() {
-                self.special == Some(SpecialValue::PositiveInfinity)
+                self.numerator > 0
             } else {
-                other.special == Some(SpecialValue::PositiveInfinity)
+                other.numerator > 0
             };
             let other_sign_positive = if self.is_infinite() {
                 other.numerator >= 0
@@ -384,7 +355,7 @@ impl Fraction {
         }
 
         let (num, den) = Self::reduce(na * nb, db * da);
-        Fraction { numerator: num, denominator: den, special: None }
+        Fraction { numerator: num, denominator: den }
     }
 
     fn div(self, other: Fraction) -> Fraction {
@@ -437,7 +408,6 @@ impl Fraction {
         Fraction {
             numerator: reduced_num,
             denominator: reduced_den,
-            special: None,
         }
     }
 
@@ -461,7 +431,7 @@ impl Fraction {
                 self.numerator.pow(exp as u32),
                 self.denominator.pow(exp as u32),
             );
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         } else {
             if self.numerator == 0 {
                 return Self::infinity(true); // 0^(-n) = infinity
@@ -470,7 +440,7 @@ impl Fraction {
                 self.denominator.pow((-exp) as u32),
                 self.numerator.pow((-exp) as u32),
             );
-            Fraction { numerator: num, denominator: den, special: None }
+            Fraction { numerator: num, denominator: den }
         }
     }
 }
@@ -590,12 +560,11 @@ impl Neg for Fraction {
             return Self::nan();
         }
         if self.is_infinite() {
-            return Self::infinity(self.special != Some(SpecialValue::PositiveInfinity));
+            return Self::infinity(self.numerator < 0);
         }
         Fraction {
             numerator: -self.numerator,
             denominator: self.denominator,
-            special: None,
         }
     }
 }
@@ -609,24 +578,24 @@ impl PartialOrd for Fraction {
 
         // Handle infinities
         if self.is_infinite() && other.is_infinite() {
-            if self.special == other.special {
+            if self.numerator == other.numerator {
                 return Some(Ordering::Equal);
             }
-            return Some(if self.special == Some(SpecialValue::PositiveInfinity) {
+            return Some(if self.numerator > other.numerator {
                 Ordering::Greater
             } else {
                 Ordering::Less
             });
         }
         if self.is_infinite() {
-            return Some(if self.special == Some(SpecialValue::PositiveInfinity) {
+            return Some(if self.numerator > 0 {
                 Ordering::Greater
             } else {
                 Ordering::Less
             });
         }
         if other.is_infinite() {
-            return Some(if other.special == Some(SpecialValue::PositiveInfinity) {
+            return Some(if other.numerator > 0 {
                 Ordering::Less
             } else {
                 Ordering::Greater
@@ -648,28 +617,23 @@ impl Hash for Fraction {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.numerator.hash(state);
         self.denominator.hash(state);
-        match self.special {
-            Some(SpecialValue::PositiveInfinity) => 1.hash(state),
-            Some(SpecialValue::NegativeInfinity) => 2.hash(state),
-            Some(SpecialValue::NaN) => 3.hash(state),
-            None => 0.hash(state),
-        }
     }
 }
 
 impl fmt::Display for Fraction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self.special {
-            Some(SpecialValue::PositiveInfinity) => write!(f, "inf"),
-            Some(SpecialValue::NegativeInfinity) => write!(f, "-inf"),
-            Some(SpecialValue::NaN) => write!(f, "nan"),
-            None => {
-                if self.denominator == 1 {
-                    write!(f, "{}", self.numerator)
-                } else {
-                    write!(f, "{}/{}", self.numerator, self.denominator)
-                }
+        if self.denominator == 0 {
+            if self.numerator == 0 {
+                write!(f, "nan")
+            } else if self.numerator > 0 {
+                write!(f, "inf")
+            } else {
+                write!(f, "-inf")
             }
+        } else if self.denominator == 1 {
+            write!(f, "{}", self.numerator)
+        } else {
+            write!(f, "{}/{}", self.numerator, self.denominator)
         }
     }
 }
