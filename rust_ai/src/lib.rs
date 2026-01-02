@@ -109,7 +109,7 @@ impl Fraction {
 
         let numerator = sign * mantissa;
         let denominator = if exponent >= 0 {
-            1i128 << exponent
+            1i128.checked_shl(exponent as u32).unwrap_or(i128::MAX)
         } else {
             1i128
         };
@@ -117,7 +117,7 @@ impl Fraction {
         let (num, den) = if exponent >= 0 {
             (numerator, denominator)
         } else {
-            (numerator, 1i128 << (-exponent))
+            (numerator, 1i128.checked_shl((-exponent) as u32).unwrap_or(i128::MAX))
         };
 
         Fraction {
@@ -875,5 +875,259 @@ mod tests {
 
         let nan = Fraction::from_str("nan").unwrap();
         assert!(nan.is_nan());
+    }
+}
+
+#[cfg(test)]
+mod proptests {
+    use super::*;
+    use proptest::prelude::*;
+
+    proptest! {
+        #[test]
+        fn prop_addition_commutative(a in -1000i128..1000, b in -1000i128..1000) {
+            if b != 0 {
+                let f1 = Fraction::new(a, b);
+                let f2 = Fraction::new(b, a.abs() + 1);
+                prop_assert_eq!(f1 + f2, f2 + f1);
+            }
+        }
+
+        #[test]
+        fn prop_addition_associative(
+            a in -100i128..100,
+            b in -100i128..100,
+            c in -100i128..100,
+            d in -100i128..100,
+            e in 1i128..100,
+            f in 1i128..100,
+            g in 1i128..100
+        ) {
+            let f1 = Fraction::new(a, e);
+            let f2 = Fraction::new(b, f);
+            let f3 = Fraction::new(c, g);
+            prop_assert_eq!((f1 + f2) + f3, f1 + (f2 + f3));
+        }
+
+        #[test]
+        fn prop_multiplication_commutative(a in -1000i128..1000, b in -1000i128..1000) {
+            if b != 0 && a != 0 {
+                let f1 = Fraction::new(a, b);
+                let f2 = Fraction::new(b, a.abs() + 1);
+                prop_assert_eq!(f1 * f2, f2 * f1);
+            }
+        }
+
+        #[test]
+        fn prop_multiplication_associative(
+            a in -100i128..100,
+            b in -100i128..100,
+            c in -100i128..100,
+            d in -100i128..100,
+            e in 1i128..100,
+            f in 1i128..100,
+            g in 1i128..100
+        ) {
+            let f1 = Fraction::new(a, e);
+            let f2 = Fraction::new(b, f);
+            let f3 = Fraction::new(c, g);
+            prop_assert_eq!((f1 * f2) * f3, f1 * (f2 * f3));
+        }
+
+        #[test]
+        fn prop_distributive_law(
+            a in -100i128..100,
+            b in -100i128..100,
+            c in -100i128..100,
+            d in -100i128..100,
+            e in -100i128..100,
+            f in -100i128..100,
+            g in 1i128..100,
+            h in 1i128..100,
+            i in 1i128..100
+        ) {
+            let f1 = Fraction::new(a, g);
+            let f2 = Fraction::new(b, h);
+            let f3 = Fraction::new(c, i);
+            prop_assert_eq!(f1 * (f2 + f3), f1 * f2 + f1 * f3);
+        }
+
+        #[test]
+        fn prop_additive_identity(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            let zero = Fraction::from_integer(0);
+            prop_assert_eq!(f + zero, f);
+            prop_assert_eq!(zero + f, f);
+        }
+
+        #[test]
+        fn prop_multiplicative_identity(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            let one = Fraction::from_integer(1);
+            prop_assert_eq!(f * one, f);
+            prop_assert_eq!(one * f, f);
+        }
+
+        #[test]
+        fn prop_additive_inverse(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            let zero = Fraction::from_integer(0);
+            prop_assert_eq!(f + (-f), zero);
+        }
+
+        #[test]
+        fn prop_multiplicative_inverse(a in -1000i128..1000, b in 1i128..1000) {
+            if a != 0 {
+                let f = Fraction::new(a, b);
+                let one = Fraction::from_integer(1);
+                prop_assert_eq!(f * (Fraction::from_integer(1) / f), one);
+            }
+        }
+
+        #[test]
+        fn prop_subtraction_definition(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
+            let f1 = Fraction::new(a, b);
+            let f2 = Fraction::new(c, d);
+            prop_assert_eq!(f1 - f2, f1 + (-f2));
+        }
+
+        #[test]
+        fn prop_division_definition(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
+            if c != 0 {
+                let f1 = Fraction::new(a, b);
+                let f2 = Fraction::new(c, d);
+                prop_assert_eq!(f1 / f2, f1 * (Fraction::from_integer(1) / f2));
+            }
+        }
+
+        #[test]
+        fn prop_reflexive_equality(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            prop_assert!(f == f);
+        }
+
+        #[test]
+        fn prop_symmetric_equality(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
+            let f1 = Fraction::new(a, b);
+            let f2 = Fraction::new(c, d);
+            if f1 == f2 {
+                prop_assert!(f2 == f1);
+            }
+        }
+
+        #[test]
+        fn prop_transitive_equality(
+            a in -100i128..100, b in 1i128..100,
+            c in -100i128..100, d in 1i128..100,
+            e in -100i128..100, f in 1i128..100
+        ) {
+            let f1 = Fraction::new(a, b);
+            let f2 = Fraction::new(c, d);
+            let f3 = Fraction::new(e, f);
+            if f1 == f2 && f2 == f3 {
+                prop_assert!(f1 == f3);
+            }
+        }
+
+        #[test]
+        fn prop_comparison_transitivity(
+            a in -100i128..100, b in 1i128..100,
+            c in -100i128..100, d in 1i128..100,
+            e in -100i128..100, f in 1i128..100
+        ) {
+            let f1 = Fraction::new(a, b);
+            let f2 = Fraction::new(c, d);
+            let f3 = Fraction::new(e, f);
+            if f1 < f2 && f2 < f3 {
+                prop_assert!(f1 < f3);
+            }
+        }
+
+        #[test]
+        fn prop_comparison_totality(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
+            let f1 = Fraction::new(a, b);
+            let f2 = Fraction::new(c, d);
+            if !f1.is_nan() && !f2.is_nan() {
+                prop_assert!(f1 == f2 || f1 < f2 || f1 > f2);
+            }
+        }
+
+        #[test]
+        fn prop_pow_positive_exponent(a in -10i128..10, b in 1i128..10, exp in 0u8..5) {
+            if a != 0 {
+                let f = Fraction::new(a, b);
+                let result = f.pow(exp as i32);
+                let expected = (0..exp).fold(Fraction::from_integer(1), |acc, _| acc * f);
+                prop_assert_eq!(result, expected);
+            }
+        }
+
+        #[test]
+        fn prop_pow_negative_exponent(a in -10i128..10, b in 1i128..10, exp in 1u8..5) {
+            if a != 0 {
+                let f = Fraction::new(a, b);
+                let result = f.pow(-(exp as i32));
+                let reciprocal = Fraction::from_integer(1) / f;
+                let expected = (0..exp).fold(Fraction::from_integer(1), |acc, _| acc * reciprocal);
+                prop_assert_eq!(result, expected);
+            }
+        }
+
+        #[test]
+        fn prop_pow_zero_exponent(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            prop_assert_eq!(f.pow(0), Fraction::from_integer(1));
+        }
+
+        #[test]
+        fn prop_negation_twice(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            prop_assert_eq!(-(-f), f);
+        }
+
+        #[test]
+        fn prop_integer_multiplication(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
+            let f = Fraction::new(a, b);
+            let f_int = Fraction::from_integer(n);
+            prop_assert_eq!(f * n, f * f_int);
+            prop_assert_eq!(n * f, f_int * f);
+        }
+
+        #[test]
+        fn prop_integer_addition(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
+            let f = Fraction::new(a, b);
+            let f_int = Fraction::from_integer(n);
+            prop_assert_eq!(f + n, f + f_int);
+            prop_assert_eq!(n + f, f_int + f);
+        }
+
+        #[test]
+        fn prop_integer_subtraction(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
+            let f = Fraction::new(a, b);
+            let f_int = Fraction::from_integer(n);
+            prop_assert_eq!(f - n, f - f_int);
+            prop_assert_eq!(n - f, f_int - f);
+        }
+
+        #[test]
+        fn prop_integer_division(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
+            if n != 0 {
+                let f = Fraction::new(a, b);
+                let f_int = Fraction::from_integer(n);
+                prop_assert_eq!(f / n, f / f_int);
+                prop_assert_eq!(n / f, f_int / f);
+            }
+        }
+
+        #[test]
+        fn prop_is_integer_consistency(a in -1000i128..1000, b in 1i128..1000) {
+            let f = Fraction::new(a, b);
+            if f.is_integer() {
+                prop_assert_eq!(f.denominator(), 1);
+            }
+            if f.denominator() == 1 {
+                prop_assert!(f.is_integer());
+            }
+        }
     }
 }
