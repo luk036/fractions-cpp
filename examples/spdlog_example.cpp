@@ -14,8 +14,8 @@ int main() {
     console->error("Error message");
 
     // Test fractions with logging
-    fractions::Fraction<int> f1(3, 4);
-    fractions::Fraction<int> f2(2, 5);
+    fractions::FastFraction<int> f1(3, 4);
+    fractions::FastFraction<int> f2(2, 5);
 
     console->info("Working with fractions:");
     console->info("f1 = {}/{}", f1._numer, f1._denom);

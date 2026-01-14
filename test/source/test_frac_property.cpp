@@ -8,10 +8,10 @@
 
 using namespace fractions;
 
-// Property-based tests for Fraction class
+// Property-based tests for FastFraction class
 // These tests verify mathematical properties that should hold for all valid inputs
 
-TEST_CASE("Property-based tests for Fraction operations") {
+TEST_CASE("Property-based tests for FastFraction operations") {
     
     SUBCASE("Addition commutativity: a + b == b + a") {
         rc::check("fraction addition is commutative", []() {
@@ -20,8 +20,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto b_num = *rc::gen::inRange(-100, 100);
             const auto b_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
             
             RC_ASSERT(a + b == b + a);
         });
@@ -36,9 +36,9 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto c_num = *rc::gen::inRange(-50, 50);
             const auto c_den = *rc::gen::inRange(1, 50);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
-            Fraction<int> c(c_num, c_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
+            FastFraction<int> c(c_num, c_den);
             
             RC_ASSERT((a + b) + c == a + (b + c));
         });
@@ -49,8 +49,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> zero(0, 1);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> zero(0, 1);
             
             RC_ASSERT(a + zero == a);
             RC_ASSERT(zero + a == a);
@@ -64,8 +64,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto b_num = *rc::gen::inRange(-50, 50);
             const auto b_den = *rc::gen::inRange(1, 50);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
             
             RC_ASSERT(a * b == b * a);
         });
@@ -80,9 +80,9 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto c_num = *rc::gen::inRange(-20, 20);
             const auto c_den = *rc::gen::inRange(1, 20);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
-            Fraction<int> c(c_num, c_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
+            FastFraction<int> c(c_num, c_den);
             
             RC_ASSERT((a * b) * c == a * (b * c));
         });
@@ -93,8 +93,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> one(1, 1);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> one(1, 1);
             
             RC_ASSERT(a * one == a);
             RC_ASSERT(one * a == a);
@@ -110,9 +110,9 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto c_num = *rc::gen::inRange(-30, 30);
             const auto c_den = *rc::gen::inRange(1, 30);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
-            Fraction<int> c(c_num, c_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
+            FastFraction<int> c(c_num, c_den);
             
             RC_ASSERT(a * (b + c) == a * b + a * c);
         });
@@ -125,8 +125,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto b_num = *rc::gen::inRange(-100, 100);
             const auto b_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
             
             RC_ASSERT(a - b == a + (-b));
         });
@@ -139,9 +139,9 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto b_num = *rc::gen::inRange(-100, -1);  // Non-zero numerator
             const auto b_den = *rc::gen::inRange(1, 100);   // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
-            Fraction<int> b_recip = b;
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
+            FastFraction<int> b_recip = b;
             b_recip.reciprocal();
             
             RC_ASSERT(a / b == a * b_recip);
@@ -153,7 +153,7 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
+            FastFraction<int> a(a_num, a_den);
             
             RC_ASSERT(-(-a) == a);
         });
@@ -164,8 +164,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(1, 100);  // Non-zero numerator
             const auto a_den = *rc::gen::inRange(1, 100);  // Non-zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> a_recip = a;
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> a_recip = a;
             a_recip.reciprocal();
             a_recip.reciprocal();
             
@@ -178,8 +178,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> zero(0, 1);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> zero(0, 1);
             
             RC_ASSERT(a * zero == zero);
             RC_ASSERT(zero * a == zero);
@@ -191,8 +191,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> zero(0, 1);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> zero(0, 1);
             
             RC_ASSERT(a + (-a) == zero);
         });
@@ -205,8 +205,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto b_num = *rc::gen::inRange(-100, 100);
             const auto b_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
             
             RC_ASSERT(a.cross(b) == -b.cross(a));
         });
@@ -217,7 +217,7 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
+            FastFraction<int> a(a_num, a_den);
             
             RC_ASSERT(a.cross(a) == 0);
         });
@@ -230,8 +230,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto multiplier = *rc::gen::inRange(-10, 10);
             RC_PRE(multiplier != 0);  // Multiplier must not be zero
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(a_num * multiplier, a_den * multiplier);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(a_num * multiplier, a_den * multiplier);
             
             RC_ASSERT(a == b);
         });
@@ -246,9 +246,9 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto c_num = *rc::gen::inRange(-50, 50);
             const auto c_den = *rc::gen::inRange(1, 50);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> b(b_num, b_den);
-            Fraction<int> c(c_num, c_den);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> b(b_num, b_den);
+            FastFraction<int> c(c_num, c_den);
             
             // Only test when the precondition holds
             RC_PRE(a < b && b < c);
@@ -262,10 +262,10 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> a_abs = abs(a);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> a_abs = abs(a);
             
-            RC_ASSERT(a_abs >= Fraction<int>(0, 1));
+            RC_ASSERT(a_abs >= FastFraction<int>(0, 1));
         });
     }
     
@@ -274,8 +274,8 @@ TEST_CASE("Property-based tests for Fraction operations") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> a_abs = abs(a);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> a_abs = abs(a);
             
             RC_ASSERT(abs(a_abs) == a_abs);
         });
@@ -289,8 +289,8 @@ TEST_CASE("Property-based tests for edge cases") {
             const auto a_num = *rc::gen::inRange(-100, 100);
             const auto a_den = *rc::gen::inRange(1, 100);  // Avoid zero denominator
             
-            Fraction<int> a(a_num, a_den);
-            Fraction<int> zero(0, 1);
+            FastFraction<int> a(a_num, a_den);
+            FastFraction<int> zero(0, 1);
             
             RC_ASSERT(a + zero == a);
             RC_ASSERT(a * zero == zero);
@@ -306,21 +306,21 @@ TEST_CASE("Property-based tests for edge cases") {
             const auto a_num = *rc::gen::inRange(-10, -1);  // Non-zero numerator
             const auto b_num = *rc::gen::inRange(1, 10);    // Non-zero numerator
             
-            Fraction<int> infinity_a(a_num, 0);
-            Fraction<int> infinity_b(b_num, 0);
-            Fraction<int> zero(0, 1);
+            FastFraction<int> infinity_a(a_num, 0);
+            FastFraction<int> infinity_b(b_num, 0);
+            FastFraction<int> zero(0, 1);
             
             // Infinity times any non-zero should be infinity-like
-            Fraction<int> normal(1, 2);
-            Fraction<int> result1 = infinity_a * normal;
+            FastFraction<int> normal(1, 2);
+            FastFraction<int> result1 = infinity_a * normal;
             RC_ASSERT(result1.denom() == 0);
             
             // Infinity divided by infinity should be NaN-like
-            Fraction<int> result2 = infinity_a / infinity_b;
+            FastFraction<int> result2 = infinity_a / infinity_b;
             RC_ASSERT(result2.numer() == 0 && result2.denom() == 0);
             
             // Infinity times zero should be NaN-like
-            Fraction<int> result3 = infinity_a * zero;
+            FastFraction<int> result3 = infinity_a * zero;
             RC_ASSERT(result3.numer() == 0 && result3.denom() == 0);
         });
     }

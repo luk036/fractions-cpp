@@ -1,7 +1,7 @@
 # Originally contributed by Sjoerd Mullender.
 # Significantly modified by Jeffrey Yasskin <jyasskin at gmail.com>.
 
-"""Fraction, infinite-precision, rational numbers."""
+"""FastFraction, infinite-precision, rational numbers."""
 
 from decimal import Decimal
 import functools
@@ -11,7 +11,7 @@ import operator
 import re
 import sys
 
-__all__ = ['Fraction']
+__all__ = ['FastFraction']
 
 
 # Constants related to the hash implementation;  hash(x) is based
@@ -24,7 +24,7 @@ _PyHASH_INF = sys.hash_info.inf
 @functools.lru_cache(maxsize = 1 << 14)
 def _hash_algorithm(numerator, denominator):
 
-    # To make sure that the hash of a Fraction agrees with the hash
+    # To make sure that the hash of a FastFraction agrees with the hash
     # of a numerically equal integer, float or Decimal instance, we
     # follow the rules for numeric hashes outlined in the
     # documentation.  (See library docs, 'Built-in Types').
@@ -159,13 +159,13 @@ _FLOAT_FORMAT_SPECIFICATION_MATCHER = re.compile(r"""
 """, re.DOTALL | re.VERBOSE).fullmatch
 
 
-class Fraction(numbers.Rational):
+class FastFraction(numbers.Rational):
     """This class implements rational numbers.
 
-    In the two-argument form of the constructor, Fraction(8, 6) will
+    In the two-argument form of the constructor, FastFraction(8, 6) will
     produce a rational number equivalent to 4/3. Both arguments must
     be Rational. The numerator defaults to 0 and the denominator
-    defaults to 1 so that Fraction(3) == 3 and Fraction() == 0.
+    defaults to 1 so that FastFraction(3) == 3 and FastFraction() == 0.
 
     Fractions can also be constructed from:
 
@@ -192,29 +192,29 @@ class Fraction(numbers.Rational):
         Examples
         --------
 
-        >>> Fraction(10, -8)
-        Fraction(-5, 4)
-        >>> Fraction(Fraction(1, 7), 5)
-        Fraction(1, 35)
-        >>> Fraction(Fraction(1, 7), Fraction(2, 3))
-        Fraction(3, 14)
-        >>> Fraction('314')
-        Fraction(314, 1)
-        >>> Fraction('-35/4')
-        Fraction(-35, 4)
-        >>> Fraction('3.1415') # conversion from numeric string
-        Fraction(6283, 2000)
-        >>> Fraction('-47e-2') # string may include a decimal exponent
-        Fraction(-47, 100)
-        >>> Fraction(1.47)  # direct construction from float (exact conversion)
-        Fraction(6620291452234629, 4503599627370496)
-        >>> Fraction(2.25)
-        Fraction(9, 4)
-        >>> Fraction(Decimal('1.47'))
-        Fraction(147, 100)
+        >>> FastFraction(10, -8)
+        FastFraction(-5, 4)
+        >>> FastFraction(FastFraction(1, 7), 5)
+        FastFraction(1, 35)
+        >>> FastFraction(FastFraction(1, 7), FastFraction(2, 3))
+        FastFraction(3, 14)
+        >>> FastFraction('314')
+        FastFraction(314, 1)
+        >>> FastFraction('-35/4')
+        FastFraction(-35, 4)
+        >>> FastFraction('3.1415') # conversion from numeric string
+        FastFraction(6283, 2000)
+        >>> FastFraction('-47e-2') # string may include a decimal exponent
+        FastFraction(-47, 100)
+        >>> FastFraction(1.47)  # direct construction from float (exact conversion)
+        FastFraction(6620291452234629, 4503599627370496)
+        >>> FastFraction(2.25)
+        FastFraction(9, 4)
+        >>> FastFraction(Decimal('1.47'))
+        FastFraction(147, 100)
 
         """
-        self = super(Fraction, cls).__new__(cls)
+        self = super(FastFraction, cls).__new__(cls)
 
         if denominator is None:
             if type(numerator) is int:
@@ -236,7 +236,7 @@ class Fraction(numbers.Rational):
                 # Handle construction from strings.
                 m = _RATIONAL_FORMAT.match(numerator)
                 if m is None:
-                    raise ValueError('Invalid literal for Fraction: %r' %
+                    raise ValueError('Invalid literal for FastFraction: %r' %
                                      numerator)
                 numerator = int(m.group('num') or '0')
                 denom = m.group('denom')
@@ -278,7 +278,7 @@ class Fraction(numbers.Rational):
                             "Rational instances")
 
         if denominator == 0:
-            raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
+            raise ZeroDivisionError('FastFraction(%s, 0)' % numerator)
         g = math.gcd(numerator, denominator)
         if denominator < 0:
             g = -g
@@ -292,7 +292,7 @@ class Fraction(numbers.Rational):
     def from_float(cls, f):
         """Converts a finite float to a rational number, exactly.
 
-        Beware that Fraction.from_float(0.3) != Fraction(3, 10).
+        Beware that FastFraction.from_float(0.3) != FastFraction(3, 10).
 
         """
         if isinstance(f, numbers.Integral):
@@ -321,31 +321,31 @@ class Fraction(numbers.Rational):
         The ratio of integers should be in lowest terms and the denominator
         should be positive.
         """
-        obj = super(Fraction, cls).__new__(cls)
+        obj = super(FastFraction, cls).__new__(cls)
         obj._numerator = numerator
         obj._denominator = denominator
         return obj
 
     def is_integer(self):
-        """Return True if the Fraction is an integer."""
+        """Return True if the FastFraction is an integer."""
         return self._denominator == 1
 
     def as_integer_ratio(self):
-        """Return a pair of integers, whose ratio is equal to the original Fraction.
+        """Return a pair of integers, whose ratio is equal to the original FastFraction.
 
         The ratio is in lowest terms and has a positive denominator.
         """
         return (self._numerator, self._denominator)
 
     def limit_denominator(self, max_denominator=1000000):
-        """Closest Fraction to self with denominator at most max_denominator.
+        """Closest FastFraction to self with denominator at most max_denominator.
 
-        >>> Fraction('3.141592653589793').limit_denominator(10)
-        Fraction(22, 7)
-        >>> Fraction('3.141592653589793').limit_denominator(100)
-        Fraction(311, 99)
-        >>> Fraction(4321, 8765).limit_denominator(10000)
-        Fraction(4321, 8765)
+        >>> FastFraction('3.141592653589793').limit_denominator(10)
+        FastFraction(22, 7)
+        >>> FastFraction('3.141592653589793').limit_denominator(100)
+        FastFraction(311, 99)
+        >>> FastFraction(4321, 8765).limit_denominator(10000)
+        FastFraction(4321, 8765)
 
         """
         # Algorithm notes: For any real number x, define a *best upper
@@ -372,7 +372,7 @@ class Fraction(numbers.Rational):
         if max_denominator < 1:
             raise ValueError("max_denominator should be at least 1")
         if self._denominator <= max_denominator:
-            return Fraction(self)
+            return FastFraction(self)
 
         p0, q0, p1, q1 = 0, 1, 1, 0
         n, d = self._numerator, self._denominator
@@ -390,9 +390,9 @@ class Fraction(numbers.Rational):
         # the distance from p1/q1 to self is d/(q1*self._denominator). So we
         # need to compare 2*(q0+k*q1) with self._denominator/d.
         if 2*d*(q0+k*q1) <= self._denominator:
-            return Fraction._from_coprime_ints(p1, q1)
+            return FastFraction._from_coprime_ints(p1, q1)
         else:
-            return Fraction._from_coprime_ints(p0+k*p1, q0+k*q1)
+            return FastFraction._from_coprime_ints(p0+k*p1, q0+k*q1)
 
     @property
     def numerator(a):
@@ -541,13 +541,13 @@ class Fraction(numbers.Rational):
         that mixed-mode operations either call an implementation whose
         author knew about the types of both arguments, or convert both
         to the nearest built in type and do the operation there. In
-        Fraction, that means that we define __add__ and __radd__ as:
+        FastFraction, that means that we define __add__ and __radd__ as:
 
             def __add__(self, other):
                 # Both types have numerators/denominator attributes,
                 # so do the operation directly
-                if isinstance(other, (int, Fraction)):
-                    return Fraction(self.numerator * other.denominator +
+                if isinstance(other, (int, FastFraction)):
+                    return FastFraction(self.numerator * other.denominator +
                                     other.numerator * self.denominator,
                                     self.denominator * other.denominator)
                 # float and complex don't have those operations, but we
@@ -563,7 +563,7 @@ class Fraction(numbers.Rational):
                 # radd handles more types than add because there's
                 # nothing left to fall back to.
                 if isinstance(other, numbers.Rational):
-                    return Fraction(self.numerator * other.denominator +
+                    return FastFraction(self.numerator * other.denominator +
                                     other.numerator * self.denominator,
                                     self.denominator * other.denominator)
                 elif isinstance(other, Real):
@@ -574,29 +574,29 @@ class Fraction(numbers.Rational):
 
 
         There are 5 different cases for a mixed-type addition on
-        Fraction. I'll refer to all of the above code that doesn't
-        refer to Fraction, float, or complex as "boilerplate". 'r'
-        will be an instance of Fraction, which is a subtype of
-        Rational (r : Fraction <: Rational), and b : B <:
+        FastFraction. I'll refer to all of the above code that doesn't
+        refer to FastFraction, float, or complex as "boilerplate". 'r'
+        will be an instance of FastFraction, which is a subtype of
+        Rational (r : FastFraction <: Rational), and b : B <:
         Complex. The first three involve 'r + b':
 
-            1. If B <: Fraction, int, float, or complex, we handle
+            1. If B <: FastFraction, int, float, or complex, we handle
                that specially, and all is well.
-            2. If Fraction falls back to the boilerplate code, and it
+            2. If FastFraction falls back to the boilerplate code, and it
                were to return a value from __add__, we'd miss the
                possibility that B defines a more intelligent __radd__,
                so the boilerplate should return NotImplemented from
                __add__. In particular, we don't handle Rational
                here, even though we could get an exact answer, in case
                the other type wants to do something special.
-            3. If B <: Fraction, Python tries B.__radd__ before
-               Fraction.__add__. This is ok, because it was
-               implemented with knowledge of Fraction, so it can
+            3. If B <: FastFraction, Python tries B.__radd__ before
+               FastFraction.__add__. This is ok, because it was
+               implemented with knowledge of FastFraction, so it can
                handle those instances before delegating to Real or
                Complex.
 
         The next two situations describe 'b + r'. We assume that b
-        didn't know about Fraction in its implementation, and that it
+        didn't know about FastFraction in its implementation, and that it
         uses similar boilerplate code:
 
             4. If B <: Rational, then __radd_ converts both to the
@@ -611,10 +611,10 @@ class Fraction(numbers.Rational):
 
         """
         def forward(a, b):
-            if isinstance(b, Fraction):
+            if isinstance(b, FastFraction):
                 return monomorphic_operator(a, b)
             elif isinstance(b, int):
-                return monomorphic_operator(a, Fraction(b))
+                return monomorphic_operator(a, FastFraction(b))
             elif isinstance(b, float):
                 return fallback_operator(float(a), b)
             elif isinstance(b, complex):
@@ -627,7 +627,7 @@ class Fraction(numbers.Rational):
         def reverse(b, a):
             if isinstance(a, numbers.Rational):
                 # Includes ints.
-                return monomorphic_operator(Fraction(a), b)
+                return monomorphic_operator(FastFraction(a), b)
             elif isinstance(a, numbers.Real):
                 return fallback_operator(float(a), float(b))
             elif isinstance(a, numbers.Complex):
@@ -713,13 +713,13 @@ class Fraction(numbers.Rational):
         nb, db = b._numerator, b._denominator
         g = math.gcd(da, db)
         if g == 1:
-            return Fraction._from_coprime_ints(na * db + da * nb, da * db)
+            return FastFraction._from_coprime_ints(na * db + da * nb, da * db)
         s = da // g
         t = na * (db // g) + nb * s
         g2 = math.gcd(t, g)
         if g2 == 1:
-            return Fraction._from_coprime_ints(t, s * db)
-        return Fraction._from_coprime_ints(t // g2, s * (db // g2))
+            return FastFraction._from_coprime_ints(t, s * db)
+        return FastFraction._from_coprime_ints(t // g2, s * (db // g2))
 
     __add__, __radd__ = _operator_fallbacks(_add, operator.add)
 
@@ -729,13 +729,13 @@ class Fraction(numbers.Rational):
         nb, db = b._numerator, b._denominator
         g = math.gcd(da, db)
         if g == 1:
-            return Fraction._from_coprime_ints(na * db - da * nb, da * db)
+            return FastFraction._from_coprime_ints(na * db - da * nb, da * db)
         s = da // g
         t = na * (db // g) - nb * s
         g2 = math.gcd(t, g)
         if g2 == 1:
-            return Fraction._from_coprime_ints(t, s * db)
-        return Fraction._from_coprime_ints(t // g2, s * (db // g2))
+            return FastFraction._from_coprime_ints(t, s * db)
+        return FastFraction._from_coprime_ints(t // g2, s * (db // g2))
 
     __sub__, __rsub__ = _operator_fallbacks(_sub, operator.sub)
 
@@ -751,7 +751,7 @@ class Fraction(numbers.Rational):
         if g2 > 1:
             nb //= g2
             da //= g2
-        return Fraction._from_coprime_ints(na * nb, db * da)
+        return FastFraction._from_coprime_ints(na * nb, db * da)
 
     __mul__, __rmul__ = _operator_fallbacks(_mul, operator.mul)
 
@@ -760,7 +760,7 @@ class Fraction(numbers.Rational):
         # Same as _mul(), with inversed b.
         nb, db = b._numerator, b._denominator
         if nb == 0:
-            raise ZeroDivisionError('Fraction(%s, 0)' % db)
+            raise ZeroDivisionError('FastFraction(%s, 0)' % db)
         na, da = a._numerator, a._denominator
         g1 = math.gcd(na, nb)
         if g1 > 1:
@@ -773,7 +773,7 @@ class Fraction(numbers.Rational):
         n, d = na * db, nb * da
         if d < 0:
             n, d = -n, -d
-        return Fraction._from_coprime_ints(n, d)
+        return FastFraction._from_coprime_ints(n, d)
 
     __truediv__, __rtruediv__ = _operator_fallbacks(_div, operator.truediv)
 
@@ -787,14 +787,14 @@ class Fraction(numbers.Rational):
         """(a // b, a % b)"""
         da, db = a.denominator, b.denominator
         div, n_mod = divmod(a.numerator * db, da * b.numerator)
-        return div, Fraction(n_mod, da * db)
+        return div, FastFraction(n_mod, da * db)
 
     __divmod__, __rdivmod__ = _operator_fallbacks(_divmod, divmod)
 
     def _mod(a, b):
         """a % b"""
         da, db = a.denominator, b.denominator
-        return Fraction((a.numerator * db) % (b.numerator * da), da * db)
+        return FastFraction((a.numerator * db) % (b.numerator * da), da * db)
 
     __mod__, __rmod__ = _operator_fallbacks(_mod, operator.mod)
 
@@ -810,16 +810,16 @@ class Fraction(numbers.Rational):
             if b.denominator == 1:
                 power = b.numerator
                 if power >= 0:
-                    return Fraction._from_coprime_ints(a._numerator ** power,
+                    return FastFraction._from_coprime_ints(a._numerator ** power,
                                                        a._denominator ** power)
                 elif a._numerator > 0:
-                    return Fraction._from_coprime_ints(a._denominator ** -power,
+                    return FastFraction._from_coprime_ints(a._denominator ** -power,
                                                        a._numerator ** -power)
                 elif a._numerator == 0:
-                    raise ZeroDivisionError('Fraction(%s, 0)' %
+                    raise ZeroDivisionError('FastFraction(%s, 0)' %
                                             a._denominator ** -power)
                 else:
-                    return Fraction._from_coprime_ints((-a._denominator) ** -power,
+                    return FastFraction._from_coprime_ints((-a._denominator) ** -power,
                                                        (-a._numerator) ** -power)
             else:
                 # A fractional power will generally produce an
@@ -835,7 +835,7 @@ class Fraction(numbers.Rational):
             return a ** b._numerator
 
         if isinstance(a, numbers.Rational):
-            return Fraction(a.numerator, a.denominator) ** b
+            return FastFraction(a.numerator, a.denominator) ** b
 
         if b._denominator == 1:
             return a ** b._numerator
@@ -843,16 +843,16 @@ class Fraction(numbers.Rational):
         return a ** float(b)
 
     def __pos__(a):
-        """+a: Coerces a subclass instance to Fraction"""
-        return Fraction._from_coprime_ints(a._numerator, a._denominator)
+        """+a: Coerces a subclass instance to FastFraction"""
+        return FastFraction._from_coprime_ints(a._numerator, a._denominator)
 
     def __neg__(a):
         """-a"""
-        return Fraction._from_coprime_ints(-a._numerator, a._denominator)
+        return FastFraction._from_coprime_ints(-a._numerator, a._denominator)
 
     def __abs__(a):
         """abs(a)"""
-        return Fraction._from_coprime_ints(abs(a._numerator), a._denominator)
+        return FastFraction._from_coprime_ints(abs(a._numerator), a._denominator)
 
     def __int__(a, _index=operator.index):
         """int(a)"""
@@ -896,12 +896,12 @@ class Fraction(numbers.Rational):
                 return floor + 1
         shift = 10**abs(ndigits)
         # See _operator_fallbacks.forward to check that the results of
-        # these operations will always be Fraction and therefore have
+        # these operations will always be FastFraction and therefore have
         # round().
         if ndigits > 0:
-            return Fraction(round(self * shift), shift)
+            return FastFraction(round(self * shift), shift)
         else:
-            return Fraction(round(self / shift) * shift)
+            return FastFraction(round(self / shift) * shift)
 
     def __hash__(self):
         """hash(self)"""
@@ -978,11 +978,11 @@ class Fraction(numbers.Rational):
         return (self.__class__, (self._numerator, self._denominator))
 
     def __copy__(self):
-        if type(self) == Fraction:
+        if type(self) == FastFraction:
             return self     # I'm immutable; therefore I am my own clone
         return self.__class__(self._numerator, self._denominator)
 
     def __deepcopy__(self, memo):
-        if type(self) == Fraction:
+        if type(self) == FastFraction:
             return self     # My components are also immutable
         return self.__class__(self._numerator, self._denominator)

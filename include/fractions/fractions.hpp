@@ -149,12 +149,12 @@ namespace fractions {
     }
 
     /**
-     * @brief Fraction
+     * @brief FastFraction
      *
      * Example:
      *
      * ```
-     * Fraction<int> f(1, 2);
+     * FastFraction<int> f(1, 2);
      * f.numer() = 1;
      * f.denom() = 2;
      * ```
@@ -162,7 +162,7 @@ namespace fractions {
      *
      * ```svgbob
      *    +-------+
-     *    |  a    |    =  Fraction<T>
+     *    |  a    |    =  FastFraction<T>
      *    | ---   |
      *    |  b    |
      *    +-------+
@@ -171,18 +171,18 @@ namespace fractions {
      *    b = denominator
      * ```
      */
-    template <typename T> struct Fraction {
+    template <typename T> struct FastFraction {
         T _numer;  /// numerator
         T _denom;  /// denominator
 
         /**
-         * Constructs a new Fraction object from the given numerator and denominator.
+         * Constructs a new FastFraction object from the given numerator and denominator.
          *
          * Normalizes the fraction after construction.
          *
          * Example:
          * ```
-         * Fraction<int> f(1, 2); // f = 1/2
+         * FastFraction<int> f(1, 2); // f = 1/2
          * ```
          * @param[in] numer The numerator
          * @param[in] denom The denominator
@@ -199,7 +199,7 @@ namespace fractions {
          *                                   +-------+
          * ```
          */
-        CONSTEXPR14 Fraction(T numer, T denom)
+        CONSTEXPR14 FastFraction(T numer, T denom)
             : _numer{std::move(numer)}, _denom{std::move(denom)} {
             this->normalize();
         }
@@ -246,7 +246,7 @@ namespace fractions {
          *
          * Example:
          * ```
-         * Fraction<int> f(2, 6); // f = 1/3
+         * FastFraction<int> f(2, 6); // f = 1/3
          * f.reduce();
          * ```
          */
@@ -260,44 +260,44 @@ namespace fractions {
         }
 
         /**
-         * Constructs a new Fraction object from the given numerator.
+         * Constructs a new FastFraction object from the given numerator.
          *
          * The denominator is initialized to 1.
          *
          * Example:
          * ```
-         * Fraction<int> f(2); // f = 2/1
+         * FastFraction<int> f(2); // f = 2/1
          * assert(f.numer() == 2 && f.denom() == 1);
          * ```
          * @param[in] numer The numerator.
          */
-        CONSTEXPR14 explicit Fraction(T &&numer) : _numer{std::move(numer)}, _denom(1) {}
+        CONSTEXPR14 explicit FastFraction(T &&numer) : _numer{std::move(numer)}, _denom(1) {}
 
         /**
-         * Constructs a new Fraction object from the given numerator.
+         * Constructs a new FastFraction object from the given numerator.
          *
          * The denominator is initialized to 1.
          *
          * Example:
          * ```
-         * Fraction<int> f(2); // f = 2/1
-         * assert(f == Fraction<int>(2, 1));
+         * FastFraction<int> f(2); // f = 2/1
+         * assert(f == FastFraction<int>(2, 1));
          * ```
          * @param[in] numer The numerator.
          */
-        CONSTEXPR14 explicit Fraction(const T &numer) : _numer{numer}, _denom(1) {}
+        CONSTEXPR14 explicit FastFraction(const T &numer) : _numer{numer}, _denom(1) {}
 
         /**
-         * Constructs a new Fraction object with numerator initialized to 0 and denominator
+         * Constructs a new FastFraction object with numerator initialized to 0 and denominator
          * initialized to 1.
          *
          * Example:
          * ```
-         * Fraction<int> f; // f = 0/1
+         * FastFraction<int> f; // f = 0/1
          * assert(f.numer() == 0);
          * ```
          */
-        CONSTEXPR14 Fraction() : _numer(0), _denom(1) {}
+        CONSTEXPR14 FastFraction() : _numer(0), _denom(1) {}
 
         /**
          * Gets the numerator of the fraction.
@@ -324,9 +324,9 @@ namespace fractions {
          *
          * Example:
          *
-         *   cross(Fraction(1,2), Fraction(3,4)) = -1
-         *   cross(Fraction(1,2), Fraction(1,2)) = 0
-         *   cross(Fraction(1,2), Fraction(-1,2)) = 0
+         *   cross(FastFraction(1,2), FastFraction(3,4)) = -1
+         *   cross(FastFraction(1,2), FastFraction(1,2)) = 0
+         *   cross(FastFraction(1,2), FastFraction(-1,2)) = 0
          *
          * @param[in] rhs The right-hand fraction to compute the cross product with.
          * @return The computed cross product.
@@ -345,7 +345,7 @@ namespace fractions {
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
          * ```
          */
-        CONSTEXPR14 auto cross(const Fraction &rhs) const -> T {
+        CONSTEXPR14 auto cross(const FastFraction &rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
 
@@ -362,15 +362,15 @@ namespace fractions {
          * integer when the denominator is 1.
          *
          * Example:
-         *   Fraction(1, 1) == 1 -> true
-         *   Fraction(1, 2) == 2 -> false
-         *   Fraction(1, 2) == 3 -> false
+         *   FastFraction(1, 1) == 1 -> true
+         *   FastFraction(1, 2) == 2 -> false
+         *   FastFraction(1, 2) == 3 -> false
          *
          * @param lhs The left hand side fraction to compare.
          * @param rhs The right hand side integer to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const Fraction &lhs, const T &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const FastFraction &lhs, const T &rhs) -> bool {
             return lhs._numer == rhs && lhs._denom == 1;
         }
 
@@ -382,15 +382,15 @@ namespace fractions {
          * the integer when the denominator is 1.
          *
          * Example:
-         *   Fraction(1, 1) < 1 -> false
-         *   Fraction(1, 2) < 2 -> true
-         *   Fraction(1, 2) < 3 -> true
+         *   FastFraction(1, 1) < 1 -> false
+         *   FastFraction(1, 2) < 2 -> true
+         *   FastFraction(1, 2) < 3 -> true
          *
          * @param lhs The left hand side fraction to compare.
          * @param rhs The right hand side integer to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const Fraction &lhs, const T &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const FastFraction &lhs, const T &rhs) -> bool {
             if (lhs._denom == 1 || rhs == 0) {
                 return lhs._numer < rhs;
             }
@@ -409,15 +409,15 @@ namespace fractions {
          * the integer when the denominator is 1.
          *
          * Example:
-         *   1 < Fraction(1, 1) -> false
-         *   2 < Fraction(1, 2) -> false
-         *   3 < Fraction(7, 2) -> true
+         *   1 < FastFraction(1, 1) -> false
+         *   2 < FastFraction(1, 2) -> false
+         *   3 < FastFraction(7, 2) -> true
          *
          * @param lhs The left hand side integer to compare.
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const T &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const T &lhs, const FastFraction &rhs) -> bool {
             if (rhs._denom == 1 || lhs == 0) {
                 return lhs < rhs._numer;
             }
@@ -436,15 +436,15 @@ namespace fractions {
          * of the fraction.
          *
          * Example:
-         *   1 == Fraction(1, 1) -> true
-         *   2 == Fraction(1, 2) -> false
-         *   3 == Fraction(7, 2) -> false
+         *   1 == FastFraction(1, 1) -> true
+         *   2 == FastFraction(1, 2) -> false
+         *   3 == FastFraction(7, 2) -> false
          *
          * @param lhs The left hand side integer to compare.
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const T &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const T &lhs, const FastFraction &rhs) -> bool {
             return rhs == lhs;
         }
 
@@ -456,15 +456,15 @@ namespace fractions {
          * to a common denominator and comparing the numerators.
          *
          * Example:
-         *   Fraction(1, 1) == Fraction(1, 1) -> true
-         *   Fraction(1, 2) == Fraction(2, 4) -> true
-         *   Fraction(1, 2) == Fraction(3, 4) -> false
+         *   FastFraction(1, 1) == FastFraction(1, 1) -> true
+         *   FastFraction(1, 2) == FastFraction(2, 4) -> true
+         *   FastFraction(1, 2) == FastFraction(3, 4) -> false
          *
          * @param lhs The left hand side fraction to compare.
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const Fraction &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const FastFraction &lhs, const FastFraction &rhs) -> bool {
             return lhs._numer == rhs._numer && lhs._denom == rhs._denom;
         }
 
@@ -479,7 +479,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const Fraction &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const FastFraction &lhs, const FastFraction &rhs) -> bool {
             if (lhs._denom == rhs._denom) {
                 return lhs._numer < rhs._numer;
             }
@@ -501,7 +501,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare against.
          * @return True if the fractions are not equal, false if they are equal.
          */
-        CONSTEXPR14 auto operator!=(const Fraction &rhs) const -> bool { return !(*this == rhs); }
+        CONSTEXPR14 auto operator!=(const FastFraction &rhs) const -> bool { return !(*this == rhs); }
 
         /**
          * Compares this fraction to another fraction for greater than.
@@ -513,7 +513,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if this fraction is greater than rhs, false otherwise.
          */
-        CONSTEXPR14 auto operator>(const Fraction &rhs) const -> bool { return rhs < *this; }
+        CONSTEXPR14 auto operator>(const FastFraction &rhs) const -> bool { return rhs < *this; }
 
         /**
          * Compares this fraction to another fraction for greater than or equal to.
@@ -522,7 +522,7 @@ namespace fractions {
          * @returns True if this fraction is greater than or equal to the other fraction,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator>=(const Fraction &rhs) const -> bool { return !(*this < rhs); }
+        CONSTEXPR14 auto operator>=(const FastFraction &rhs) const -> bool { return !(*this < rhs); }
 
         /**
          * Compares this fraction to another fraction for less than or equal to.
@@ -531,7 +531,7 @@ namespace fractions {
          * @returns True if this fraction is less than or equal to the other fraction,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator<=(const Fraction &rhs) const -> bool { return !(rhs < *this); }
+        CONSTEXPR14 auto operator<=(const FastFraction &rhs) const -> bool { return !(rhs < *this); }
 
         /**
          * Compares this fraction to another T integer for greater than.
@@ -561,44 +561,44 @@ namespace fractions {
         CONSTEXPR14 auto operator>=(const T &rhs) const -> bool { return !(*this < rhs); }
 
         /**
-         * Compares a T integer to a Fraction for greater than.
+         * Compares a T integer to a FastFraction for greater than.
          *
          * This is a friend function that allows comparing a T integer on the left
-         * hand side to a Fraction on the right hand side.
+         * hand side to a FastFraction on the right hand side.
          *
          * @param lhs The T integer on the left hand side.
-         * @param rhs The Fraction on the right hand side.
+         * @param rhs The FastFraction on the right hand side.
          * @return True if lhs is greater than rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator>(const T &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator>(const T &lhs, const FastFraction &rhs) -> bool {
             return rhs < lhs;
         }
 
         /**
-         * Compares a T integer to a Fraction for less than or equal to.
+         * Compares a T integer to a FastFraction for less than or equal to.
          *
          * This is a friend function that allows comparing a T integer on the left
-         * hand side to a Fraction on the right hand side.
+         * hand side to a FastFraction on the right hand side.
          *
          * @param lhs The T integer on the left hand side.
-         * @param rhs The Fraction on the right hand side.
+         * @param rhs The FastFraction on the right hand side.
          * @return True if lhs is less than or equal to rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<=(const T &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<=(const T &lhs, const FastFraction &rhs) -> bool {
             return !(rhs < lhs);
         }
 
         /**
-         * Compares a T integer to a Fraction for greater than or equal to.
+         * Compares a T integer to a FastFraction for greater than or equal to.
          *
          * This is a friend function that allows comparing a T integer on the left
-         * hand side to a Fraction on the right hand side.
+         * hand side to a FastFraction on the right hand side.
          *
          * @param lhs The T integer on the left hand side.
-         * @param rhs The Fraction on the right hand side.
+         * @param rhs The FastFraction on the right hand side.
          * @return True if lhs is greater than or equal to rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator>=(const T &lhs, const Fraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator>=(const T &lhs, const FastFraction &rhs) -> bool {
             return !(lhs < rhs);
         }
 
@@ -628,14 +628,14 @@ namespace fractions {
         }
 
         /**
-         * Multiplies this Fraction by the given Fraction rhs and assigns the result to this
-         * Fraction.
+         * Multiplies this FastFraction by the given FastFraction rhs and assigns the result to this
+         * FastFraction.
          *
-         * Normalizes this Fraction and rhs before multiplying. Updates the numerator and
-         * denominator of this Fraction with the result.
+         * Normalizes this FastFraction and rhs before multiplying. Updates the numerator and
+         * denominator of this FastFraction with the result.
          *
-         * @param rhs The Fraction to multiply.
-         * @return A reference to this Fraction after multiplication.
+         * @param rhs The FastFraction to multiply.
+         * @return A reference to this FastFraction after multiplication.
          *
          * ```svgbob
          *    a     c     a*c
@@ -662,7 +662,7 @@ namespace fractions {
          *    +-------+             +-------+
          * ```
          */
-        CONSTEXPR14 auto operator*=(Fraction rhs) -> Fraction & {
+        CONSTEXPR14 auto operator*=(FastFraction rhs) -> FastFraction & {
             std::swap(this->_numer, rhs._numer);
             this->reduce();
             rhs.reduce();
@@ -673,30 +673,30 @@ namespace fractions {
         }
 
         /**
-         * Multiplies the given Fraction lhs by the Fraction rhs.
+         * Multiplies the given FastFraction lhs by the FastFraction rhs.
          *
-         * Normalizes lhs and rhs before multiplying. Returns a new Fraction containing
+         * Normalizes lhs and rhs before multiplying. Returns a new FastFraction containing
          * the result of the multiplication.
          *
-         * @param lhs The left hand Fraction to multiply.
-         * @param rhs The right hand Fraction to multiply.
-         * @return A new Fraction containing the result of the multiplication.
+         * @param lhs The left hand FastFraction to multiply.
+         * @param rhs The right hand FastFraction to multiply.
+         * @return A new FastFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(Fraction lhs, const Fraction &rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator*(FastFraction lhs, const FastFraction &rhs) -> FastFraction {
             return lhs *= rhs;
         }
 
         /**
-         * Multiplies this Fraction by the given integer rhs and assigns the result to this
-         * Fraction.
+         * Multiplies this FastFraction by the given integer rhs and assigns the result to this
+         * FastFraction.
          *
-         * Normalizes this Fraction before multiplying. Updates the numerator of
-         * this Fraction with the result and retains the existing denominator.
+         * Normalizes this FastFraction before multiplying. Updates the numerator of
+         * this FastFraction with the result and retains the existing denominator.
          *
          * @param rhs The integer to multiply.
-         * @return A reference to this Fraction after multiplication.
+         * @return A reference to this FastFraction after multiplication.
          */
-        CONSTEXPR14 auto operator*=(T rhs) -> Fraction & {
+        CONSTEXPR14 auto operator*=(T rhs) -> FastFraction & {
             std::swap(this->_numer, rhs);
             this->reduce();
             this->_numer *= rhs;
@@ -705,42 +705,42 @@ namespace fractions {
         }
 
         /**
-         * Multiplies the given Fraction lhs by the integer rhs.
+         * Multiplies the given FastFraction lhs by the integer rhs.
          *
-         * Normalizes lhs before multiplying. Returns a new Fraction containing
+         * Normalizes lhs before multiplying. Returns a new FastFraction containing
          * the result of the multiplication.
          *
-         * @param lhs The left hand Fraction to multiply.
+         * @param lhs The left hand FastFraction to multiply.
          * @param rhs The right hand integer to multiply.
-         * @return A new Fraction containing the result of the multiplication.
+         * @return A new FastFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(Fraction lhs, const T &rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator*(FastFraction lhs, const T &rhs) -> FastFraction {
             return lhs *= rhs;
         }
 
         /**
-         * Multiplies the Fraction rhs by the integer lhs.
+         * Multiplies the FastFraction rhs by the integer lhs.
          *
-         * Normalizes rhs before multiplying. Returns a new Fraction containing
+         * Normalizes rhs before multiplying. Returns a new FastFraction containing
          * the result of the multiplication.
          *
          * @param lhs The left hand integer to multiply.
-         * @param rhs The right hand Fraction to multiply.
-         * @return A new Fraction containing the result of the multiplication.
+         * @param rhs The right hand FastFraction to multiply.
+         * @return A new FastFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(const T &lhs, Fraction rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator*(const T &lhs, FastFraction rhs) -> FastFraction {
             return rhs *= lhs;
         }
 
         /**
-         * Divides this Fraction by the given Fraction rhs and assigns the result to this Fraction.
+         * Divides this FastFraction by the given FastFraction rhs and assigns the result to this FastFraction.
          *
-         * Swaps the denominator of this Fraction with the numerator of rhs.
-         * Normalizes this Fraction and rhs before dividing.
-         * Updates the numerator and denominator of this Fraction with the result.
+         * Swaps the denominator of this FastFraction with the numerator of rhs.
+         * Normalizes this FastFraction and rhs before dividing.
+         * Updates the numerator and denominator of this FastFraction with the result.
          *
-         * @param rhs The Fraction to divide by.
-         * @return A reference to this Fraction after division.
+         * @param rhs The FastFraction to divide by.
+         * @return A reference to this FastFraction after division.
          *
          * ```svgbob
          *    a     c     a     d     a*d
@@ -760,7 +760,7 @@ namespace fractions {
          *    +-------+     +-------+     +-------+
          * ```
          */
-        CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction & {
+        CONSTEXPR14 auto operator/=(FastFraction rhs) -> FastFraction & {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
             if (this->_numer == 0 && rhs._numer == 0) {
                 // this->_numer = 0;
@@ -777,27 +777,27 @@ namespace fractions {
         }
 
         /**
-         * Divides the Fraction lhs by the Fraction rhs.
+         * Divides the FastFraction lhs by the FastFraction rhs.
          *
-         * Returns a new Fraction containing the result.
+         * Returns a new FastFraction containing the result.
          *
          * @param[in] lhs
          * @param[in] rhs
-         * @return A Fraction after division.
+         * @return A FastFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(Fraction lhs, const Fraction &rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator/(FastFraction lhs, const FastFraction &rhs) -> FastFraction {
             return lhs /= rhs;
         }
 
         /**
-         * Divides this Fraction by the integer rhs and assigns the result to this Fraction.
+         * Divides this FastFraction by the integer rhs and assigns the result to this FastFraction.
          *
-         * Divides the numerator of this Fraction by rhs and updates it with the result.
+         * Divides the numerator of this FastFraction by rhs and updates it with the result.
          *
-         * @param rhs The integer to divide this Fraction by.
-         * @return A reference to this Fraction after dividing by rhs.
+         * @param rhs The integer to divide this FastFraction by.
+         * @return A reference to this FastFraction after dividing by rhs.
          */
-        CONSTEXPR14 auto operator/=(T rhs) -> Fraction & {
+        CONSTEXPR14 auto operator/=(T rhs) -> FastFraction & {
             std::swap(this->_denom, rhs);
             this->normalize();
             this->_denom *= rhs;
@@ -805,47 +805,47 @@ namespace fractions {
         }
 
         /**
-         * Divides the Fraction lhs by the integer rhs.
+         * Divides the FastFraction lhs by the integer rhs.
          *
          * @param[in] lhs
          * @param[in] rhs
-         * @return A Fraction after division.
+         * @return A FastFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(Fraction lhs, const T &rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator/(FastFraction lhs, const T &rhs) -> FastFraction {
             return lhs /= rhs;
         }
 
         /**
-         * Divides the integer lhs by the Fraction rhs.
+         * Divides the integer lhs by the FastFraction rhs.
          *
-         * Returns a new Fraction containing the result.
+         * Returns a new FastFraction containing the result.
          *
          * @param[in] lhs
          * @param[in] rhs
-         * @return A Fraction after division.
+         * @return A FastFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(const T &lhs, Fraction rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator/(const T &lhs, FastFraction rhs) -> FastFraction {
             rhs.reciprocal();
             return rhs *= lhs;
         }
 
         /**
-         * Negates this Fraction by negating its numerator.
+         * Negates this FastFraction by negating its numerator.
          *
-         * Returns a new Fraction with the negated numerator.
+         * Returns a new FastFraction with the negated numerator.
          */
-        CONSTEXPR14 auto operator-() const -> Fraction {
-            auto res = Fraction(*this);
+        CONSTEXPR14 auto operator-() const -> FastFraction {
+            auto res = FastFraction(*this);
             res._numer = -res._numer;
             return res;
         }
 
         /**
-         * Adds this Fraction to the Fraction rhs.
+         * Adds this FastFraction to the FastFraction rhs.
          *
          * Finds the lowest common denominator and converts both Fractions to it.
-         * Then adds the numerators and returns a new Fraction with the result.
-         * Handles zero denominators by returning a Fraction with a zero denominator.
+         * Then adds the numerators and returns a new FastFraction with the result.
+         * Handles zero denominators by returning a FastFraction with a zero denominator.
          *
          * ```svgbob
          *    a     c     a*d + b*c
@@ -865,15 +865,15 @@ namespace fractions {
          *    +-------+     +-------+     +-------+
          * ```
          */
-        CONSTEXPR14 auto operator+(const Fraction &other) const -> Fraction {
+        CONSTEXPR14 auto operator+(const FastFraction &other) const -> FastFraction {
             if (this->_denom == other._denom) {
-                Fraction result(this->_numer + other._numer, this->_denom);
+                FastFraction result(this->_numer + other._numer, this->_denom);
                 result.normalize();
                 return result;
             }
             const auto common = gcd(this->_denom, other._denom);
             if (common == 0) {
-                Fraction result(other._denom * this->_numer + this->_denom * other._numer, 0);
+                FastFraction result(other._denom * this->_numer + this->_denom * other._numer, 0);
                 result.normalize();
                 return result;
             }
@@ -881,64 +881,64 @@ namespace fractions {
             const auto right = other._denom / common;
             auto denom = this->_denom * right;
             auto numer = right * this->_numer + left * other._numer;
-            Fraction result(std::move(numer), std::move(denom));
+            FastFraction result(std::move(numer), std::move(denom));
             result.normalize();
             return result;
         }
 
         /**
-         * Subtracts another Fraction from this Fraction.
+         * Subtracts another FastFraction from this FastFraction.
          *
-         * Negates the passed in Fraction, then adds it to this Fraction.
+         * Negates the passed in FastFraction, then adds it to this FastFraction.
          *
-         * @param[in] other The Fraction to subtract from this one.
-         * @return A new Fraction containing the result.
+         * @param[in] other The FastFraction to subtract from this one.
+         * @return A new FastFraction containing the result.
          */
-        CONSTEXPR14 auto operator-(const Fraction &other) const -> Fraction {
+        CONSTEXPR14 auto operator-(const FastFraction &other) const -> FastFraction {
             return *this + (-other);
         }
 
         /**
-         * Adds a Fraction and an integer.
+         * Adds a FastFraction and an integer.
          *
-         * Converts the integer to a Fraction and adds it to the Fraction lhs.
+         * Converts the integer to a FastFraction and adds it to the FastFraction lhs.
          *
-         * @param lhs The Fraction to add to.
+         * @param lhs The FastFraction to add to.
          * @param rhs The integer to add.
-         * @return A new Fraction containing the sum.
+         * @return A new FastFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(Fraction lhs, const T &rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator+(FastFraction lhs, const T &rhs) -> FastFraction {
             return lhs += rhs;
         }
 
         /**
-         * Adds an integer to a Fraction.
+         * Adds an integer to a FastFraction.
          *
-         * Converts the integer rhs to a Fraction and adds it to the Fraction lhs.
+         * Converts the integer rhs to a FastFraction and adds it to the FastFraction lhs.
          *
-         * @param lhs The Fraction to add to.
+         * @param lhs The FastFraction to add to.
          * @param rhs The integer to add.
-         * @return A new Fraction containing the sum.
+         * @return A new FastFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(const T &lhs, Fraction rhs) -> Fraction {
+        friend CONSTEXPR14 auto operator+(const T &lhs, FastFraction rhs) -> FastFraction {
             return rhs += lhs;
         }
 
         /**
-         * Subtracts an integer from this Fraction.
+         * Subtracts an integer from this FastFraction.
          *
-         * Converts the integer rhs to a Fraction with denominator 1 and subtracts it from this
-         * Fraction.
+         * Converts the integer rhs to a FastFraction with denominator 1 and subtracts it from this
+         * FastFraction.
          *
          * @param rhs The integer to subtract.
-         * @return A new Fraction containing the difference.
+         * @return A new FastFraction containing the difference.
          */
-        CONSTEXPR14 auto operator-(const T &rhs) const -> Fraction {
-            return Fraction(*this) -= rhs;
+        CONSTEXPR14 auto operator-(const T &rhs) const -> FastFraction {
+            return FastFraction(*this) -= rhs;
         }
 
         /**
-         * Adds another Fraction to this Fraction.
+         * Adds another FastFraction to this FastFraction.
          *
          * If the denominators are equal, simply add the numerators.
          * Otherwise, find the greatest common divisor of both denominators,
@@ -947,10 +947,10 @@ namespace fractions {
          * multiply by the product of the original denominators,
          * and reduce to lowest terms.
          *
-         * @param[in] rhs The Fraction to add.
-         * @return A reference to this Fraction after adding.
+         * @param[in] rhs The FastFraction to add.
+         * @return A reference to this FastFraction after adding.
          */
-        CONSTEXPR14 auto operator+=(const Fraction &rhs) -> Fraction & {
+        CONSTEXPR14 auto operator+=(const FastFraction &rhs) -> FastFraction & {
             if (this->_denom == rhs._denom) {
                 this->_numer += rhs._numer;
                 this->reduce();
@@ -973,7 +973,7 @@ namespace fractions {
         }
 
         /**
-         * Subtracts another Fraction from this Fraction.
+         * Subtracts another FastFraction from this FastFraction.
          *
          * If the denominators are equal, simply subtract the numerators.
          * Otherwise, find the greatest common divisor of both denominators,
@@ -982,10 +982,10 @@ namespace fractions {
          * multiply by the product of the original denominators,
          * and reduce to lowest terms.
          *
-         * @param rhs The Fraction to subtract.
-         * @return A reference to this Fraction after subtracting.
+         * @param rhs The FastFraction to subtract.
+         * @return A reference to this FastFraction after subtracting.
          */
-        CONSTEXPR14 auto operator-=(const Fraction &rhs) -> Fraction & {
+        CONSTEXPR14 auto operator-=(const FastFraction &rhs) -> FastFraction & {
             if (this->_denom == rhs._denom) {
                 this->_numer -= rhs._numer;
                 this->reduce();
@@ -1008,16 +1008,16 @@ namespace fractions {
         }
 
         /**
-         * Adds a T (integer) to this Fraction.
+         * Adds a T (integer) to this FastFraction.
          *
          * If the denominator is 1, simply add to the numerator.
          * Otherwise, multiply the T by the denominator and add to the numerator.
          * Then, reduce to lowest terms.
          *
          * @param[in] rhs The T (integer) to add.
-         * @return A reference to this Fraction after adding.
+         * @return A reference to this FastFraction after adding.
          */
-        CONSTEXPR14 auto operator+=(const T &rhs) -> Fraction & {
+        CONSTEXPR14 auto operator+=(const T &rhs) -> FastFraction & {
             if (this->_denom == 1) {
                 this->_numer += rhs;
                 return *this;
@@ -1034,26 +1034,26 @@ namespace fractions {
         }
 
         /**
-         * Increments this Fraction by 1.
+         * Increments this FastFraction by 1.
          *
-         * Adds 1 to this Fraction
+         * Adds 1 to this FastFraction
          *
-         * @return A reference to this Fraction after incrementing.
+         * @return A reference to this FastFraction after incrementing.
          */
-        CONSTEXPR14 auto operator++() -> Fraction & {
+        CONSTEXPR14 auto operator++() -> FastFraction & {
             this->_numer += this->_denom;
             return *this;
         }
 
         /**
-         * Decrements this Fraction by 1.
+         * Decrements this FastFraction by 1.
          *
-         * Subtracts 1 from this Fraction by calling operator-=() with
+         * Subtracts 1 from this FastFraction by calling operator-=() with
          * a T (integer) value of 1.
          *
-         * @return A reference to this Fraction after decrementing.
+         * @return A reference to this FastFraction after decrementing.
          */
-        CONSTEXPR14 auto operator--() -> Fraction & {
+        CONSTEXPR14 auto operator--() -> FastFraction & {
             this->_numer -= this->_denom;
             return *this;
         }
@@ -1061,10 +1061,10 @@ namespace fractions {
         /**
          * Post-increment operator.
          *
-         * Makes a copy of this Fraction, increments the copy,
+         * Makes a copy of this FastFraction, increments the copy,
          * and returns the copy.
          */
-        CONSTEXPR14 auto operator++(int) -> Fraction {
+        CONSTEXPR14 auto operator++(int) -> FastFraction {
             auto tmp{*this};
             ++(*this);
             return tmp;
@@ -1073,10 +1073,10 @@ namespace fractions {
         /**
          * Post-decrement operator.
          *
-         * Makes a copy of this Fraction, decrements the copy,
+         * Makes a copy of this FastFraction, decrements the copy,
          * and returns the copy.
          */
-        CONSTEXPR14 auto operator--(int) -> Fraction {
+        CONSTEXPR14 auto operator--(int) -> FastFraction {
             auto tmp{*this};
             --(*this);
             return tmp;
@@ -1092,7 +1092,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A reference to this fraction after subtracting.
          */
-        inline auto operator-=(const T &rhs) -> Fraction & {
+        inline auto operator-=(const T &rhs) -> FastFraction & {
             if (this->_denom == 1) {
                 this->_numer -= rhs;
                 return *this;
@@ -1109,67 +1109,67 @@ namespace fractions {
         }
 
         /**
-         * Subtracts a T integer from this Fraction.
+         * Subtracts a T integer from this FastFraction.
          *
-         * Subtracts the integer val from this Fraction frac.
-         * Returns the result as a new Fraction.
+         * Subtracts the integer val from this FastFraction frac.
+         * Returns the result as a new FastFraction.
          *
          * @param val The integer to subtract.
-         * @param frac The Fraction to subtract from.
-         * @return A new Fraction containing the difference.
+         * @param frac The FastFraction to subtract from.
+         * @return A new FastFraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(const T &val, const Fraction &frac) -> Fraction {
+        friend CONSTEXPR14 auto operator-(const T &val, const FastFraction &frac) -> FastFraction {
             return val + (-frac);
         }
 
         /**
-         * Adds an integer to a Fraction.
+         * Adds an integer to a FastFraction.
          *
-         * This friend function allows adding an integer and a Fraction by
-         * converting the integer to a Fraction and delegating to the
-         * Fraction += operator.
+         * This friend function allows adding an integer and a FastFraction by
+         * converting the integer to a FastFraction and delegating to the
+         * FastFraction += operator.
          *
          * @param val The integer to add.
-         * @param frac The Fraction to add to.
-         * @return A new Fraction containing the sum.
+         * @param frac The FastFraction to add to.
+         * @return A new FastFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(int &&val, const Fraction &frac) -> Fraction {
+        friend CONSTEXPR14 auto operator+(int &&val, const FastFraction &frac) -> FastFraction {
             return frac + val;
         }
 
         /**
-         * Subtracts an integer from a Fraction.
+         * Subtracts an integer from a FastFraction.
          *
-         * This allows subtracting an integer from a Fraction by first
-         * converting the integer to a Fraction.
+         * This allows subtracting an integer from a FastFraction by first
+         * converting the integer to a FastFraction.
          *
          * @param val The integer to subtract.
-         * @param frac The Fraction to subtract from.
-         * @return A new Fraction containing the difference.
+         * @param frac The FastFraction to subtract from.
+         * @return A new FastFraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(int &&val, const Fraction &frac) -> Fraction {
+        friend CONSTEXPR14 auto operator-(int &&val, const FastFraction &frac) -> FastFraction {
             return val - frac;
         }
 
         /**
-         * Multiplies an integer by a Fraction.
+         * Multiplies an integer by a FastFraction.
          *
-         * This friend function converts the integer to a Fraction and
-         * delegates to the Fraction *= operator to perform the
+         * This friend function converts the integer to a FastFraction and
+         * delegates to the FastFraction *= operator to perform the
          * multiplication.
          *
          * @param val The integer value to multiply.
-         * @param frac The Fraction to multiply.
-         * @return A new Fraction containing the product.
+         * @param frac The FastFraction to multiply.
+         * @return A new FastFraction containing the product.
          */
-        friend CONSTEXPR14 auto operator*(int &&val, const Fraction &frac) -> Fraction {
+        friend CONSTEXPR14 auto operator*(int &&val, const FastFraction &frac) -> FastFraction {
             return frac * val;
         }
 
         /**
-         * Overloads the stream output operator to print a Fraction to a stream.
+         * Overloads the stream output operator to print a FastFraction to a stream.
          *
-         * This allows printing a Fraction to an output stream in the format
+         * This allows printing a FastFraction to an output stream in the format
          * "(numerator/denominator)".
          *
          * @tparam _Stream
@@ -1177,7 +1177,7 @@ namespace fractions {
          * @param[in] frac
          * @return _Stream&
          */
-        template <typename _Stream> friend auto operator<<(_Stream &out_stream, const Fraction &frac)
+        template <typename _Stream> friend auto operator<<(_Stream &out_stream, const FastFraction &frac)
             -> _Stream & {
             out_stream << "(" << frac.numer() << "/" << frac.denom() << ")";
             return out_stream;
