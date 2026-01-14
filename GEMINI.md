@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a C++ project that implements a fraction library. It uses modern CMake practices for building, testing, and dependency management. The core of the project is a single-header library, `fractions.hpp`, which provides a `FastFraction` class with support for arithmetic and comparison operations.
+This is a C++ project that implements a fraction library. It uses modern CMake practices for building, testing, and dependency management. The core of the project is a single-header library, `fastfractions.hpp`, which provides a `FastFraction` class with support for arithmetic and comparison operations.
 
 The project is well-structured, with separate directories for the library code (`include`, `source`), tests (`test`), and a standalone example (`standalone`). It also includes configuration for continuous integration, code coverage, and code formatting.
 

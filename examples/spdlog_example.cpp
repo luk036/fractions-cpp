@@ -1,6 +1,6 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include "fractions/fractions.hpp"
+#include "fractions/fastfractions.hpp"
 
 int main() {
     // Create a color multi-threaded logger

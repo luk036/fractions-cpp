@@ -15,7 +15,7 @@ The project follows modern CMake practices and includes:
 ## Key Files and Structure
 
 ### Library Implementation
-- `include/fractions/fractions.hpp` - Main header file containing the FastFraction class template and related functions (gcd, lcm, abs)
+- `include/fractions/fastfractions.hpp` - Main header file containing the FastFraction class template and related functions (gcd, lcm, abs)
 
 ### Build Configuration
 - `CMakeLists.txt` - Main CMake configuration for the library

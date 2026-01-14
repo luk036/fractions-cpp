@@ -3,7 +3,7 @@
  */
 #include <doctest/doctest.h>
 
-#include <fractions/fractions.hpp>
+#include <fractions/fastfractions.hpp>
 #include <ostream>
 
 using namespace fractions;
