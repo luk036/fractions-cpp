@@ -1,12 +1,12 @@
-use fractions::FastFraction;
+use fractions::ExtFraction;
 
 fn main() {
     // Basic usage examples
-    println!("=== FastFraction Library Demo ===\n");
+    println!("=== ExtFraction Library Demo ===\n");
 
     // Creating fractions
-    let f1 = FastFraction::new(3, 4);
-    let f2 = FastFraction::new(1, 2);
+    let f1 = ExtFraction::new(3, 4);
+    let f2 = ExtFraction::new(1, 2);
     println!("f1 = {}", f1);
     println!("f2 = {}", f2);
 
@@ -30,27 +30,27 @@ fn main() {
 
     // From string
     println!("\nFrom string:");
-    let f3 = FastFraction::from_str("5/6").unwrap();
-    println!("FastFraction::from_str(\"5/6\") = {}", f3);
+    let f3 = ExtFraction::from_str("5/6").unwrap();
+    println!("ExtFraction::from_str(\"5/6\") = {}", f3);
 
     // Limit denominator
     println!("\nLimit denominator:");
-    let pi_approx = FastFraction::new(355, 113);
+    let pi_approx = ExtFraction::new(355, 113);
     let limited = pi_approx.limit_denominator(100).unwrap();
     println!("355/113 limited to denominator 100 = {}", limited);
 
     // Is integer
     println!("\nIs integer:");
-    println!("4/2 is integer: {}", FastFraction::new(4, 2).is_integer());
-    println!("3/4 is integer: {}", FastFraction::new(3, 4).is_integer());
+    println!("4/2 is integer: {}", ExtFraction::new(4, 2).is_integer());
+    println!("3/4 is integer: {}", ExtFraction::new(3, 4).is_integer());
 
     // Special values
     println!("\n=== Special Values ===");
 
     // Division by zero
     println!("\nDivision by zero:");
-    let zero = FastFraction::from_integer(0);
-    let one = FastFraction::from_integer(1);
+    let zero = ExtFraction::from_integer(0);
+    let one = ExtFraction::from_integer(1);
     let pos_inf = one / zero;
     let neg_inf = -one / zero;
     println!("1 / 0 = {}", pos_inf);
@@ -68,7 +68,7 @@ fn main() {
 
     // Infinity operations
     println!("\nInfinity operations:");
-    let two = FastFraction::from_integer(2);
+    let two = ExtFraction::from_integer(2);
     println!("inf + 2 = {}", pos_inf + two);
     println!("inf - 2 = {}", pos_inf - two);
     println!("inf * 2 = {}", pos_inf * two);
@@ -79,21 +79,21 @@ fn main() {
 
     // Comparisons with special values
     println!("\nComparisons with special values:");
-    println!("inf > 1000: {}", pos_inf > FastFraction::from_integer(1000));
-    println!("-inf < -1000: {}", neg_inf < FastFraction::from_integer(-1000));
+    println!("inf > 1000: {}", pos_inf > ExtFraction::from_integer(1000));
+    println!("-inf < -1000: {}", neg_inf < ExtFraction::from_integer(-1000));
     println!("inf == inf: {}", pos_inf == pos_inf);
     println!("nan == nan: {}", nan == nan);
     println!("inf > -inf: {}", pos_inf > neg_inf);
 
     // From float with special values
     println!("\nFrom float:");
-    println!("FastFraction::from_float(f64::INFINITY) = {}", FastFraction::from_float(f64::INFINITY));
-    println!("FastFraction::from_float(f64::NEG_INFINITY) = {}", FastFraction::from_float(f64::NEG_INFINITY));
-    println!("FastFraction::from_float(f64::NAN) = {}", FastFraction::from_float(f64::NAN));
+    println!("ExtFraction::from_float(f64::INFINITY) = {}", ExtFraction::from_float(f64::INFINITY));
+    println!("ExtFraction::from_float(f64::NEG_INFINITY) = {}", ExtFraction::from_float(f64::NEG_INFINITY));
+    println!("ExtFraction::from_float(f64::NAN) = {}", ExtFraction::from_float(f64::NAN));
 
     // From string with special values
     println!("\nFrom string:");
-    println!("FastFraction::from_str(\"inf\") = {}", FastFraction::from_str("inf").unwrap());
-    println!("FastFraction::from_str(\"-inf\") = {}", FastFraction::from_str("-inf").unwrap());
-    println!("FastFraction::from_str(\"nan\") = {}", FastFraction::from_str("nan").unwrap());
+    println!("ExtFraction::from_str(\"inf\") = {}", ExtFraction::from_str("inf").unwrap());
+    println!("ExtFraction::from_str(\"-inf\") = {}", ExtFraction::from_str("-inf").unwrap());
+    println!("ExtFraction::from_str(\"nan\") = {}", ExtFraction::from_str("nan").unwrap());
 }

@@ -3,7 +3,7 @@
  */
 #include <doctest/doctest.h>
 
-#include <fractions/fastfractions.hpp>
+#include <fractions/extfractions.hpp>
 #include <ostream>
 
 using namespace fractions;
@@ -15,185 +15,185 @@ using namespace fractions;
 //     return std::strong_ordering::equivalent;
 // }
 
-TEST_CASE("FastFraction<int> add") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
-    CHECK_EQ(a + b, FastFraction<int>{19, 12});
+TEST_CASE("ExtFraction<int> add") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
+    CHECK_EQ(a + b, ExtFraction<int>{19, 12});
 }
 
-TEST_CASE("FastFraction<int> subtract") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
-    CHECK_EQ(a - b, FastFraction<int>{-1, 12});
+TEST_CASE("ExtFraction<int> subtract") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
+    CHECK_EQ(a - b, ExtFraction<int>{-1, 12});
 }
 
-TEST_CASE("FastFraction<int> multiply") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
-    CHECK_EQ(a * b, FastFraction<int>{15, 24});
+TEST_CASE("ExtFraction<int> multiply") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
+    CHECK_EQ(a * b, ExtFraction<int>{15, 24});
 }
 
-TEST_CASE("FastFraction<int> divide") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
-    CHECK_EQ(a / b, FastFraction<int>{9, 10});
+TEST_CASE("ExtFraction<int> divide") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
+    CHECK_EQ(a / b, ExtFraction<int>{9, 10});
 }
 
-TEST_CASE("FastFraction<int> neg") {
-    const auto a = FastFraction<int>{3, 4};
-    CHECK_EQ(-a, FastFraction<int>{-3, 4});
+TEST_CASE("ExtFraction<int> neg") {
+    const auto a = ExtFraction<int>{3, 4};
+    CHECK_EQ(-a, ExtFraction<int>{-3, 4});
 }
 
-TEST_CASE("FastFraction<int> abs") {
-    const auto a = FastFraction<int>{-3, 4};
-    CHECK_EQ(abs(a), FastFraction<int>{3, 4});
+TEST_CASE("ExtFraction<int> abs") {
+    const auto a = ExtFraction<int>{-3, 4};
+    CHECK_EQ(abs(a), ExtFraction<int>{3, 4});
 }
 
-TEST_CASE("FastFraction<int> less than") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
+TEST_CASE("ExtFraction<int> less than") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
     CHECK(a < b);
 }
 
-TEST_CASE("FastFraction<int> greater than") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{5, 6};
+TEST_CASE("ExtFraction<int> greater than") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{5, 6};
     CHECK(!(a > b));
 }
 
-TEST_CASE("FastFraction<int>::operator==") {
-    const auto a = FastFraction<int>{3, 4};
-    const auto b = FastFraction<int>{6, 8};
+TEST_CASE("ExtFraction<int>::operator==") {
+    const auto a = ExtFraction<int>{3, 4};
+    const auto b = ExtFraction<int>{6, 8};
     CHECK(a == b);
 }
 
-TEST_CASE("FastFraction<int>::operator== with zero denominator") {
-    const auto a = FastFraction<int>{0, 1};
-    const auto b = FastFraction<int>{0, 2};
+TEST_CASE("ExtFraction<int>::operator== with zero denominator") {
+    const auto a = ExtFraction<int>{0, 1};
+    const auto b = ExtFraction<int>{0, 2};
     CHECK(a == b);
 }
 
-TEST_CASE("FastFraction<int>::operator== with zero numerator and denominator") {
-    const auto a = FastFraction<int>{0, 1};
+TEST_CASE("ExtFraction<int>::operator== with zero numerator and denominator") {
+    const auto a = ExtFraction<int>{0, 1};
     CHECK(a == a);
 }
 
-TEST_CASE("FastFraction<int>::operator== with zero numerator and non-zero denominator") {
-    const auto a = FastFraction<int>{0, 1};
-    const auto b = FastFraction<int>{0, 2};
+TEST_CASE("ExtFraction<int>::operator== with zero numerator and non-zero denominator") {
+    const auto a = ExtFraction<int>{0, 1};
+    const auto b = ExtFraction<int>{0, 2};
     CHECK(a == b);
 }
 
-TEST_CASE("FastFraction<int>::operator== with non-zero numerator and zero denominator") {
-    const auto a = FastFraction<int>{1, 0};
+TEST_CASE("ExtFraction<int>::operator== with non-zero numerator and zero denominator") {
+    const auto a = ExtFraction<int>{1, 0};
     CHECK(a == a);
 }
 
-TEST_CASE("FastFraction<int>::operator== with non-zero numerator and non-zero denominator") {
-    const auto a = FastFraction<int>{1, 2};
+TEST_CASE("ExtFraction<int>::operator== with non-zero numerator and non-zero denominator") {
+    const auto a = ExtFraction<int>{1, 2};
     CHECK(a == a);
 }
 
-TEST_CASE("FastFraction<int>::operator<=") {
-    const auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator<=") {
+    const auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     CHECK(a <= b);
 }
 
-TEST_CASE("FastFraction<int>::operator>=") {
-    const auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator>=") {
+    const auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     CHECK(a >= b);
 }
 
-TEST_CASE("FastFraction<int>::operator<= with zero denominator and non-zero numerator") {
-    const auto a = FastFraction<int>{1, 0};
+TEST_CASE("ExtFraction<int>::operator<= with zero denominator and non-zero numerator") {
+    const auto a = ExtFraction<int>{1, 0};
     CHECK(a <= a);
 }
 
-TEST_CASE("FastFraction<int>::operator>= with zero denominator and non-zero numerator") {
-    const auto a = FastFraction<int>{1, 0};
+TEST_CASE("ExtFraction<int>::operator>= with zero denominator and non-zero numerator") {
+    const auto a = ExtFraction<int>{1, 0};
     CHECK(a >= a);
 }
 
-TEST_CASE("FastFraction<int>::operator+=") {
-    auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator+=") {
+    auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     a += b;
-    CHECK_EQ(a, FastFraction<int>{1, 1});
+    CHECK_EQ(a, ExtFraction<int>{1, 1});
 }
 
-TEST_CASE("FastFraction<int>::operator-=") {
-    auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator-=") {
+    auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     a -= b;
-    CHECK_EQ(a, FastFraction<int>{0, 1});
+    CHECK_EQ(a, ExtFraction<int>{0, 1});
 }
 
-TEST_CASE("FastFraction<int>::operator*=") {
-    auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator*=") {
+    auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     a *= b;
-    CHECK_EQ(a, FastFraction<int>{1, 4});
+    CHECK_EQ(a, ExtFraction<int>{1, 4});
 }
 
-TEST_CASE("FastFraction<int>::operator/=") {
-    auto a = FastFraction<int>{1, 2};
-    const auto b = FastFraction<int>{2, 4};
+TEST_CASE("ExtFraction<int>::operator/=") {
+    auto a = ExtFraction<int>{1, 2};
+    const auto b = ExtFraction<int>{2, 4};
     a /= b;
-    CHECK_EQ(a, FastFraction<int>{1, 1});
+    CHECK_EQ(a, ExtFraction<int>{1, 1});
 }
 
-TEST_CASE("FastFraction<int>::operator++") {
-    auto a = FastFraction<int>{1, 2};
-    CHECK_EQ(++a, FastFraction<int>{3, 2});
+TEST_CASE("ExtFraction<int>::operator++") {
+    auto a = ExtFraction<int>{1, 2};
+    CHECK_EQ(++a, ExtFraction<int>{3, 2});
 }
 
-TEST_CASE("FastFraction<int>::operator--") {
-    auto a = FastFraction<int>{1, 2};
-    CHECK_EQ(--a, FastFraction<int>{-1, 2});
+TEST_CASE("ExtFraction<int>::operator--") {
+    auto a = ExtFraction<int>{1, 2};
+    CHECK_EQ(--a, ExtFraction<int>{-1, 2});
 }
 
-TEST_CASE("FastFraction<int>::operator++ with postfix") {
-    auto a = FastFraction<int>{1, 2};
-    CHECK_EQ(a++, FastFraction<int>{1, 2});
+TEST_CASE("ExtFraction<int>::operator++ with postfix") {
+    auto a = ExtFraction<int>{1, 2};
+    CHECK_EQ(a++, ExtFraction<int>{1, 2});
 }
 
-TEST_CASE("FastFraction<int>::operator-- with postfix") {
-    auto a = FastFraction<int>{1, 2};
-    CHECK_EQ(a--, FastFraction<int>{1, 2});
+TEST_CASE("ExtFraction<int>::operator-- with postfix") {
+    auto a = ExtFraction<int>{1, 2};
+    CHECK_EQ(a--, ExtFraction<int>{1, 2});
 }
 
-TEST_CASE("FastFraction<int>::operator* with zero denominator and non-zero numerator") {
-    const auto a = FastFraction<int>{1, 0};
+TEST_CASE("ExtFraction<int>::operator* with zero denominator and non-zero numerator") {
+    const auto a = ExtFraction<int>{1, 0};
     CHECK(a * a == a);
 }
 
-TEST_CASE("FastFraction<int>::operator* with zero numerator and non-zero denominator") {
-    const auto a = FastFraction<int>{0, 1};
+TEST_CASE("ExtFraction<int>::operator* with zero numerator and non-zero denominator") {
+    const auto a = ExtFraction<int>{0, 1};
     CHECK(a * a == a);
 }
 
-TEST_CASE("FastFraction") {
+TEST_CASE("ExtFraction") {
     const auto val_a = 3U;
     const auto val_b = 4U;
     const auto val_c = 5U;
     const auto val_d = 6U;
 
-    const auto p = FastFraction<int>{val_a, val_b};
-    const auto q = FastFraction<int>{val_c, val_d};
+    const auto p = ExtFraction<int>{val_a, val_b};
+    const auto q = ExtFraction<int>{val_c, val_d};
 
-    CHECK(p == FastFraction<int>(30U, 40U));
-    CHECK(p + q == FastFraction<int>(19U, 12U));
+    CHECK(p == ExtFraction<int>(30U, 40U));
+    CHECK(p + q == ExtFraction<int>(19U, 12U));
     CHECK((p - q) + q == p);
     // CHECK(p != 0);
 }
 
-TEST_CASE("FastFraction Special Cases") {
-    const auto posf = FastFraction<int>{3, 4};
-    const auto inf = FastFraction<int>{1, 0};
-    const auto nan = FastFraction<int>{0, 0};
-    const auto zero = FastFraction<int>{0, 1};
+TEST_CASE("ExtFraction Special Cases") {
+    const auto posf = ExtFraction<int>{3, 4};
+    const auto inf = ExtFraction<int>{1, 0};
+    const auto nan = ExtFraction<int>{0, 0};
+    const auto zero = ExtFraction<int>{0, 1};
 
     CHECK(-inf < zero);
     CHECK(zero < inf);
@@ -254,56 +254,56 @@ TEST_CASE("lcm function") {
     CHECK(lcm(-12, -8) == 24);
 }
 
-TEST_CASE("FastFraction construction") {
+TEST_CASE("ExtFraction construction") {
     SUBCASE("default constructor") {
-        FastFraction<int> f;
+        ExtFraction<int> f;
         CHECK(f.numer() == 0);
         CHECK(f.denom() == 1);
     }
 
     SUBCASE("single argument constructor") {
-        FastFraction<int> f1(5);
+        ExtFraction<int> f1(5);
         CHECK(f1.numer() == 5);
         CHECK(f1.denom() == 1);
 
-        FastFraction<int> f2(-3);
+        ExtFraction<int> f2(-3);
         CHECK(f2.numer() == -3);
         CHECK(f2.denom() == 1);
     }
 
     SUBCASE("two argument constructor") {
-        FastFraction<int> f1(1, 2);
+        ExtFraction<int> f1(1, 2);
         CHECK(f1.numer() == 1);
         CHECK(f1.denom() == 2);
 
-        FastFraction<int> f2(-1, 2);
+        ExtFraction<int> f2(-1, 2);
         CHECK(f2.numer() == -1);
         CHECK(f2.denom() == 2);
 
-        FastFraction<int> f3(1, -2);
+        ExtFraction<int> f3(1, -2);
         CHECK(f3.numer() == -1);
         CHECK(f3.denom() == 2);
 
-        FastFraction<int> f4(-1, -2);
+        ExtFraction<int> f4(-1, -2);
         CHECK(f4.numer() == 1);
         CHECK(f4.denom() == 2);
 
-        FastFraction<int> f5(2, 4);
+        ExtFraction<int> f5(2, 4);
         CHECK(f5.numer() == 1);
         CHECK(f5.denom() == 2);
 
-        FastFraction<int> f6(0, 5);
+        ExtFraction<int> f6(0, 5);
         CHECK(f6.numer() == 0);
         CHECK(f6.denom() == 1);
     }
 }
 
-TEST_CASE("FastFraction comparison operators") {
-    FastFraction<int> half(1, 2);
-    FastFraction<int> quarter(1, 4);
-    FastFraction<int> two_quarters(2, 4);
-    FastFraction<int> negative_half(-1, 2);
-    FastFraction<int> one(1);
+TEST_CASE("ExtFraction comparison operators") {
+    ExtFraction<int> half(1, 2);
+    ExtFraction<int> quarter(1, 4);
+    ExtFraction<int> two_quarters(2, 4);
+    ExtFraction<int> negative_half(-1, 2);
+    ExtFraction<int> one(1);
 
     SUBCASE("equality") {
         CHECK(half == half);
@@ -364,26 +364,26 @@ TEST_CASE("FastFraction comparison operators") {
     }
 }
 
-TEST_CASE("FastFraction arithmetic operations") {
-    FastFraction<int> half(1, 2);
-    FastFraction<int> quarter(1, 4);
-    FastFraction<int> three_quarters(3, 4);
-    FastFraction<int> one(1);
-    FastFraction<int> two(2);
-    FastFraction<int> negative_half(-1, 2);
+TEST_CASE("ExtFraction arithmetic operations") {
+    ExtFraction<int> half(1, 2);
+    ExtFraction<int> quarter(1, 4);
+    ExtFraction<int> three_quarters(3, 4);
+    ExtFraction<int> one(1);
+    ExtFraction<int> two(2);
+    ExtFraction<int> negative_half(-1, 2);
 
     SUBCASE("addition") {
         CHECK(half + quarter == three_quarters);
         CHECK(half + half == one);
-        CHECK(half + 1 == FastFraction<int>(3, 2));
-        CHECK(1 + half == FastFraction<int>(3, 2));
-        CHECK(half + negative_half == FastFraction<int>(0, 1));
+        CHECK(half + 1 == ExtFraction<int>(3, 2));
+        CHECK(1 + half == ExtFraction<int>(3, 2));
+        CHECK(half + negative_half == ExtFraction<int>(0, 1));
     }
 
     SUBCASE("subtraction") {
         CHECK(half - quarter == quarter);
         CHECK(three_quarters - half == quarter);
-        CHECK(half - half == FastFraction<int>(0, 1));
+        CHECK(half - half == ExtFraction<int>(0, 1));
         CHECK(half - 1 == negative_half);
         CHECK(1 - half == half);
     }
@@ -394,25 +394,25 @@ TEST_CASE("FastFraction arithmetic operations") {
         CHECK(two * half == one);
         CHECK(half * 2 == one);
         CHECK(2 * half == one);
-        CHECK(half * negative_half == FastFraction<int>(-1, 4));
+        CHECK(half * negative_half == ExtFraction<int>(-1, 4));
     }
 
     SUBCASE("division") {
         CHECK(half / half == one);
         CHECK(one / half == two);
         CHECK(half / 2 == quarter);
-        CHECK(2 / half == FastFraction<int>(4, 1));
-        CHECK(one / negative_half == FastFraction<int>(-2, 1));
+        CHECK(2 / half == ExtFraction<int>(4, 1));
+        CHECK(one / negative_half == ExtFraction<int>(-2, 1));
     }
 
     SUBCASE("negation") {
         CHECK(-half == negative_half);
         CHECK(-negative_half == half);
-        CHECK(-one == FastFraction<int>(-1, 1));
+        CHECK(-one == ExtFraction<int>(-1, 1));
     }
 
     SUBCASE("compound assignment") {
-        FastFraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         f += quarter;
         CHECK(f == three_quarters);
 
@@ -439,64 +439,77 @@ TEST_CASE("FastFraction arithmetic operations") {
     }
 
     SUBCASE("increment/decrement") {
-        FastFraction<int> f(3, 2);
-        CHECK(++f == FastFraction<int>(5, 2));
-        CHECK(f-- == FastFraction<int>(5, 2));
-        CHECK(f == FastFraction<int>(3, 2));
+        ExtFraction<int> f(3, 2);
+        CHECK(++f == ExtFraction<int>(5, 2));
+        CHECK(f-- == ExtFraction<int>(5, 2));
+        CHECK(f == ExtFraction<int>(3, 2));
         CHECK(--f == half);
         CHECK(f++ == half);
-        CHECK(f == FastFraction<int>(3, 2));
+        CHECK(f == ExtFraction<int>(3, 2));
     }
 }
 
-TEST_CASE("FastFraction utility methods") {
-    FastFraction<int> half(1, 2);
-    FastFraction<int> negative_half(-1, 2);
-    FastFraction<int> two_fourths(2, 4);
+TEST_CASE("ExtFraction utility methods") {
+    ExtFraction<int> half(1, 2);
+    ExtFraction<int> negative_half(-1, 2);
+    ExtFraction<int> two_fourths(2, 4);
 
     SUBCASE("reciprocal") {
         half.reciprocal();
-        CHECK(half == FastFraction<int>(2, 1));
+        CHECK(half == ExtFraction<int>(2, 1));
         half.reciprocal();
-        CHECK(half == FastFraction<int>(1, 2));
+        CHECK(half == ExtFraction<int>(1, 2));
 
         negative_half.reciprocal();
-        CHECK(negative_half == FastFraction<int>(-2, 1));
+        CHECK(negative_half == ExtFraction<int>(-2, 1));
     }
 
     SUBCASE("cross product") {
         CHECK(half.cross(two_fourths) == 0);
-        CHECK(half.cross(FastFraction<int>(3, 4)) == -2);
+        CHECK(half.cross(ExtFraction<int>(3, 4)) == -2);
         CHECK(half.cross(negative_half) == 4);
     }
 
     SUBCASE("normalization") {
-        FastFraction<int> f(2, -4);
+        ExtFraction<int> f(2, -4);
         CHECK(f.numer() == -1);
         CHECK(f.denom() == 2);
 
-        f = FastFraction<int>(-2, -4);
+        f = ExtFraction<int>(-2, -4);
         CHECK(f.numer() == 1);
         CHECK(f.denom() == 2);
     }
 }
 
-TEST_CASE("FastFraction with different types") {
+TEST_CASE("ExtFraction with different types") {
     SUBCASE("long") {
-        FastFraction<long> f(1000000000L, 2000000000L);
+        ExtFraction<long> f(1000000000L, 2000000000L);
         CHECK(f.numer() == 1);
         CHECK(f.denom() == 2);
     }
 
     // SUBCASE("unsigned") {
-    //     FastFraction<unsigned> f(3u, 6u);
+    //     ExtFraction<unsigned> f(3u, 6u);
     //     CHECK(f.numer() == 1);
     //     CHECK(f.denom() == 2);
     // }
 
     // SUBCASE("short") {
-    //     FastFraction<short> f(3, 6);
+    //     ExtFraction<short> f(3, 6);
     //     CHECK(f.numer() == 1);
     //     CHECK(f.denom() == 2);
     // }
+}
+
+TEST_CASE("ExtFraction operator<") {
+    const auto val_a = 3;
+    const auto val_b = -4;
+    const auto val_c = 5;
+    const auto val_d = 6;
+
+    const auto p = ExtFraction<int>{val_a, val_b};
+    const auto q = ExtFraction<int>{val_c, val_d};
+
+    CHECK(p < q);
+    // CHECK(p != 0);
 }

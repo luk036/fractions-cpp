@@ -1,5 +1,5 @@
 // #include <fmt/format.h>
-#include <fractions/fastfractions.hpp>
+#include <fractions/extfractions.hpp>
 
 // using namespace fractions;
 

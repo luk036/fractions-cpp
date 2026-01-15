@@ -1,47 +1,56 @@
 set_languages("c++20")
 add_repositories("local-repo", "$(projectdir)/packages")
+includes("bench")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("doctest", {alias = "doctest"})
-add_requires("fmt", {alias = "fmt"})
-add_requires("spdlog", {alias = "spdlog"})
+add_requires("doctest", { alias = "doctest" })
+add_requires("fmt", { alias = "fmt" })
+add_requires("spdlog", { alias = "spdlog" })
 
 
 if is_mode("coverage") then
-    add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
+    add_cxflags("-ftest-coverage", "-fprofile-arcs", { force = true })
 end
 
 if is_plat("linux") then
     set_warnings("all")
-    add_cxflags("-Wconversion", {force = true})
-    add_cxflags("-Wno-unused-command-line-argument", {force = true})
+    add_cxflags("-Wconversion", { force = true })
+    add_cxflags("-Wno-unused-command-line-argument", { force = true })
     -- Check if we're on Termux/Android
     local termux_prefix = os.getenv("PREFIX")
     if termux_prefix then
-        add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
-        add_sysincludedirs(termux_prefix .. "/include", {public = true})
+        add_sysincludedirs(termux_prefix .. "/include/c++/v1", { public = true })
+        add_sysincludedirs(termux_prefix .. "/include", { public = true })
     end
 elseif is_plat("windows") then
-    add_cxflags("/W4 /WX /wd4819 /wd4996 /wd4530", {force = true})
+    add_cxflags("/W4 /WX /wd4819 /wd4996 /wd4530", { force = true })
 end
 
 -- header only package
 
 target("test_frac")
-    set_kind("binary")
-    add_includedirs("include", {public = true})
-    add_files("test/source/main.cpp")
-    add_files("test/source/test_frac.cpp")
-    add_files("test/source/test_frac_extended.cpp")
-    add_files("test/source/test_frac_stress.cpp")
-    add_packages("doctest", "fmt", "spdlog")
-    add_tests("default")
+set_kind("binary")
+add_includedirs("include", { public = true })
+add_files("test/source/main.cpp")
+add_files("test/source/test_frac.cpp")
+add_files("test/source/test_frac_extended.cpp")
+add_files("test/source/test_frac_stress.cpp")
+add_files("test/source/test_pyfractions.cpp")
+add_packages("doctest", "fmt", "spdlog")
+add_tests("default")
+
+-- target("test_pyfractions")
+--     set_kind("binary")
+--     add_includedirs("include", {public = true})
+--     add_files("test/source/test_pyfractions.cpp")
+--     add_packages("doctest")
+--     add_tests("default")
 
 target("spdlog_example")
-    set_kind("binary")
-    add_includedirs("include", {public = true})
-    add_files("examples/spdlog_example.cpp")
-    add_packages("fmt", "spdlog")
+set_kind("binary")
+add_includedirs("include", { public = true })
+add_files("examples/spdlog_example.cpp")
+add_packages("fmt", "spdlog")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
@@ -111,4 +120,3 @@ target("spdlog_example")
 --
 -- @endcode
 --
-

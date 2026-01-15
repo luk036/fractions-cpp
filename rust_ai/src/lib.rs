@@ -5,12 +5,12 @@ use std::ops::*;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Copy)]
-pub struct FastFraction {
+pub struct ExtFraction {
     numerator: i128,
     denominator: i128,
 }
 
-impl PartialEq for FastFraction {
+impl PartialEq for ExtFraction {
     fn eq(&self, other: &Self) -> bool {
         // NaN != NaN
         if self.is_nan() || other.is_nan() {
@@ -32,30 +32,30 @@ impl PartialEq for FastFraction {
     }
 }
 
-impl Eq for FastFraction {}
+impl Eq for ExtFraction {}
 
-impl FastFraction {
+impl ExtFraction {
     pub fn new(numerator: i128, denominator: i128) -> Self {
         if denominator == 0 {
             if numerator == 0 {
-                FastFraction {
+                ExtFraction {
                     numerator: 0,
                     denominator: 0,
                 }
             } else if numerator > 0 {
-                FastFraction {
+                ExtFraction {
                     numerator: 1,
                     denominator: 0,
                 }
             } else {
-                FastFraction {
+                ExtFraction {
                     numerator: -1,
                     denominator: 0,
                 }
             }
         } else {
             let (num, den) = Self::reduce(numerator, denominator);
-            FastFraction {
+            ExtFraction {
                 numerator: num,
                 denominator: den,
             }
@@ -63,21 +63,21 @@ impl FastFraction {
     }
 
     pub fn from_integer(n: i128) -> Self {
-        FastFraction {
+        ExtFraction {
             numerator: n,
             denominator: 1,
         }
     }
 
     pub fn infinity(sign: bool) -> Self {
-        FastFraction {
+        ExtFraction {
             numerator: if sign { 1 } else { -1 },
             denominator: 0,
         }
     }
 
     pub fn nan() -> Self {
-        FastFraction {
+        ExtFraction {
             numerator: 0,
             denominator: 0,
         }
@@ -120,7 +120,7 @@ impl FastFraction {
             (numerator, 1i128.checked_shl((-exponent) as u32).unwrap_or(i128::MAX))
         };
 
-        FastFraction {
+        ExtFraction {
             numerator: num,
             denominator: den,
         }
@@ -146,7 +146,7 @@ impl FastFraction {
                     Ok(Self::from_float(f))
                 } else {
                     let num: i128 = s.parse().map_err(|_| "Invalid integer")?;
-                    Ok(FastFraction::from_integer(num))
+                    Ok(ExtFraction::from_integer(num))
                 }
             }
         }
@@ -224,19 +224,19 @@ impl FastFraction {
         let k = (max_denominator - q0) / q1;
 
         if 2 * d * (q0 + k * q1) <= self.denominator {
-            Ok(FastFraction {
+            Ok(ExtFraction {
                 numerator: p1,
                 denominator: q1,
             })
         } else {
-            Ok(FastFraction {
+            Ok(ExtFraction {
                 numerator: p0 + k * p1,
                 denominator: q0 + k * q1,
             })
         }
     }
 
-    fn add(self, other: FastFraction) -> FastFraction {
+    fn add(self, other: ExtFraction) -> ExtFraction {
         // Handle special values
         if self.is_nan() || other.is_nan() {
             return Self::nan();
@@ -256,7 +256,7 @@ impl FastFraction {
         let g = gcd(da, db);
         if g == 1 {
             let (num, den) = Self::reduce(na * db + da * nb, da * db);
-            return FastFraction { numerator: num, denominator: den };
+            return ExtFraction { numerator: num, denominator: den };
         }
 
         let s = da / g;
@@ -265,14 +265,14 @@ impl FastFraction {
 
         if g2 == 1 {
             let (num, den) = Self::reduce(t, s * db);
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         } else {
             let (num, den) = Self::reduce(t / g2, s * (db / g2));
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         }
     }
 
-    fn sub(self, other: FastFraction) -> FastFraction {
+    fn sub(self, other: ExtFraction) -> ExtFraction {
         // Handle special values
         if self.is_nan() || other.is_nan() {
             return Self::nan();
@@ -297,7 +297,7 @@ impl FastFraction {
         let g = gcd(da, db);
         if g == 1 {
             let (num, den) = Self::reduce(na * db - da * nb, da * db);
-            return FastFraction { numerator: num, denominator: den };
+            return ExtFraction { numerator: num, denominator: den };
         }
 
         let s = da / g;
@@ -306,14 +306,14 @@ impl FastFraction {
 
         if g2 == 1 {
             let (num, den) = Self::reduce(t, s * db);
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         } else {
             let (num, den) = Self::reduce(t / g2, s * (db / g2));
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         }
     }
 
-    fn mul(self, other: FastFraction) -> FastFraction {
+    fn mul(self, other: ExtFraction) -> ExtFraction {
         // Handle special values
         if self.is_nan() || other.is_nan() {
             return Self::nan();
@@ -355,10 +355,10 @@ impl FastFraction {
         }
 
         let (num, den) = Self::reduce(na * nb, db * da);
-        FastFraction { numerator: num, denominator: den }
+        ExtFraction { numerator: num, denominator: den }
     }
 
-    fn div(self, other: FastFraction) -> FastFraction {
+    fn div(self, other: ExtFraction) -> ExtFraction {
         // Handle special values
         if self.is_nan() || other.is_nan() {
             return Self::nan();
@@ -405,13 +405,13 @@ impl FastFraction {
         }
 
         let (reduced_num, reduced_den) = Self::reduce(num, den);
-        FastFraction {
+        ExtFraction {
             numerator: reduced_num,
             denominator: reduced_den,
         }
     }
 
-    pub fn pow(&self, exp: i32) -> FastFraction {
+    pub fn pow(&self, exp: i32) -> ExtFraction {
         if self.is_nan() {
             return Self::nan();
         }
@@ -431,7 +431,7 @@ impl FastFraction {
                 self.numerator.pow(exp as u32),
                 self.denominator.pow(exp as u32),
             );
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         } else {
             if self.numerator == 0 {
                 return Self::infinity(true); // 0^(-n) = infinity
@@ -440,7 +440,7 @@ impl FastFraction {
                 self.denominator.pow((-exp) as u32),
                 self.numerator.pow((-exp) as u32),
             );
-            FastFraction { numerator: num, denominator: den }
+            ExtFraction { numerator: num, denominator: den }
         }
     }
 }
@@ -456,104 +456,104 @@ fn gcd(a: i128, b: i128) -> i128 {
     a
 }
 
-impl Add for FastFraction {
-    type Output = FastFraction;
+impl Add for ExtFraction {
+    type Output = ExtFraction;
 
     fn add(self, other: Self) -> Self::Output {
         self.add(other)
     }
 }
 
-impl Add<i128> for FastFraction {
-    type Output = FastFraction;
+impl Add<i128> for ExtFraction {
+    type Output = ExtFraction;
 
     fn add(self, other: i128) -> Self::Output {
-        self + FastFraction::from_integer(other)
+        self + ExtFraction::from_integer(other)
     }
 }
 
-impl Add<FastFraction> for i128 {
-    type Output = FastFraction;
+impl Add<ExtFraction> for i128 {
+    type Output = ExtFraction;
 
-    fn add(self, other: FastFraction) -> Self::Output {
-        FastFraction::from_integer(self) + other
+    fn add(self, other: ExtFraction) -> Self::Output {
+        ExtFraction::from_integer(self) + other
     }
 }
 
-impl Sub for FastFraction {
-    type Output = FastFraction;
+impl Sub for ExtFraction {
+    type Output = ExtFraction;
 
     fn sub(self, other: Self) -> Self::Output {
         self.sub(other)
     }
 }
 
-impl Sub<i128> for FastFraction {
-    type Output = FastFraction;
+impl Sub<i128> for ExtFraction {
+    type Output = ExtFraction;
 
     fn sub(self, other: i128) -> Self::Output {
-        self - FastFraction::from_integer(other)
+        self - ExtFraction::from_integer(other)
     }
 }
 
-impl Sub<FastFraction> for i128 {
-    type Output = FastFraction;
+impl Sub<ExtFraction> for i128 {
+    type Output = ExtFraction;
 
-    fn sub(self, other: FastFraction) -> Self::Output {
-        FastFraction::from_integer(self) - other
+    fn sub(self, other: ExtFraction) -> Self::Output {
+        ExtFraction::from_integer(self) - other
     }
 }
 
-impl Mul for FastFraction {
-    type Output = FastFraction;
+impl Mul for ExtFraction {
+    type Output = ExtFraction;
 
     fn mul(self, other: Self) -> Self::Output {
         self.mul(other)
     }
 }
 
-impl Mul<i128> for FastFraction {
-    type Output = FastFraction;
+impl Mul<i128> for ExtFraction {
+    type Output = ExtFraction;
 
     fn mul(self, other: i128) -> Self::Output {
-        self * FastFraction::from_integer(other)
+        self * ExtFraction::from_integer(other)
     }
 }
 
-impl Mul<FastFraction> for i128 {
-    type Output = FastFraction;
+impl Mul<ExtFraction> for i128 {
+    type Output = ExtFraction;
 
-    fn mul(self, other: FastFraction) -> Self::Output {
-        FastFraction::from_integer(self) * other
+    fn mul(self, other: ExtFraction) -> Self::Output {
+        ExtFraction::from_integer(self) * other
     }
 }
 
-impl Div for FastFraction {
-    type Output = FastFraction;
+impl Div for ExtFraction {
+    type Output = ExtFraction;
 
     fn div(self, other: Self) -> Self::Output {
         self.div(other)
     }
 }
 
-impl Div<i128> for FastFraction {
-    type Output = FastFraction;
+impl Div<i128> for ExtFraction {
+    type Output = ExtFraction;
 
     fn div(self, other: i128) -> Self::Output {
-        self / FastFraction::from_integer(other)
+        self / ExtFraction::from_integer(other)
     }
 }
 
-impl Div<FastFraction> for i128 {
-    type Output = FastFraction;
+impl Div<ExtFraction> for i128 {
+    type Output = ExtFraction;
 
-    fn div(self, other: FastFraction) -> Self::Output {
-        FastFraction::from_integer(self) / other
+    fn div(self, other: ExtFraction) -> Self::Output {
+        ExtFraction::from_integer(self) / other
     }
 }
 
-impl Neg for FastFraction {
-    type Output = FastFraction;
+impl Neg for ExtFraction {
+    type Output = ExtFraction;
 
     fn neg(self) -> Self::Output {
         if self.is_nan() {
@@ -562,14 +562,14 @@ impl Neg for FastFraction {
         if self.is_infinite() {
             return Self::infinity(self.numerator < 0);
         }
-        FastFraction {
+        ExtFraction {
             numerator: -self.numerator,
             denominator: self.denominator,
         }
     }
 }
 
-impl PartialOrd for FastFraction {
+impl PartialOrd for ExtFraction {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         // NaN comparisons return None
         if self.is_nan() || other.is_nan() {
@@ -607,20 +607,20 @@ impl PartialOrd for FastFraction {
     }
 }
 
-impl Ord for FastFraction {
+impl Ord for ExtFraction {
     fn cmp(&self, other: &Self) -> Ordering {
         (self.numerator * other.denominator).cmp(&(other.numerator * self.denominator))
     }
 }
 
-impl Hash for FastFraction {
+impl Hash for ExtFraction {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.numerator.hash(state);
         self.denominator.hash(state);
     }
 }
 
-impl fmt::Display for FastFraction {
+impl fmt::Display for ExtFraction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if self.denominator == 0 {
             if self.numerator == 0 {
@@ -638,11 +638,11 @@ impl fmt::Display for FastFraction {
     }
 }
 
-impl FromStr for FastFraction {
+impl FromStr for ExtFraction {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        FastFraction::from_str(s)
+        ExtFraction::from_str(s)
     }
 }
 
@@ -652,37 +652,37 @@ mod tests {
 
     #[test]
     fn test_creation() {
-        let f = FastFraction::new(4, 3);
+        let f = ExtFraction::new(4, 3);
         assert_eq!(f.numerator(), 4);
         assert_eq!(f.denominator(), 3);
 
-        let f = FastFraction::new(8, 6);
+        let f = ExtFraction::new(8, 6);
         assert_eq!(f.numerator(), 4);
         assert_eq!(f.denominator(), 3);
 
-        let f = FastFraction::new(-5, 4);
+        let f = ExtFraction::new(-5, 4);
         assert_eq!(f.numerator(), -5);
         assert_eq!(f.denominator(), 4);
     }
 
     #[test]
     fn test_zero_denominator() {
-        let f = FastFraction::new(1, 0);
+        let f = ExtFraction::new(1, 0);
         assert!(f.is_infinite());
         assert!(!f.is_finite());
     }
 
     #[test]
     fn test_from_integer() {
-        let f = FastFraction::from_integer(5);
+        let f = ExtFraction::from_integer(5);
         assert_eq!(f.numerator(), 5);
         assert_eq!(f.denominator(), 1);
     }
 
     #[test]
     fn test_addition() {
-        let f1 = FastFraction::new(1, 2);
-        let f2 = FastFraction::new(1, 3);
+        let f1 = ExtFraction::new(1, 2);
+        let f2 = ExtFraction::new(1, 3);
         let result = f1 + f2;
         assert_eq!(result.numerator(), 5);
         assert_eq!(result.denominator(), 6);
@@ -690,8 +690,8 @@ mod tests {
 
     #[test]
     fn test_subtraction() {
-        let f1 = FastFraction::new(3, 4);
-        let f2 = FastFraction::new(1, 4);
+        let f1 = ExtFraction::new(3, 4);
+        let f2 = ExtFraction::new(1, 4);
         let result = f1 - f2;
         assert_eq!(result.numerator(), 1);
         assert_eq!(result.denominator(), 2);
@@ -699,8 +699,8 @@ mod tests {
 
     #[test]
     fn test_multiplication() {
-        let f1 = FastFraction::new(2, 3);
-        let f2 = FastFraction::new(3, 4);
+        let f1 = ExtFraction::new(2, 3);
+        let f2 = ExtFraction::new(3, 4);
         let result = f1 * f2;
         assert_eq!(result.numerator(), 1);
         assert_eq!(result.denominator(), 2);
@@ -708,8 +708,8 @@ mod tests {
 
     #[test]
     fn test_division() {
-        let f1 = FastFraction::new(3, 4);
-        let f2 = FastFraction::new(1, 2);
+        let f1 = ExtFraction::new(3, 4);
+        let f2 = ExtFraction::new(1, 2);
         let result = f1 / f2;
         assert_eq!(result.numerator(), 3);
         assert_eq!(result.denominator(), 2);
@@ -717,15 +717,15 @@ mod tests {
 
     #[test]
     fn test_division_by_zero() {
-        let f1 = FastFraction::new(1, 2);
-        let f2 = FastFraction::new(0, 1);
+        let f1 = ExtFraction::new(1, 2);
+        let f2 = ExtFraction::new(0, 1);
         let result = f1 / f2;
         assert!(result.is_infinite());
     }
 
     #[test]
     fn test_negation() {
-        let f = FastFraction::new(3, 4);
+        let f = ExtFraction::new(3, 4);
         let result = -f;
         assert_eq!(result.numerator(), -3);
         assert_eq!(result.denominator(), 4);
@@ -733,38 +733,38 @@ mod tests {
 
     #[test]
     fn test_comparison() {
-        let f1 = FastFraction::new(1, 2);
-        let f2 = FastFraction::new(1, 3);
+        let f1 = ExtFraction::new(1, 2);
+        let f2 = ExtFraction::new(1, 3);
         assert!(f1 > f2);
         assert!(f2 < f1);
         assert!(f1 >= f2);
         assert!(f2 <= f1);
-        assert_eq!(f1, FastFraction::new(2, 4));
+        assert_eq!(f1, ExtFraction::new(2, 4));
     }
 
     #[test]
     fn test_display() {
-        let f = FastFraction::new(3, 4);
+        let f = ExtFraction::new(3, 4);
         assert_eq!(format!("{}", f), "3/4");
 
-        let f = FastFraction::new(5, 1);
+        let f = ExtFraction::new(5, 1);
         assert_eq!(format!("{}", f), "5");
     }
 
     #[test]
     fn test_from_str() {
-        let f = FastFraction::from_str("3/4").unwrap();
+        let f = ExtFraction::from_str("3/4").unwrap();
         assert_eq!(f.numerator(), 3);
         assert_eq!(f.denominator(), 4);
 
-        let f = FastFraction::from_str("5").unwrap();
+        let f = ExtFraction::from_str("5").unwrap();
         assert_eq!(f.numerator(), 5);
         assert_eq!(f.denominator(), 1);
     }
 
     #[test]
     fn test_pow() {
-        let f = FastFraction::new(2, 3);
+        let f = ExtFraction::new(2, 3);
         let result = f.pow(2);
         assert_eq!(result.numerator(), 4);
         assert_eq!(result.denominator(), 9);
@@ -776,7 +776,7 @@ mod tests {
 
     #[test]
     fn test_limit_denominator() {
-        let f = FastFraction::new(22, 7);
+        let f = ExtFraction::new(22, 7);
         let result = f.limit_denominator(10).unwrap();
         assert_eq!(result.numerator(), 22);
         assert_eq!(result.denominator(), 7);
@@ -784,17 +784,17 @@ mod tests {
 
     #[test]
     fn test_is_integer() {
-        let f = FastFraction::new(4, 2);
+        let f = ExtFraction::new(4, 2);
         assert!(f.is_integer());
 
-        let f = FastFraction::new(3, 4);
+        let f = ExtFraction::new(3, 4);
         assert!(!f.is_integer());
     }
 
     #[test]
     fn test_special_values() {
-        let zero = FastFraction::from_integer(0);
-        let one = FastFraction::from_integer(1);
+        let zero = ExtFraction::from_integer(0);
+        let one = ExtFraction::from_integer(1);
 
         // Positive infinity
         let pos_inf = one / zero;
@@ -819,8 +819,8 @@ mod tests {
         assert!(nan != nan);
 
         // Infinity comparisons
-        assert!(pos_inf > FastFraction::from_integer(1000));
-        assert!(neg_inf < FastFraction::from_integer(-1000));
+        assert!(pos_inf > ExtFraction::from_integer(1000));
+        assert!(neg_inf < ExtFraction::from_integer(-1000));
         assert!(pos_inf > neg_inf);
         assert_eq!(pos_inf, pos_inf);
         assert_eq!(neg_inf, neg_inf);
@@ -828,9 +828,9 @@ mod tests {
 
     #[test]
     fn test_infinity_operations() {
-        let zero = FastFraction::from_integer(0);
-        let one = FastFraction::from_integer(1);
-        let two = FastFraction::from_integer(2);
+        let zero = ExtFraction::from_integer(0);
+        let one = ExtFraction::from_integer(1);
+        let two = ExtFraction::from_integer(2);
         let inf = one / zero;
 
         // Addition
@@ -852,28 +852,28 @@ mod tests {
 
     #[test]
     fn test_from_float_special() {
-        let pos_inf = FastFraction::from_float(f64::INFINITY);
+        let pos_inf = ExtFraction::from_float(f64::INFINITY);
         assert!(pos_inf.is_infinite());
         assert_eq!(format!("{}", pos_inf), "inf");
 
-        let neg_inf = FastFraction::from_float(f64::NEG_INFINITY);
+        let neg_inf = ExtFraction::from_float(f64::NEG_INFINITY);
         assert!(neg_inf.is_infinite());
         assert_eq!(format!("{}", neg_inf), "-inf");
 
-        let nan = FastFraction::from_float(f64::NAN);
+        let nan = ExtFraction::from_float(f64::NAN);
         assert!(nan.is_nan());
         assert_eq!(format!("{}", nan), "nan");
     }
 
     #[test]
     fn test_from_str_special() {
-        let pos_inf = FastFraction::from_str("inf").unwrap();
+        let pos_inf = ExtFraction::from_str("inf").unwrap();
         assert!(pos_inf.is_infinite());
 
-        let neg_inf = FastFraction::from_str("-inf").unwrap();
+        let neg_inf = ExtFraction::from_str("-inf").unwrap();
         assert!(neg_inf.is_infinite());
 
-        let nan = FastFraction::from_str("nan").unwrap();
+        let nan = ExtFraction::from_str("nan").unwrap();
         assert!(nan.is_nan());
     }
 }
@@ -887,8 +887,8 @@ mod proptests {
         #[test]
         fn prop_addition_commutative(a in -1000i128..1000, b in -1000i128..1000) {
             if b != 0 {
-                let f1 = FastFraction::new(a, b);
-                let f2 = FastFraction::new(b, a.abs() + 1);
+                let f1 = ExtFraction::new(a, b);
+                let f2 = ExtFraction::new(b, a.abs() + 1);
                 prop_assert_eq!(f1 + f2, f2 + f1);
             }
         }
@@ -903,17 +903,17 @@ mod proptests {
             f in 1i128..100,
             g in 1i128..100
         ) {
-            let f1 = FastFraction::new(a, e);
-            let f2 = FastFraction::new(b, f);
-            let f3 = FastFraction::new(c, g);
+            let f1 = ExtFraction::new(a, e);
+            let f2 = ExtFraction::new(b, f);
+            let f3 = ExtFraction::new(c, g);
             prop_assert_eq!((f1 + f2) + f3, f1 + (f2 + f3));
         }
 
         #[test]
         fn prop_multiplication_commutative(a in -1000i128..1000, b in -1000i128..1000) {
             if b != 0 && a != 0 {
-                let f1 = FastFraction::new(a, b);
-                let f2 = FastFraction::new(b, a.abs() + 1);
+                let f1 = ExtFraction::new(a, b);
+                let f2 = ExtFraction::new(b, a.abs() + 1);
                 prop_assert_eq!(f1 * f2, f2 * f1);
             }
         }
@@ -928,9 +928,9 @@ mod proptests {
             f in 1i128..100,
             g in 1i128..100
         ) {
-            let f1 = FastFraction::new(a, e);
-            let f2 = FastFraction::new(b, f);
-            let f3 = FastFraction::new(c, g);
+            let f1 = ExtFraction::new(a, e);
+            let f2 = ExtFraction::new(b, f);
+            let f3 = ExtFraction::new(c, g);
             prop_assert_eq!((f1 * f2) * f3, f1 * (f2 * f3));
         }
 
@@ -946,70 +946,70 @@ mod proptests {
             h in 1i128..100,
             i in 1i128..100
         ) {
-            let f1 = FastFraction::new(a, g);
-            let f2 = FastFraction::new(b, h);
-            let f3 = FastFraction::new(c, i);
+            let f1 = ExtFraction::new(a, g);
+            let f2 = ExtFraction::new(b, h);
+            let f3 = ExtFraction::new(c, i);
             prop_assert_eq!(f1 * (f2 + f3), f1 * f2 + f1 * f3);
         }
 
         #[test]
         fn prop_additive_identity(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
-            let zero = FastFraction::from_integer(0);
+            let f = ExtFraction::new(a, b);
+            let zero = ExtFraction::from_integer(0);
             prop_assert_eq!(f + zero, f);
             prop_assert_eq!(zero + f, f);
         }
 
         #[test]
         fn prop_multiplicative_identity(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
-            let one = FastFraction::from_integer(1);
+            let f = ExtFraction::new(a, b);
+            let one = ExtFraction::from_integer(1);
             prop_assert_eq!(f * one, f);
             prop_assert_eq!(one * f, f);
         }
 
         #[test]
         fn prop_additive_inverse(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
-            let zero = FastFraction::from_integer(0);
+            let f = ExtFraction::new(a, b);
+            let zero = ExtFraction::from_integer(0);
             prop_assert_eq!(f + (-f), zero);
         }
 
         #[test]
         fn prop_multiplicative_inverse(a in -1000i128..1000, b in 1i128..1000) {
             if a != 0 {
-                let f = FastFraction::new(a, b);
-                let one = FastFraction::from_integer(1);
-                prop_assert_eq!(f * (FastFraction::from_integer(1) / f), one);
+                let f = ExtFraction::new(a, b);
+                let one = ExtFraction::from_integer(1);
+                prop_assert_eq!(f * (ExtFraction::from_integer(1) / f), one);
             }
         }
 
         #[test]
         fn prop_subtraction_definition(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
-            let f1 = FastFraction::new(a, b);
-            let f2 = FastFraction::new(c, d);
+            let f1 = ExtFraction::new(a, b);
+            let f2 = ExtFraction::new(c, d);
             prop_assert_eq!(f1 - f2, f1 + (-f2));
         }
 
         #[test]
         fn prop_division_definition(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
             if c != 0 {
-                let f1 = FastFraction::new(a, b);
-                let f2 = FastFraction::new(c, d);
-                prop_assert_eq!(f1 / f2, f1 * (FastFraction::from_integer(1) / f2));
+                let f1 = ExtFraction::new(a, b);
+                let f2 = ExtFraction::new(c, d);
+                prop_assert_eq!(f1 / f2, f1 * (ExtFraction::from_integer(1) / f2));
             }
         }
 
         #[test]
         fn prop_reflexive_equality(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
+            let f = ExtFraction::new(a, b);
             prop_assert!(f == f);
         }
 
         #[test]
         fn prop_symmetric_equality(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
-            let f1 = FastFraction::new(a, b);
-            let f2 = FastFraction::new(c, d);
+            let f1 = ExtFraction::new(a, b);
+            let f2 = ExtFraction::new(c, d);
             if f1 == f2 {
                 prop_assert!(f2 == f1);
             }
@@ -1021,9 +1021,9 @@ mod proptests {
             c in -100i128..100, d in 1i128..100,
             e in -100i128..100, f in 1i128..100
         ) {
-            let f1 = FastFraction::new(a, b);
-            let f2 = FastFraction::new(c, d);
-            let f3 = FastFraction::new(e, f);
+            let f1 = ExtFraction::new(a, b);
+            let f2 = ExtFraction::new(c, d);
+            let f3 = ExtFraction::new(e, f);
             if f1 == f2 && f2 == f3 {
                 prop_assert!(f1 == f3);
             }
@@ -1035,9 +1035,9 @@ mod proptests {
             c in -100i128..100, d in 1i128..100,
             e in -100i128..100, f in 1i128..100
         ) {
-            let f1 = FastFraction::new(a, b);
-            let f2 = FastFraction::new(c, d);
-            let f3 = FastFraction::new(e, f);
+            let f1 = ExtFraction::new(a, b);
+            let f2 = ExtFraction::new(c, d);
+            let f3 = ExtFraction::new(e, f);
             if f1 < f2 && f2 < f3 {
                 prop_assert!(f1 < f3);
             }
@@ -1045,8 +1045,8 @@ mod proptests {
 
         #[test]
         fn prop_comparison_totality(a in -1000i128..1000, b in 1i128..1000, c in -1000i128..1000, d in 1i128..1000) {
-            let f1 = FastFraction::new(a, b);
-            let f2 = FastFraction::new(c, d);
+            let f1 = ExtFraction::new(a, b);
+            let f2 = ExtFraction::new(c, d);
             if !f1.is_nan() && !f2.is_nan() {
                 prop_assert!(f1 == f2 || f1 < f2 || f1 > f2);
             }
@@ -1055,9 +1055,9 @@ mod proptests {
         #[test]
         fn prop_pow_positive_exponent(a in -10i128..10, b in 1i128..10, exp in 0u8..5) {
             if a != 0 {
-                let f = FastFraction::new(a, b);
+                let f = ExtFraction::new(a, b);
                 let result = f.pow(exp as i32);
-                let expected = (0..exp).fold(FastFraction::from_integer(1), |acc, _| acc * f);
+                let expected = (0..exp).fold(ExtFraction::from_integer(1), |acc, _| acc * f);
                 prop_assert_eq!(result, expected);
             }
         }
@@ -1065,46 +1065,46 @@ mod proptests {
         #[test]
         fn prop_pow_negative_exponent(a in -10i128..10, b in 1i128..10, exp in 1u8..5) {
             if a != 0 {
-                let f = FastFraction::new(a, b);
+                let f = ExtFraction::new(a, b);
                 let result = f.pow(-(exp as i32));
-                let reciprocal = FastFraction::from_integer(1) / f;
-                let expected = (0..exp).fold(FastFraction::from_integer(1), |acc, _| acc * reciprocal);
+                let reciprocal = ExtFraction::from_integer(1) / f;
+                let expected = (0..exp).fold(ExtFraction::from_integer(1), |acc, _| acc * reciprocal);
                 prop_assert_eq!(result, expected);
             }
         }
 
         #[test]
         fn prop_pow_zero_exponent(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
-            prop_assert_eq!(f.pow(0), FastFraction::from_integer(1));
+            let f = ExtFraction::new(a, b);
+            prop_assert_eq!(f.pow(0), ExtFraction::from_integer(1));
         }
 
         #[test]
         fn prop_negation_twice(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
+            let f = ExtFraction::new(a, b);
             prop_assert_eq!(-(-f), f);
         }
 
         #[test]
         fn prop_integer_multiplication(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
-            let f = FastFraction::new(a, b);
-            let f_int = FastFraction::from_integer(n);
+            let f = ExtFraction::new(a, b);
+            let f_int = ExtFraction::from_integer(n);
             prop_assert_eq!(f * n, f * f_int);
             prop_assert_eq!(n * f, f_int * f);
         }
 
         #[test]
         fn prop_integer_addition(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
-            let f = FastFraction::new(a, b);
-            let f_int = FastFraction::from_integer(n);
+            let f = ExtFraction::new(a, b);
+            let f_int = ExtFraction::from_integer(n);
             prop_assert_eq!(f + n, f + f_int);
             prop_assert_eq!(n + f, f_int + f);
         }
 
         #[test]
         fn prop_integer_subtraction(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
-            let f = FastFraction::new(a, b);
-            let f_int = FastFraction::from_integer(n);
+            let f = ExtFraction::new(a, b);
+            let f_int = ExtFraction::from_integer(n);
             prop_assert_eq!(f - n, f - f_int);
             prop_assert_eq!(n - f, f_int - f);
         }
@@ -1112,8 +1112,8 @@ mod proptests {
         #[test]
         fn prop_integer_division(a in -1000i128..1000, b in 1i128..1000, n in -1000i128..1000) {
             if n != 0 {
-                let f = FastFraction::new(a, b);
-                let f_int = FastFraction::from_integer(n);
+                let f = ExtFraction::new(a, b);
+                let f_int = ExtFraction::from_integer(n);
                 prop_assert_eq!(f / n, f / f_int);
                 prop_assert_eq!(n / f, f_int / f);
             }
@@ -1121,7 +1121,7 @@ mod proptests {
 
         #[test]
         fn prop_is_integer_consistency(a in -1000i128..1000, b in 1i128..1000) {
-            let f = FastFraction::new(a, b);
+            let f = ExtFraction::new(a, b);
             if f.is_integer() {
                 prop_assert_eq!(f.denominator(), 1);
             }

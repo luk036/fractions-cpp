@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a C++ library project called **fractions-cpp** that provides a FastFraction class for handling rational numbers. The library allows operations with fractions, including addition, subtraction, multiplication, division, comparison, and more. It supports special cases like allowing zero denominators and handles various numeric types.
+This is a C++ library project called **fractions-cpp** that provides a ExtFraction class for handling rational numbers. The library allows operations with fractions, including addition, subtraction, multiplication, division, comparison, and more. It supports special cases like allowing zero denominators and handles various numeric types.
 
 The project follows modern CMake practices and includes:
 - A header-only library implementation
@@ -15,7 +15,7 @@ The project follows modern CMake practices and includes:
 ## Key Files and Structure
 
 ### Library Implementation
-- `include/fractions/fastfractions.hpp` - Main header file containing the FastFraction class template and related functions (gcd, lcm, abs)
+- `include/fractions/extfractions.hpp` - Main header file containing the ExtFraction class template and related functions (gcd, lcm, abs)
 
 ### Build Configuration
 - `CMakeLists.txt` - Main CMake configuration for the library
@@ -23,7 +23,7 @@ The project follows modern CMake practices and includes:
 - `cmake/tools.cmake` - Additional tools for sanitizers, static analyzers, etc.
 
 ### Tests
-- `test/source/test_frac.cpp` - Main test file with comprehensive tests for FastFraction operations
+- `test/source/test_frac.cpp` - Main test file with comprehensive tests for ExtFraction operations
 - `test/source/test_frac_extended.cpp` - Extended tests for mixed types and other features
 - `test/source/main.cpp` - Test runner entry point
 
@@ -70,7 +70,7 @@ cmake --build build --target fix-format
 - Modern CMake practices with CPM for dependency management
 - Header-only library design
 - Comprehensive test coverage using doctest
-- Zero denominators are allowed in the FastFraction class
+- Zero denominators are allowed in the ExtFraction class
 
 ## Special Features
 
