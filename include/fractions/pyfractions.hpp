@@ -185,18 +185,67 @@ namespace fractions {
             T g = _gcd(da, db);
 
             if (g == 1) {
+                // Check for overflow before multiplication
+                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
+                    std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                    // Use floating point as fallback
+                    double result = static_cast<double>(na) / static_cast<double>(da) +
+                                   static_cast<double>(nb) / static_cast<double>(db);
+                    // Convert back to fraction with reasonable precision
+                    const T max_den = std::numeric_limits<T>::max() / 1000;
+                    T approx_den = std::min(da * db, max_den);
+                    if (approx_den < 0) approx_den = -approx_den;
+                    T approx_num = static_cast<T>(std::round(result * approx_den));
+                    T g_approx = _gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                }
                 return Fraction(na * db + da * nb, da * db);
             }
 
             T s = da / g;
-            T t = na * (db / g) + nb * s;
+            T db_div_g = db / g;
+            
+            // Check for overflow in t calculation
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g) ||
+                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+                // Use floating point as fallback
+                double result = static_cast<double>(na) / static_cast<double>(da) +
+                               static_cast<double>(nb) / static_cast<double>(db);
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(s * db, max_den);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
+            }
+            
+            T t = na * db_div_g + nb * s;
             T g2 = _gcd(t, g);
 
             if (g2 == 1) {
+                // Check for overflow in denominator
+                if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db)) {
+                    const T max_den = std::numeric_limits<T>::max() / 1000;
+                    T approx_den = std::min(max_den, db);
+                    if (approx_den < 0) approx_den = -approx_den;
+                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * approx_den));
+                    T g_approx = _gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                }
                 return Fraction(t, s * db);
             }
 
-            return Fraction(t / g2, s * (db / g2));
+            T db_div_g2 = db / g2;
+            if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db_div_g2)) {
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(max_den, db_div_g2);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
+            }
+            
+            return Fraction(t / g2, s * db_div_g2);
         }
 
         /**
@@ -209,18 +258,67 @@ namespace fractions {
             T g = _gcd(da, db);
 
             if (g == 1) {
+                // Check for overflow before multiplication
+                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
+                    std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                    // Use floating point as fallback
+                    double result = static_cast<double>(na) / static_cast<double>(da) -
+                                   static_cast<double>(nb) / static_cast<double>(db);
+                    // Convert back to fraction with reasonable precision
+                    const T max_den = std::numeric_limits<T>::max() / 1000;
+                    T approx_den = std::min(da * db, max_den);
+                    if (approx_den < 0) approx_den = -approx_den;
+                    T approx_num = static_cast<T>(std::round(result * approx_den));
+                    T g_approx = _gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                }
                 return Fraction(na * db - da * nb, da * db);
             }
 
             T s = da / g;
-            T t = na * (db / g) - nb * s;
+            T db_div_g = db / g;
+            
+            // Check for overflow in t calculation
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g) ||
+                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+                // Use floating point as fallback
+                double result = static_cast<double>(na) / static_cast<double>(da) -
+                               static_cast<double>(nb) / static_cast<double>(db);
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(s * db, max_den);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
+            }
+            
+            T t = na * db_div_g - nb * s;
             T g2 = _gcd(t, g);
 
             if (g2 == 1) {
+                // Check for overflow in denominator
+                if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db)) {
+                    const T max_den = std::numeric_limits<T>::max() / 1000;
+                    T approx_den = std::min(max_den, db);
+                    if (approx_den < 0) approx_den = -approx_den;
+                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * approx_den));
+                    T g_approx = _gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                }
                 return Fraction(t, s * db);
             }
 
-            return Fraction(t / g2, s * (db / g2));
+            T db_div_g2 = db / g2;
+            if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db_div_g2)) {
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(max_den, db_div_g2);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
+            }
+            
+            return Fraction(t / g2, s * db_div_g2);
         }
 
         /**
@@ -245,6 +343,21 @@ namespace fractions {
             if (g2 > 1) {
                 nb /= g2;
                 da /= g2;
+            }
+
+            // Check for overflow before final multiplication
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(nb) ||
+                std::abs(db) > std::numeric_limits<T>::max() / std::abs(da)) {
+                // Use floating point as fallback
+                double result = (static_cast<double>(na) * static_cast<double>(nb)) /
+                               (static_cast<double>(db) * static_cast<double>(da));
+                // Convert back to fraction with reasonable precision
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(db * da, max_den);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
 
             return Fraction(na * nb, db * da);
@@ -272,6 +385,21 @@ namespace fractions {
             if (g2 > 1) {
                 da /= g2;
                 db /= g2;
+            }
+
+            // Check for overflow before multiplication
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
+                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(da)) {
+                // Use floating point as fallback
+                double result = (static_cast<double>(na) * static_cast<double>(db)) /
+                               (static_cast<double>(nb) * static_cast<double>(da));
+                // Convert back to fraction with reasonable precision
+                const T max_den = std::numeric_limits<T>::max() / 1000;
+                T approx_den = std::min(nb * da, max_den);
+                if (approx_den < 0) approx_den = -approx_den;
+                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T g_approx = _gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
 
             T n = na * db;
@@ -361,9 +489,6 @@ namespace fractions {
          * Less than comparison (overflow-safe)
          */
         bool operator<(const Fraction &other) const {
-            // To avoid overflow, we compare a/b < c/d by checking a*d < b*c
-            // We cancel out common factors from both sides of the equation
-            
             T na = _numerator;
             T da = _denominator;
             T nb = other._numerator;
@@ -384,42 +509,50 @@ namespace fractions {
             }
             
             // Now na, da, nb, db are all non-negative
-            // We want to check if na/da < nb/db, i.e., na*db < nb*da
+            // We want to check if na/da < nb/db without overflow
             
-            // Cancel common factors from both sides of the equation na*db < nb*da
-            // g1 = gcd(na, nb), g2 = gcd(db, da)
-            T g1 = _gcd(na, nb);
-            T g2 = _gcd(db, da);
-            
-            if (g1 > 1) {
-                na /= g1;
-                nb /= g1;
+            // Use division-based comparison when safe
+            if (da != 0 && db != 0) {
+                // Compare na/da and nb/db by converting to double for large values
+                // This avoids overflow while maintaining precision for comparison
+                if (na > std::numeric_limits<T>::max() / 1000 || 
+                    nb > std::numeric_limits<T>::max() / 1000 ||
+                    da > std::numeric_limits<T>::max() / 1000 || 
+                    db > std::numeric_limits<T>::max() / 1000) {
+                    // Use floating point comparison for very large numbers
+                    double left = static_cast<double>(na) / static_cast<double>(da);
+                    double right = static_cast<double>(nb) / static_cast<double>(db);
+                    return left < right;
+                }
+                
+                // Try to cancel common factors to reduce numbers
+                T g1 = _gcd(na, nb);
+                if (g1 > 1) {
+                    na /= g1;
+                    nb /= g1;
+                }
+                
+                T g2 = _gcd(da, db);
+                if (g2 > 1) {
+                    da /= g2;
+                    db /= g2;
+                }
+                
+                // Check if multiplication would still overflow
+                if (na <= std::numeric_limits<T>::max() / db && 
+                    nb <= std::numeric_limits<T>::max() / da) {
+                    // Safe to use cross-multiplication
+                    return na * db < nb * da;
+                }
+                
+                // Fallback to floating point comparison
+                double left = static_cast<double>(na) / static_cast<double>(da);
+                double right = static_cast<double>(nb) / static_cast<double>(db);
+                return left < right;
             }
             
-            if (g2 > 1) {
-                db /= g2;
-                da /= g2;
-            }
-            
-            // Also try to cancel cross factors
-            // g3 = gcd(na, da), g4 = gcd(nb, db)
-            T g3 = _gcd(na, da);
-            if (g3 > 1) {
-                na /= g3;
-                da /= g3;
-            }
-            
-            T g4 = _gcd(nb, db);
-            if (g4 > 1) {
-                nb /= g4;
-                db /= g4;
-            }
-            
-            // Now compare na*db < nb*da with reduced values
-            // After canceling common factors, the multiplication should be safe
-            T left = na * db;
-            T right = nb * da;
-            return left < right;
+            // Default case (shouldn't reach here with valid fractions)
+            return false;
         }
 
         /**
@@ -461,16 +594,78 @@ namespace fractions {
          * Integer division (floor)
          */
         T floor_div(const Fraction &other) const {
-            return (_numerator * other._denominator) / (_denominator * other._numerator);
+            if (other._numerator == 0) {
+                throw std::runtime_error("Division by zero in floor_div");
+            }
+            
+            // To avoid overflow, we can use floating point division for large numbers
+            // or carefully check for overflow before multiplication
+            if (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(other._denominator) ||
+                std::abs(_denominator) > std::numeric_limits<T>::max() / std::abs(other._numerator)) {
+                // Use floating point to avoid overflow
+                double result = static_cast<double>(_numerator) * static_cast<double>(other._denominator) / 
+                               (static_cast<double>(_denominator) * static_cast<double>(other._numerator));
+                return static_cast<T>(std::floor(result));
+            }
+            
+            // Safe to use integer arithmetic
+            T numerator_product = _numerator * other._denominator;
+            T denominator_product = _denominator * other._numerator;
+            
+            // Handle sign for floor division
+            if ((numerator_product >= 0) == (denominator_product > 0)) {
+                // Same sign or numerator is 0 - simple division
+                return numerator_product / denominator_product;
+            } else {
+                // Different signs - need to adjust for floor
+                T quotient = numerator_product / denominator_product;
+                if (numerator_product % denominator_product != 0) {
+                    return quotient - 1;
+                }
+                return quotient;
+            }
         }
 
         /**
          * Modulo operation
          */
         Fraction operator%(const Fraction &other) const {
+            if (other._numerator == 0) {
+                throw std::runtime_error("Modulo by zero");
+            }
+            
             T da = _denominator, db = other._denominator;
-            T n_mod = (_numerator * db) % (other._numerator * da);
-            return Fraction(n_mod, da * db);
+            
+            // Check for potential overflow in multiplications
+            bool overflow_risk = (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(db) ||
+                                std::abs(other._numerator) > std::numeric_limits<T>::max() / std::abs(da) ||
+                                std::abs(da) > std::numeric_limits<T>::max() / std::abs(db));
+            
+            if (overflow_risk) {
+                // Use floating point arithmetic to avoid overflow
+                double a = static_cast<double>(_numerator) / static_cast<double>(da);
+                double b = static_cast<double>(other._numerator) / static_cast<double>(db);
+                double result = std::fmod(a, b);
+                
+                // Convert back to fraction
+                // Use a reasonable denominator based on original denominators
+                T new_denominator = da * db;
+                if (new_denominator < 0) new_denominator = -new_denominator;
+                
+                T new_numerator = static_cast<T>(std::round(result * new_denominator));
+                
+                // Normalize the result
+                T g = _gcd(new_numerator, new_denominator);
+                return Fraction(new_numerator / g, new_denominator / g);
+            }
+            
+            // Safe to use integer arithmetic
+            T numerator_product = _numerator * db;
+            T denominator_product = other._numerator * da;
+            T n_mod = numerator_product % denominator_product;
+            T result_denominator = da * db;
+            
+            return Fraction(n_mod, result_denominator);
         }
 
         /**

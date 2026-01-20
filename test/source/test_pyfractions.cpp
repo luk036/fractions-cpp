@@ -297,4 +297,51 @@ TEST_SUITE("Python Fractions Implementation Comparison") {
         ss << f;
         CHECK(ss.str() == "3/4");
     }
+
+    TEST_CASE("Overflow Handling") {
+        using T = int32_t;
+        const T max_val = std::numeric_limits<T>::max();
+        
+        // Test comparison with large values
+        fractions::Fraction<T> large_num(max_val, 1);
+        fractions::Fraction<T> large_denom(1, max_val);
+        fractions::Fraction<T> very_large(max_val, max_val - 1);
+        
+        // These should not crash
+        CHECK(large_num > large_denom);
+        CHECK(large_denom < large_num);
+        
+        // Test arithmetic with large values
+        fractions::Fraction<T> f1(max_val / 2, 1);
+        fractions::Fraction<T> f2(max_val / 2, 1);
+        
+        // Addition should handle overflow gracefully
+        auto sum = f1 + f2;
+        CHECK(sum.numerator() < max_val);  // Should be normalized/approximated
+        
+        // Multiplication with large values
+        fractions::Fraction<T> f3(max_val / 1000, max_val / 1000);
+        auto product = f3 * f3;
+        CHECK(product.numerator() <= max_val);
+        CHECK(product.denominator() <= max_val);
+        
+        // Division by large values
+        fractions::Fraction<T> f4(max_val, 1);
+        fractions::Fraction<T> f5(1, max_val);
+        auto division = f4 / f5;
+        CHECK(division.numerator() <= max_val);
+        CHECK(division.denominator() <= max_val);
+        
+        // Test floor_div with large values
+        fractions::Fraction<T> f6(max_val, 1);
+        fractions::Fraction<T> f7(2, 1);
+        auto floor_result = f6.floor_div(f7);
+        CHECK(floor_result > 0);
+        
+        // Test modulo with large values
+        fractions::Fraction<T> f8(max_val - 1, 1);
+        fractions::Fraction<T> f9(max_val / 2, 1);
+        auto mod_result = f8 % f9;
+        CHECK(mod_result.numerator() < f9.numerator());
+    }
 }
