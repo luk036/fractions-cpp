@@ -2,9 +2,10 @@
  *  Distributed under the MIT License (See accompanying file /LICENSE )
  */
 #include <doctest/doctest.h>
+
 #include <fractions/extfractions.hpp>
-#include <sstream>
 #include <limits>
+#include <sstream>
 #include <type_traits>
 
 using namespace fractions;
@@ -31,7 +32,6 @@ TEST_CASE("ExtFraction boundary and edge cases") {
     SUBCASE("Unity fraction (1/1) properties") {
         ExtFraction<int> one(1, 1);
         ExtFraction<int> pos(3, 4);
-        ExtFraction<int> neg(-3, 4);
 
         CHECK(one * one == one);
         CHECK(one / one == one);
