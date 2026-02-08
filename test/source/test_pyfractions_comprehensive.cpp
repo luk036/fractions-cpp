@@ -67,7 +67,8 @@ TEST_CASE("Copy and move semantics") {
 
     SUBCASE("Self-assignment") {
         Fraction<int64_t> f1(3, 4);
-        f1 = f1;
+        Fraction<int64_t>& ref = f1;
+        f1 = ref;  // Assignment through reference to avoid direct self-assignment warning
         CHECK(f1.numerator() == 3);
         CHECK(f1.denominator() == 4);
     }

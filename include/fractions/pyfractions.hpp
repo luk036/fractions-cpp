@@ -195,7 +195,7 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round(result * approx_den));
+                    T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -214,7 +214,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -228,7 +228,7 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * approx_den));
+                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -240,7 +240,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * approx_den));
+                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -268,7 +268,7 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round(result * approx_den));
+                    T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -287,7 +287,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -301,7 +301,7 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * approx_den));
+                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -313,7 +313,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * approx_den));
+                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -355,7 +355,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(db * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -397,7 +397,7 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(nb * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(result * approx_den));
+                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -652,7 +652,7 @@ namespace fractions {
                 T new_denominator = da * db;
                 if (new_denominator < 0) new_denominator = -new_denominator;
                 
-                T new_numerator = static_cast<T>(std::round(result * new_denominator));
+                T new_numerator = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(new_denominator)));
                 
                 // Normalize the result
                 T g = _gcd(new_numerator, new_denominator);
@@ -748,12 +748,12 @@ namespace fractions {
         /**
          * Convert to double
          */
-        double to_double() const { return static_cast<double>(_numerator) / _denominator; }
+        double to_double() const { return static_cast<double>(_numerator) / static_cast<double>(_denominator); }
 
         /**
          * Convert to float
          */
-        float to_float() const { return static_cast<float>(_numerator) / _denominator; }
+        float to_float() const { return static_cast<float>(_numerator) / static_cast<float>(_denominator); }
 
         /**
          * String representation
