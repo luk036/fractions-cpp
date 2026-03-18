@@ -23,7 +23,7 @@ namespace fractions {
      * For unsigned types, simply returns the input value.
      *
      * @tparam T The type of the input parameter.
-     * @param[in] a The input value.
+     * @param[in] val_a The input value.
      * @return The absolute value of the input.
      *
      * ```svgbob
@@ -1173,7 +1173,7 @@ namespace fractions {
          * "(numerator/denominator)".
          *
          * @tparam _Stream
-         * @param[in] os
+         * @param[in] out_stream
          * @param[in] frac
          * @return _Stream&
          */
