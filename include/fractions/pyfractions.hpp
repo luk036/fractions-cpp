@@ -27,17 +27,18 @@
 namespace fractions {
 
     /**
-     * Fraction - A direct C++ port of Python's fractions.Fraction class
+     * @brief Fraction class - C++ port of Python's fractions.Fraction
      *
-     * This implementation closely mirrors the Python fractions.py implementation,
-     * including the optimized arithmetic algorithms from Knuth's TAOCP.
+     * A direct C++ implementation of Python's fractions.Fraction class that closely
+     * mirrors the Python implementation, including optimized arithmetic algorithms
+     * from Knuth's TAOCP.
      *
      * Key features:
      * - Exact rational number representation
      * - Automatic normalization to lowest terms
-     * - Optimized GCD-based arithmetic (following Knuth's algorithms)
-     * - Comparison operators
-     * - Conversion to/from integers
+     * - Optimized GCD-based arithmetic
+     * - Overflow-safe operations with floating-point fallback
+     * - Full comparison and arithmetic operator support
      *
      * @tparam T Integer type for numerator and denominator (default: int64_t)
      */
@@ -789,11 +790,23 @@ namespace fractions {
     /**
      * Comparison operators for integer on left side
      */
+    /**
+     * @brief Equality comparison between integer and Fraction
+     * @param lhs Integer to compare
+     * @param rhs Fraction to compare
+     * @return true if rhs equals lhs (i.e., rhs.numerator() == lhs && rhs.denominator() == 1)
+     */
     template <typename T>
     bool operator==(T lhs, const Fraction<T> &rhs) {
         return rhs.numerator() == lhs && rhs.denominator() == 1;
     }
 
+    /**
+     * @brief Less-than comparison between integer and Fraction
+     * @param lhs Integer to compare
+     * @param rhs Fraction to compare
+     * @return true if lhs is less than rhs
+     */
     template <typename T>
     bool operator<(T lhs, const Fraction<T> &rhs) {
         if (rhs.denominator() == 1 || lhs == 0) {
@@ -802,6 +815,12 @@ namespace fractions {
         return rhs.denominator() * lhs < rhs.numerator();
     }
 
+    /**
+     * @brief Greater-than comparison between integer and Fraction
+     * @param lhs Integer to compare
+     * @param rhs Fraction to compare
+     * @return true if lhs is greater than rhs
+     */
     template <typename T>
     bool operator>(T lhs, const Fraction<T> &rhs) {
         if (rhs.denominator() == 1 || lhs == 0) {
@@ -810,11 +829,23 @@ namespace fractions {
         return rhs.denominator() * lhs > rhs.numerator();
     }
 
+    /**
+     * @brief Less-than-or-equal comparison between integer and Fraction
+     * @param lhs Integer to compare
+     * @param rhs Fraction to compare
+     * @return true if lhs is less than or equal to rhs
+     */
     template <typename T>
     bool operator<=(T lhs, const Fraction<T> &rhs) {
         return !(lhs > rhs);
     }
 
+    /**
+     * @brief Greater-than-or-equal comparison between integer and Fraction
+     * @param lhs Integer to compare
+     * @param rhs Fraction to compare
+     * @return true if lhs is greater than or equal to rhs
+     */
     template <typename T>
     bool operator>=(T lhs, const Fraction<T> &rhs) {
         return !(lhs < rhs);
@@ -823,21 +854,45 @@ namespace fractions {
     /**
      * Arithmetic operators for integer on left side
      */
+    /**
+     * @brief Addition operator for integer on left side
+     * @param lhs Integer to add
+     * @param rhs Fraction to add
+     * @return Result of lhs + rhs as new Fraction
+     */
     template <typename T>
     Fraction<T> operator+(T lhs, const Fraction<T> &rhs) {
         return Fraction<T>(lhs) + rhs;
     }
 
+    /**
+     * @brief Subtraction operator for integer on left side
+     * @param lhs Integer to subtract
+     * @param rhs Fraction to subtract
+     * @return Result of lhs - rhs as new Fraction
+     */
     template <typename T>
     Fraction<T> operator-(T lhs, const Fraction<T> &rhs) {
         return Fraction<T>(lhs) - rhs;
     }
 
+    /**
+     * @brief Multiplication operator for integer on left side
+     * @param lhs Integer to multiply
+     * @param rhs Fraction to multiply
+     * @return Result of lhs * rhs as new Fraction
+     */
     template <typename T>
     Fraction<T> operator*(T lhs, const Fraction<T> &rhs) {
         return Fraction<T>(lhs) * rhs;
     }
 
+    /**
+     * @brief Division operator for integer on left side
+     * @param lhs Integer to divide
+     * @param rhs Fraction to divide by
+     * @return Result of lhs / rhs as new Fraction
+     */
     template <typename T>
     Fraction<T> operator/(T lhs, const Fraction<T> &rhs) {
         return Fraction<T>(lhs) / rhs;

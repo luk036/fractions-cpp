@@ -1,6 +1,6 @@
 #pragma once
 
-/** @file include/extfractions.hpp
+/** @file include/fractions.hpp
  *  This is a C++ Library header.
  */
 
