@@ -4,6 +4,7 @@
  */
 
 #include <benchmark/benchmark.h>
+
 #include "fractions/extfractions.hpp"
 #include "fractions/pyfractions.hpp"
 

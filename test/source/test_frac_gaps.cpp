@@ -2,9 +2,10 @@
  *  Distributed under the MIT License (See accompanying file /LICENSE )
  */
 #include <doctest/doctest.h>
+
 #include <fractions/extfractions.hpp>
-#include <sstream>
 #include <limits>
+#include <sstream>
 #include <type_traits>
 
 using namespace fractions;
@@ -380,13 +381,9 @@ TEST_CASE("Constructor with move semantics") {
 TEST_CASE("noexcept specifications") {
     ExtFraction<int> f(1, 2);
 
-    SUBCASE("numer() is noexcept") {
-        CHECK(noexcept(f.numer()));
-    }
+    SUBCASE("numer() is noexcept") { CHECK(noexcept(f.numer())); }
 
-    SUBCASE("denom() is noexcept") {
-        CHECK(noexcept(f.denom()));
-    }
+    SUBCASE("denom() is noexcept") { CHECK(noexcept(f.denom())); }
 
     SUBCASE("copy constructor is noexcept") {
         ExtFraction<int> f2(f);

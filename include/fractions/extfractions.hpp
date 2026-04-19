@@ -40,7 +40,7 @@ namespace fractions {
      *    +---+             +---+
      * ```
      */
-    template <typename T> CONSTEXPR14 auto abs(const T &val_a) ->
+    template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<std::is_unsigned<T>::value, T>::type {
         return val_a;
     }
@@ -53,7 +53,7 @@ namespace fractions {
      * @param[in] val_a The input value.
      * @return The absolute value of the input.
      */
-    template <typename T> CONSTEXPR14 auto abs(const T &val_a) ->
+    template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
         return (val_a < 0) ? static_cast<T>(-val_a) : val_a;
     }
@@ -88,7 +88,7 @@ namespace fractions {
      *    gcd(6, 0) = 6
      * ```
      */
-    template <typename _Mn> CONSTEXPR14 auto gcd_recur(const _Mn &__m, const _Mn &__n) -> _Mn {
+    template <typename _Mn> CONSTEXPR14 auto gcd_recur(const _Mn& __m, const _Mn& __n) -> _Mn {
         if (__n == 0) {
             return abs(__m);
         }
@@ -112,7 +112,7 @@ namespace fractions {
      * @param __n The second integer.
      * @return The GCD of __m and __n.
      */
-    template <typename _Mn> CONSTEXPR14 auto gcd(const _Mn &__m, const _Mn &__n) -> _Mn {
+    template <typename _Mn> CONSTEXPR14 auto gcd(const _Mn& __m, const _Mn& __n) -> _Mn {
         if (__m == 0) {
             return abs(__n);
         }
@@ -141,7 +141,7 @@ namespace fractions {
      *    +-----+       +-----+       +--------+
      * ```
      */
-    template <typename _Mn> CONSTEXPR14 auto lcm(const _Mn &__m, const _Mn &__n) -> _Mn {
+    template <typename _Mn> CONSTEXPR14 auto lcm(const _Mn& __m, const _Mn& __n) -> _Mn {
         if (__m == 0 || __n == 0) {
             return 0;
         }
@@ -176,7 +176,8 @@ namespace fractions {
         T _denom;  /// denominator
 
         /**
-         * Constructs a new ExtFraction (Extended Fraction) object from the given numerator and denominator.
+         * Constructs a new ExtFraction (Extended Fraction) object from the given numerator and
+         * denominator.
          *
          * Normalizes the fraction after construction.
          *
@@ -271,7 +272,7 @@ namespace fractions {
          * ```
          * @param[in] numer The numerator.
          */
-        CONSTEXPR14 explicit ExtFraction(T &&numer) : _numer{std::move(numer)}, _denom(1) {}
+        CONSTEXPR14 explicit ExtFraction(T&& numer) : _numer{std::move(numer)}, _denom(1) {}
 
         /**
          * Constructs a new ExtFraction object from the given numerator.
@@ -285,7 +286,7 @@ namespace fractions {
          * ```
          * @param[in] numer The numerator.
          */
-        CONSTEXPR14 explicit ExtFraction(const T &numer) : _numer{numer}, _denom(1) {}
+        CONSTEXPR14 explicit ExtFraction(const T& numer) : _numer{numer}, _denom(1) {}
 
         /**
          * Constructs a new ExtFraction object with numerator initialized to 0 and denominator
@@ -304,14 +305,14 @@ namespace fractions {
          *
          * @return A const reference to the numerator.
          */
-        CONSTEXPR14 auto numer() const noexcept -> const T & { return _numer; }
+        CONSTEXPR14 auto numer() const noexcept -> const T& { return _numer; }
 
         /**
          * Gets the denominator of the fraction.
          *
          * @return A const reference to the denominator.
          */
-        CONSTEXPR14 auto denom() const noexcept -> const T & { return _denom; }
+        CONSTEXPR14 auto denom() const noexcept -> const T& { return _denom; }
 
         /**
          * Computes the cross product of this fraction and another fraction.
@@ -345,7 +346,7 @@ namespace fractions {
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
          * ```
          */
-        CONSTEXPR14 auto cross(const ExtFraction &rhs) const -> T {
+        CONSTEXPR14 auto cross(const ExtFraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
 
@@ -370,7 +371,7 @@ namespace fractions {
          * @param rhs The right hand side integer to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const ExtFraction &lhs, const T &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const ExtFraction& lhs, const T& rhs) -> bool {
             return lhs._numer == rhs && lhs._denom == 1;
         }
 
@@ -390,7 +391,7 @@ namespace fractions {
          * @param rhs The right hand side integer to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const ExtFraction &lhs, const T &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const ExtFraction& lhs, const T& rhs) -> bool {
             if (lhs._denom == 1 || rhs == 0) {
                 return lhs._numer < rhs;
             }
@@ -417,7 +418,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const T &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const T& lhs, const ExtFraction& rhs) -> bool {
             if (rhs._denom == 1 || lhs == 0) {
                 return lhs < rhs._numer;
             }
@@ -444,7 +445,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const T &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const T& lhs, const ExtFraction& rhs) -> bool {
             return rhs == lhs;
         }
 
@@ -464,7 +465,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs == rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator==(const ExtFraction &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator==(const ExtFraction& lhs, const ExtFraction& rhs) -> bool {
             return lhs._numer == rhs._numer && lhs._denom == rhs._denom;
         }
 
@@ -479,7 +480,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if lhs < rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<(const ExtFraction &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<(const ExtFraction& lhs, const ExtFraction& rhs) -> bool {
             if (lhs._denom == rhs._denom) {
                 return lhs._numer < rhs._numer;
             }
@@ -501,7 +502,9 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare against.
          * @return True if the fractions are not equal, false if they are equal.
          */
-        CONSTEXPR14 auto operator!=(const ExtFraction &rhs) const -> bool { return !(*this == rhs); }
+        CONSTEXPR14 auto operator!=(const ExtFraction& rhs) const -> bool {
+            return !(*this == rhs);
+        }
 
         /**
          * Compares this fraction to another fraction for greater than.
@@ -513,7 +516,7 @@ namespace fractions {
          * @param rhs The right hand side fraction to compare.
          * @return True if this fraction is greater than rhs, false otherwise.
          */
-        CONSTEXPR14 auto operator>(const ExtFraction &rhs) const -> bool { return rhs < *this; }
+        CONSTEXPR14 auto operator>(const ExtFraction& rhs) const -> bool { return rhs < *this; }
 
         /**
          * Compares this fraction to another fraction for greater than or equal to.
@@ -522,7 +525,7 @@ namespace fractions {
          * @returns True if this fraction is greater than or equal to the other fraction,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator>=(const ExtFraction &rhs) const -> bool { return !(*this < rhs); }
+        CONSTEXPR14 auto operator>=(const ExtFraction& rhs) const -> bool { return !(*this < rhs); }
 
         /**
          * Compares this fraction to another fraction for less than or equal to.
@@ -531,7 +534,7 @@ namespace fractions {
          * @returns True if this fraction is less than or equal to the other fraction,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator<=(const ExtFraction &rhs) const -> bool { return !(rhs < *this); }
+        CONSTEXPR14 auto operator<=(const ExtFraction& rhs) const -> bool { return !(rhs < *this); }
 
         /**
          * Compares this fraction to another T integer for greater than.
@@ -540,7 +543,7 @@ namespace fractions {
          * @returns True if this fraction is greater than the other T integer,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator>(const T &rhs) const -> bool { return rhs < *this; }
+        CONSTEXPR14 auto operator>(const T& rhs) const -> bool { return rhs < *this; }
 
         /**
          * Compares this fraction to another T integer for less than or equal to.
@@ -549,7 +552,7 @@ namespace fractions {
          * @returns True if this fraction is less than or equal to the other T integer,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator<=(const T &rhs) const -> bool { return !(rhs < *this); }
+        CONSTEXPR14 auto operator<=(const T& rhs) const -> bool { return !(rhs < *this); }
 
         /**
          * Compares this fraction to another T integer for greater than or equal to.
@@ -558,7 +561,7 @@ namespace fractions {
          * @returns True if this fraction is greater than or equal to the other T integer,
          * false otherwise.
          */
-        CONSTEXPR14 auto operator>=(const T &rhs) const -> bool { return !(*this < rhs); }
+        CONSTEXPR14 auto operator>=(const T& rhs) const -> bool { return !(*this < rhs); }
 
         /**
          * Compares a T integer to a ExtFraction for greater than.
@@ -570,7 +573,7 @@ namespace fractions {
          * @param rhs The ExtFraction on the right hand side.
          * @return True if lhs is greater than rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator>(const T &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator>(const T& lhs, const ExtFraction& rhs) -> bool {
             return rhs < lhs;
         }
 
@@ -584,7 +587,7 @@ namespace fractions {
          * @param rhs The ExtFraction on the right hand side.
          * @return True if lhs is less than or equal to rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator<=(const T &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator<=(const T& lhs, const ExtFraction& rhs) -> bool {
             return !(rhs < lhs);
         }
 
@@ -598,7 +601,7 @@ namespace fractions {
          * @param rhs The ExtFraction on the right hand side.
          * @return True if lhs is greater than or equal to rhs, false otherwise.
          */
-        friend CONSTEXPR14 auto operator>=(const T &lhs, const ExtFraction &rhs) -> bool {
+        friend CONSTEXPR14 auto operator>=(const T& lhs, const ExtFraction& rhs) -> bool {
             return !(lhs < rhs);
         }
 
@@ -662,7 +665,7 @@ namespace fractions {
          *    +-------+             +-------+
          * ```
          */
-        CONSTEXPR14 auto operator*=(ExtFraction rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator*=(ExtFraction rhs) -> ExtFraction& {
             std::swap(this->_numer, rhs._numer);
             this->reduce();
             rhs.reduce();
@@ -682,7 +685,7 @@ namespace fractions {
          * @param rhs The right hand ExtFraction to multiply.
          * @return A new ExtFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(ExtFraction lhs, const ExtFraction &rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator*(ExtFraction lhs, const ExtFraction& rhs) -> ExtFraction {
             return lhs *= rhs;
         }
 
@@ -696,7 +699,7 @@ namespace fractions {
          * @param rhs The integer to multiply.
          * @return A reference to this ExtFraction after multiplication.
          */
-        CONSTEXPR14 auto operator*=(T rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator*=(T rhs) -> ExtFraction& {
             std::swap(this->_numer, rhs);
             this->reduce();
             this->_numer *= rhs;
@@ -714,7 +717,7 @@ namespace fractions {
          * @param rhs The right hand integer to multiply.
          * @return A new ExtFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(ExtFraction lhs, const T &rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator*(ExtFraction lhs, const T& rhs) -> ExtFraction {
             return lhs *= rhs;
         }
 
@@ -728,12 +731,13 @@ namespace fractions {
          * @param rhs The right hand ExtFraction to multiply.
          * @return A new ExtFraction containing the result of the multiplication.
          */
-        friend CONSTEXPR14 auto operator*(const T &lhs, ExtFraction rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator*(const T& lhs, ExtFraction rhs) -> ExtFraction {
             return rhs *= lhs;
         }
 
         /**
-         * Divides this ExtFraction by the given ExtFraction rhs and assigns the result to this ExtFraction.
+         * Divides this ExtFraction by the given ExtFraction rhs and assigns the result to this
+         * ExtFraction.
          *
          * Swaps the denominator of this ExtFraction with the numerator of rhs.
          * Normalizes this ExtFraction and rhs before dividing.
@@ -760,7 +764,7 @@ namespace fractions {
          *    +-------+     +-------+     +-------+
          * ```
          */
-        CONSTEXPR14 auto operator/=(ExtFraction rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator/=(ExtFraction rhs) -> ExtFraction& {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
             if (this->_numer == 0 && rhs._numer == 0) {
                 // this->_numer = 0;
@@ -785,7 +789,7 @@ namespace fractions {
          * @param[in] rhs
          * @return A ExtFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(ExtFraction lhs, const ExtFraction &rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator/(ExtFraction lhs, const ExtFraction& rhs) -> ExtFraction {
             return lhs /= rhs;
         }
 
@@ -797,7 +801,7 @@ namespace fractions {
          * @param rhs The integer to divide this ExtFraction by.
          * @return A reference to this ExtFraction after dividing by rhs.
          */
-        CONSTEXPR14 auto operator/=(T rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator/=(T rhs) -> ExtFraction& {
             std::swap(this->_denom, rhs);
             this->normalize();
             this->_denom *= rhs;
@@ -811,7 +815,7 @@ namespace fractions {
          * @param[in] rhs
          * @return A ExtFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(ExtFraction lhs, const T &rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator/(ExtFraction lhs, const T& rhs) -> ExtFraction {
             return lhs /= rhs;
         }
 
@@ -824,7 +828,7 @@ namespace fractions {
          * @param[in] rhs
          * @return A ExtFraction after division.
          */
-        friend CONSTEXPR14 auto operator/(const T &lhs, ExtFraction rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator/(const T& lhs, ExtFraction rhs) -> ExtFraction {
             rhs.reciprocal();
             return rhs *= lhs;
         }
@@ -865,7 +869,7 @@ namespace fractions {
          *    +-------+     +-------+     +-------+
          * ```
          */
-        CONSTEXPR14 auto operator+(const ExtFraction &other) const -> ExtFraction {
+        CONSTEXPR14 auto operator+(const ExtFraction& other) const -> ExtFraction {
             if (this->_denom == other._denom) {
                 ExtFraction result(this->_numer + other._numer, this->_denom);
                 result.normalize();
@@ -894,7 +898,7 @@ namespace fractions {
          * @param[in] other The ExtFraction to subtract from this one.
          * @return A new ExtFraction containing the result.
          */
-        CONSTEXPR14 auto operator-(const ExtFraction &other) const -> ExtFraction {
+        CONSTEXPR14 auto operator-(const ExtFraction& other) const -> ExtFraction {
             return *this + (-other);
         }
 
@@ -907,7 +911,7 @@ namespace fractions {
          * @param rhs The integer to add.
          * @return A new ExtFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(ExtFraction lhs, const T &rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator+(ExtFraction lhs, const T& rhs) -> ExtFraction {
             return lhs += rhs;
         }
 
@@ -920,7 +924,7 @@ namespace fractions {
          * @param rhs The integer to add.
          * @return A new ExtFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(const T &lhs, ExtFraction rhs) -> ExtFraction {
+        friend CONSTEXPR14 auto operator+(const T& lhs, ExtFraction rhs) -> ExtFraction {
             return rhs += lhs;
         }
 
@@ -933,7 +937,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A new ExtFraction containing the difference.
          */
-        CONSTEXPR14 auto operator-(const T &rhs) const -> ExtFraction {
+        CONSTEXPR14 auto operator-(const T& rhs) const -> ExtFraction {
             return ExtFraction(*this) -= rhs;
         }
 
@@ -950,7 +954,7 @@ namespace fractions {
          * @param[in] rhs The ExtFraction to add.
          * @return A reference to this ExtFraction after adding.
          */
-        CONSTEXPR14 auto operator+=(const ExtFraction &rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator+=(const ExtFraction& rhs) -> ExtFraction& {
             if (this->_denom == rhs._denom) {
                 this->_numer += rhs._numer;
                 this->reduce();
@@ -985,7 +989,7 @@ namespace fractions {
          * @param rhs The ExtFraction to subtract.
          * @return A reference to this ExtFraction after subtracting.
          */
-        CONSTEXPR14 auto operator-=(const ExtFraction &rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator-=(const ExtFraction& rhs) -> ExtFraction& {
             if (this->_denom == rhs._denom) {
                 this->_numer -= rhs._numer;
                 this->reduce();
@@ -1017,7 +1021,7 @@ namespace fractions {
          * @param[in] rhs The T (integer) to add.
          * @return A reference to this ExtFraction after adding.
          */
-        CONSTEXPR14 auto operator+=(const T &rhs) -> ExtFraction & {
+        CONSTEXPR14 auto operator+=(const T& rhs) -> ExtFraction& {
             if (this->_denom == 1) {
                 this->_numer += rhs;
                 return *this;
@@ -1040,7 +1044,7 @@ namespace fractions {
          *
          * @return A reference to this ExtFraction after incrementing.
          */
-        CONSTEXPR14 auto operator++() -> ExtFraction & {
+        CONSTEXPR14 auto operator++() -> ExtFraction& {
             this->_numer += this->_denom;
             return *this;
         }
@@ -1053,7 +1057,7 @@ namespace fractions {
          *
          * @return A reference to this ExtFraction after decrementing.
          */
-        CONSTEXPR14 auto operator--() -> ExtFraction & {
+        CONSTEXPR14 auto operator--() -> ExtFraction& {
             this->_numer -= this->_denom;
             return *this;
         }
@@ -1092,7 +1096,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A reference to this fraction after subtracting.
          */
-        inline auto operator-=(const T &rhs) -> ExtFraction & {
+        inline auto operator-=(const T& rhs) -> ExtFraction& {
             if (this->_denom == 1) {
                 this->_numer -= rhs;
                 return *this;
@@ -1118,7 +1122,7 @@ namespace fractions {
          * @param frac The ExtFraction to subtract from.
          * @return A new ExtFraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(const T &val, const ExtFraction &frac) -> ExtFraction {
+        friend CONSTEXPR14 auto operator-(const T& val, const ExtFraction& frac) -> ExtFraction {
             return val + (-frac);
         }
 
@@ -1133,7 +1137,7 @@ namespace fractions {
          * @param frac The ExtFraction to add to.
          * @return A new ExtFraction containing the sum.
          */
-        friend CONSTEXPR14 auto operator+(int &&val, const ExtFraction &frac) -> ExtFraction {
+        friend CONSTEXPR14 auto operator+(int&& val, const ExtFraction& frac) -> ExtFraction {
             return frac + val;
         }
 
@@ -1147,7 +1151,7 @@ namespace fractions {
          * @param frac The ExtFraction to subtract from.
          * @return A new ExtFraction containing the difference.
          */
-        friend CONSTEXPR14 auto operator-(int &&val, const ExtFraction &frac) -> ExtFraction {
+        friend CONSTEXPR14 auto operator-(int&& val, const ExtFraction& frac) -> ExtFraction {
             return val - frac;
         }
 
@@ -1162,7 +1166,7 @@ namespace fractions {
          * @param frac The ExtFraction to multiply.
          * @return A new ExtFraction containing the product.
          */
-        friend CONSTEXPR14 auto operator*(int &&val, const ExtFraction &frac) -> ExtFraction {
+        friend CONSTEXPR14 auto operator*(int&& val, const ExtFraction& frac) -> ExtFraction {
             return frac * val;
         }
 
@@ -1177,8 +1181,8 @@ namespace fractions {
          * @param[in] frac
          * @return _Stream&
          */
-        template <typename _Stream> friend auto operator<<(_Stream &out_stream, const ExtFraction &frac)
-            -> _Stream & {
+        template <typename _Stream>
+        friend auto operator<<(_Stream& out_stream, const ExtFraction& frac) -> _Stream& {
             out_stream << "(" << frac.numer() << "/" << frac.denom() << ")";
             return out_stream;
         }

@@ -43,10 +43,10 @@ namespace fractions {
      * @tparam T Integer type for numerator and denominator (default: int64_t)
      */
     template <typename T = int64_t> class Fraction {
-    public:
+      public:
         using value_type = T;
 
-    private:
+      private:
         T _numerator;
         T _denominator;
 
@@ -73,7 +73,7 @@ namespace fractions {
             (void)skip_normalize;  // Suppress unused parameter warning
         }
 
-    public:
+      public:
         /**
          * Default constructor: Fraction(0, 1)
          */
@@ -96,7 +96,7 @@ namespace fractions {
             T g = _gcd(numerator, denominator);
             _numerator = numerator / g;
             _denominator = denominator / g;
-            
+
             // Ensure denominator is positive
             if (_denominator < 0) {
                 _numerator = -_numerator;
@@ -107,19 +107,20 @@ namespace fractions {
         /**
          * Copy constructor
          */
-        Fraction(const Fraction &other)
+        Fraction(const Fraction& other)
             : _numerator(other._numerator), _denominator(other._denominator) {}
 
         /**
          * Move constructor
          */
-        Fraction(Fraction &&other) noexcept
-            : _numerator(std::move(other._numerator)), _denominator(std::move(other._denominator)) {}
+        Fraction(Fraction&& other) noexcept
+            : _numerator(std::move(other._numerator)),
+              _denominator(std::move(other._denominator)) {}
 
         /**
          * Copy assignment
          */
-        Fraction &operator=(const Fraction &other) {
+        Fraction& operator=(const Fraction& other) {
             if (this != &other) {
                 _numerator = other._numerator;
                 _denominator = other._denominator;
@@ -130,7 +131,7 @@ namespace fractions {
         /**
          * Move assignment
          */
-        Fraction &operator=(Fraction &&other) noexcept {
+        Fraction& operator=(Fraction&& other) noexcept {
             if (this != &other) {
                 _numerator = std::move(other._numerator);
                 _denominator = std::move(other._denominator);
@@ -161,9 +162,7 @@ namespace fractions {
         /**
          * Negation operator
          */
-        Fraction operator-() const {
-            return Fraction(-_numerator, _denominator, true);
-        }
+        Fraction operator-() const { return Fraction(-_numerator, _denominator, true); }
 
         /**
          * Absolute value
@@ -179,7 +178,7 @@ namespace fractions {
          * - Find g = gcd(da, db)
          * - Compute result with smaller intermediate values
          */
-        Fraction operator+(const Fraction &other) const {
+        Fraction operator+(const Fraction& other) const {
             T na = _numerator, da = _denominator;
             T nb = other._numerator, db = other._denominator;
 
@@ -187,16 +186,17 @@ namespace fractions {
 
             if (g == 1) {
                 // Check for overflow before multiplication
-                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
-                    std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
+                    || std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
                     // Use floating point as fallback
-                    double result = static_cast<double>(na) / static_cast<double>(da) +
-                                   static_cast<double>(nb) / static_cast<double>(db);
+                    double result = static_cast<double>(na) / static_cast<double>(da)
+                                    + static_cast<double>(nb) / static_cast<double>(db);
                     // Convert back to fraction with reasonable precision
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    T approx_num = static_cast<T>(
+                        std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -205,21 +205,22 @@ namespace fractions {
 
             T s = da / g;
             T db_div_g = db / g;
-            
+
             // Check for overflow in t calculation
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g) ||
-                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g)
+                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
                 // Use floating point as fallback
-                double result = static_cast<double>(na) / static_cast<double>(da) +
-                               static_cast<double>(nb) / static_cast<double>(db);
+                double result = static_cast<double>(na) / static_cast<double>(da)
+                                + static_cast<double>(nb) / static_cast<double>(db);
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
-            
+
             T t = na * db_div_g + nb * s;
             T g2 = _gcd(t, g);
 
@@ -229,7 +230,9 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * static_cast<double>(approx_den)));
+                    T approx_num = static_cast<T>(
+                        std::round((static_cast<double>(t) / static_cast<double>(s))
+                                   * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -241,18 +244,20 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round((static_cast<double>(t / g2) / static_cast<double>(s))
+                               * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
-            
+
             return Fraction(t / g2, s * db_div_g2);
         }
 
         /**
          * Subtraction - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1
          */
-        Fraction operator-(const Fraction &other) const {
+        Fraction operator-(const Fraction& other) const {
             T na = _numerator, da = _denominator;
             T nb = other._numerator, db = other._denominator;
 
@@ -260,16 +265,17 @@ namespace fractions {
 
             if (g == 1) {
                 // Check for overflow before multiplication
-                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
-                    std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
+                    || std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
                     // Use floating point as fallback
-                    double result = static_cast<double>(na) / static_cast<double>(da) -
-                                   static_cast<double>(nb) / static_cast<double>(db);
+                    double result = static_cast<double>(na) / static_cast<double>(da)
+                                    - static_cast<double>(nb) / static_cast<double>(db);
                     // Convert back to fraction with reasonable precision
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    T approx_num = static_cast<T>(
+                        std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -278,21 +284,22 @@ namespace fractions {
 
             T s = da / g;
             T db_div_g = db / g;
-            
+
             // Check for overflow in t calculation
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g) ||
-                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g)
+                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
                 // Use floating point as fallback
-                double result = static_cast<double>(na) / static_cast<double>(da) -
-                               static_cast<double>(nb) / static_cast<double>(db);
+                double result = static_cast<double>(na) / static_cast<double>(da)
+                                - static_cast<double>(nb) / static_cast<double>(db);
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
-            
+
             T t = na * db_div_g - nb * s;
             T g2 = _gcd(t, g);
 
@@ -302,7 +309,9 @@ namespace fractions {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
-                    T approx_num = static_cast<T>(std::round((static_cast<double>(t) / static_cast<double>(s)) * static_cast<double>(approx_den)));
+                    T approx_num = static_cast<T>(
+                        std::round((static_cast<double>(t) / static_cast<double>(s))
+                                   * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -314,11 +323,13 @@ namespace fractions {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round((static_cast<double>(t/g2) / static_cast<double>(s)) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round((static_cast<double>(t / g2) / static_cast<double>(s))
+                               * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
-            
+
             return Fraction(t / g2, s * db_div_g2);
         }
 
@@ -330,7 +341,7 @@ namespace fractions {
          * - g2 = gcd(nb, da)
          * - Divide before multiplying to keep numbers small
          */
-        Fraction operator*(const Fraction &other) const {
+        Fraction operator*(const Fraction& other) const {
             T na = _numerator, da = _denominator;
             T nb = other._numerator, db = other._denominator;
 
@@ -347,16 +358,17 @@ namespace fractions {
             }
 
             // Check for overflow before final multiplication
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(nb) ||
-                std::abs(db) > std::numeric_limits<T>::max() / std::abs(da)) {
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(nb)
+                || std::abs(db) > std::numeric_limits<T>::max() / std::abs(da)) {
                 // Use floating point as fallback
-                double result = (static_cast<double>(na) * static_cast<double>(nb)) /
-                               (static_cast<double>(db) * static_cast<double>(da));
+                double result = (static_cast<double>(na) * static_cast<double>(nb))
+                                / (static_cast<double>(db) * static_cast<double>(da));
                 // Convert back to fraction with reasonable precision
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(db * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -367,7 +379,7 @@ namespace fractions {
         /**
          * Division - optimized algorithm (inverse of multiplication)
          */
-        Fraction operator/(const Fraction &other) const {
+        Fraction operator/(const Fraction& other) const {
             T nb = other._numerator, db = other._denominator;
 
             if (nb == 0) {
@@ -389,16 +401,17 @@ namespace fractions {
             }
 
             // Check for overflow before multiplication
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db) ||
-                std::abs(nb) > std::numeric_limits<T>::max() / std::abs(da)) {
+            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
+                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(da)) {
                 // Use floating point as fallback
-                double result = (static_cast<double>(na) * static_cast<double>(db)) /
-                               (static_cast<double>(nb) * static_cast<double>(da));
+                double result = (static_cast<double>(na) * static_cast<double>(db))
+                                / (static_cast<double>(nb) * static_cast<double>(da));
                 // Convert back to fraction with reasonable precision
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(nb * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
-                T approx_num = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                T approx_num = static_cast<T>(
+                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -417,7 +430,7 @@ namespace fractions {
         /**
          * In-place addition
          */
-        Fraction &operator+=(const Fraction &other) {
+        Fraction& operator+=(const Fraction& other) {
             *this = *this + other;
             return *this;
         }
@@ -425,7 +438,7 @@ namespace fractions {
         /**
          * In-place subtraction
          */
-        Fraction &operator-=(const Fraction &other) {
+        Fraction& operator-=(const Fraction& other) {
             *this = *this - other;
             return *this;
         }
@@ -433,7 +446,7 @@ namespace fractions {
         /**
          * In-place multiplication
          */
-        Fraction &operator*=(const Fraction &other) {
+        Fraction& operator*=(const Fraction& other) {
             *this = *this * other;
             return *this;
         }
@@ -441,7 +454,7 @@ namespace fractions {
         /**
          * In-place division
          */
-        Fraction &operator/=(const Fraction &other) {
+        Fraction& operator/=(const Fraction& other) {
             *this = *this / other;
             return *this;
         }
@@ -449,109 +462,101 @@ namespace fractions {
         /**
          * Addition with integer
          */
-        Fraction operator+(T other) const {
-            return *this + Fraction(other);
-        }
+        Fraction operator+(T other) const { return *this + Fraction(other); }
 
         /**
          * Subtraction with integer
          */
-        Fraction operator-(T other) const {
-            return *this - Fraction(other);
-        }
+        Fraction operator-(T other) const { return *this - Fraction(other); }
 
         /**
          * Multiplication with integer
          */
-        Fraction operator*(T other) const {
-            return *this * Fraction(other);
-        }
+        Fraction operator*(T other) const { return *this * Fraction(other); }
 
         /**
          * Division with integer
          */
-        Fraction operator/(T other) const {
-            return *this / Fraction(other);
-        }
+        Fraction operator/(T other) const { return *this / Fraction(other); }
 
         /**
          * Equality comparison
          */
-        bool operator==(const Fraction &other) const {
+        bool operator==(const Fraction& other) const {
             return _numerator == other._numerator && _denominator == other._denominator;
         }
 
         /**
          * Inequality comparison
          */
-        bool operator!=(const Fraction &other) const { return !(*this == other); }
+        bool operator!=(const Fraction& other) const { return !(*this == other); }
 
         /**
          * Less than comparison (overflow-safe)
          */
-        bool operator<(const Fraction &other) const {
+        bool operator<(const Fraction& other) const {
             T na = _numerator;
             T da = _denominator;
             T nb = other._numerator;
             T db = other._denominator;
-            
+
             // Handle different signs
             if (na < 0 && nb >= 0) return true;
             if (na >= 0 && nb < 0) return false;
-            
+
             // Both are non-negative or both are negative
             // For negative case, the comparison reverses
             bool both_negative = (na < 0);
-            
+
             // Make both non-negative for comparison
             if (both_negative) {
                 na = -na;
                 nb = -nb;
             }
-            
+
             // Now na, da, nb, db are all non-negative
             // We want to check if na/da < nb/db without overflow
-            
+
             // Use division-based comparison when safe
             if (da != 0 && db != 0) {
                 // Compare na/da and nb/db by converting to double for large values
                 // This avoids overflow while maintaining precision for comparison
-                if (na > std::numeric_limits<T>::max() / 1000 || 
-                    nb > std::numeric_limits<T>::max() / 1000 ||
-                    da > std::numeric_limits<T>::max() / 1000 || 
-                    db > std::numeric_limits<T>::max() / 1000) {
+                if (na > std::numeric_limits<T>::max() / 1000
+                    || nb > std::numeric_limits<T>::max() / 1000
+                    || da > std::numeric_limits<T>::max() / 1000
+                    || db > std::numeric_limits<T>::max() / 1000) {
                     // Use floating point comparison for very large numbers
                     double left = static_cast<double>(na) / static_cast<double>(da);
                     double right = static_cast<double>(nb) / static_cast<double>(db);
                     return left < right;
                 }
-                
+
                 // Try to cancel common factors to reduce numbers
                 T g1 = _gcd(na, nb);
                 if (g1 > 1) {
                     na /= g1;
                     nb /= g1;
                 }
-                
+
                 T g2 = _gcd(da, db);
                 if (g2 > 1) {
                     da /= g2;
                     db /= g2;
                 }
-                
+
                 // Check if multiplication would still overflow
-                if (na <= std::numeric_limits<T>::max() / db && 
-                    nb <= std::numeric_limits<T>::max() / da) {
+                if (na <= std::numeric_limits<T>::max() / db
+                    && nb <= std::numeric_limits<T>::max() / da) {
                     // Safe to use cross-multiplication
                     return na * db < nb * da;
                 }
-                
+
                 // Fallback to floating point comparison
                 double left = static_cast<double>(na) / static_cast<double>(da);
                 double right = static_cast<double>(nb) / static_cast<double>(db);
                 return left < right;
             }
-            
+
             // Default case (shouldn't reach here with valid fractions)
             return false;
         }
@@ -559,17 +564,17 @@ namespace fractions {
         /**
          * Greater than comparison
          */
-        bool operator>(const Fraction &other) const { return other < *this; }
+        bool operator>(const Fraction& other) const { return other < *this; }
 
         /**
          * Less than or equal comparison
          */
-        bool operator<=(const Fraction &other) const { return !(other < *this); }
+        bool operator<=(const Fraction& other) const { return !(other < *this); }
 
         /**
          * Greater than or equal comparison
          */
-        bool operator>=(const Fraction &other) const { return !(*this < other); }
+        bool operator>=(const Fraction& other) const { return !(*this < other); }
 
         /**
          * Comparison with integer
@@ -594,25 +599,27 @@ namespace fractions {
         /**
          * Integer division (floor)
          */
-        T floor_div(const Fraction &other) const {
+        T floor_div(const Fraction& other) const {
             if (other._numerator == 0) {
                 throw std::runtime_error("Division by zero in floor_div");
             }
-            
+
             // To avoid overflow, we can use floating point division for large numbers
             // or carefully check for overflow before multiplication
-            if (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(other._denominator) ||
-                std::abs(_denominator) > std::numeric_limits<T>::max() / std::abs(other._numerator)) {
+            if (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(other._denominator)
+                || std::abs(_denominator)
+                       > std::numeric_limits<T>::max() / std::abs(other._numerator)) {
                 // Use floating point to avoid overflow
-                double result = static_cast<double>(_numerator) * static_cast<double>(other._denominator) / 
-                               (static_cast<double>(_denominator) * static_cast<double>(other._numerator));
+                double result
+                    = static_cast<double>(_numerator) * static_cast<double>(other._denominator)
+                      / (static_cast<double>(_denominator) * static_cast<double>(other._numerator));
                 return static_cast<T>(std::floor(result));
             }
-            
+
             // Safe to use integer arithmetic
             T numerator_product = _numerator * other._denominator;
             T denominator_product = _denominator * other._numerator;
-            
+
             // Handle sign for floor division
             if ((numerator_product >= 0) == (denominator_product > 0)) {
                 // Same sign or numerator is 0 - simple division
@@ -630,42 +637,44 @@ namespace fractions {
         /**
          * Modulo operation
          */
-        Fraction operator%(const Fraction &other) const {
+        Fraction operator%(const Fraction& other) const {
             if (other._numerator == 0) {
                 throw std::runtime_error("Modulo by zero");
             }
-            
+
             T da = _denominator, db = other._denominator;
-            
+
             // Check for potential overflow in multiplications
-            bool overflow_risk = (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(db) ||
-                                std::abs(other._numerator) > std::numeric_limits<T>::max() / std::abs(da) ||
-                                std::abs(da) > std::numeric_limits<T>::max() / std::abs(db));
-            
+            bool overflow_risk
+                = (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(db)
+                   || std::abs(other._numerator) > std::numeric_limits<T>::max() / std::abs(da)
+                   || std::abs(da) > std::numeric_limits<T>::max() / std::abs(db));
+
             if (overflow_risk) {
                 // Use floating point arithmetic to avoid overflow
                 double a = static_cast<double>(_numerator) / static_cast<double>(da);
                 double b = static_cast<double>(other._numerator) / static_cast<double>(db);
                 double result = std::fmod(a, b);
-                
+
                 // Convert back to fraction
                 // Use a reasonable denominator based on original denominators
                 T new_denominator = da * db;
                 if (new_denominator < 0) new_denominator = -new_denominator;
-                
-                T new_numerator = static_cast<T>(std::round(static_cast<double>(result) * static_cast<double>(new_denominator)));
-                
+
+                T new_numerator = static_cast<T>(
+                    std::round(static_cast<double>(result) * static_cast<double>(new_denominator)));
+
                 // Normalize the result
                 T g = _gcd(new_numerator, new_denominator);
                 return Fraction(new_numerator / g, new_denominator / g);
             }
-            
+
             // Safe to use integer arithmetic
             T numerator_product = _numerator * db;
             T denominator_product = other._numerator * da;
             T n_mod = numerator_product % denominator_product;
             T result_denominator = da * db;
-            
+
             return Fraction(n_mod, result_denominator);
         }
 
@@ -675,17 +684,17 @@ namespace fractions {
         Fraction pow(int exponent) const {
             if (exponent >= 0) {
                 return Fraction(static_cast<T>(std::pow(_numerator, exponent)),
-                                    static_cast<T>(std::pow(_denominator, exponent)));
+                                static_cast<T>(std::pow(_denominator, exponent)));
             } else {
                 if (_numerator == 0) {
                     throw std::runtime_error("Fraction(0, 0)");
                 }
                 if (_numerator > 0) {
                     return Fraction(static_cast<T>(std::pow(_denominator, -exponent)),
-                                        static_cast<T>(std::pow(_numerator, -exponent)));
+                                    static_cast<T>(std::pow(_numerator, -exponent)));
                 } else {
                     return Fraction(static_cast<T>(std::pow(-_denominator, -exponent)),
-                                        static_cast<T>(std::pow(-_numerator, -exponent)));
+                                    static_cast<T>(std::pow(-_numerator, -exponent)));
                 }
             }
         }
@@ -749,12 +758,16 @@ namespace fractions {
         /**
          * Convert to double
          */
-        double to_double() const { return static_cast<double>(_numerator) / static_cast<double>(_denominator); }
+        double to_double() const {
+            return static_cast<double>(_numerator) / static_cast<double>(_denominator);
+        }
 
         /**
          * Convert to float
          */
-        float to_float() const { return static_cast<float>(_numerator) / static_cast<float>(_denominator); }
+        float to_float() const {
+            return static_cast<float>(_numerator) / static_cast<float>(_denominator);
+        }
 
         /**
          * String representation
@@ -781,7 +794,7 @@ namespace fractions {
         /**
          * Stream output operator
          */
-        friend std::ostream &operator<<(std::ostream &os, const Fraction &frac) {
+        friend std::ostream& operator<<(std::ostream& os, const Fraction& frac) {
             os << frac.to_string();
             return os;
         }
@@ -796,8 +809,7 @@ namespace fractions {
      * @param rhs Fraction to compare
      * @return true if rhs equals lhs (i.e., rhs.numerator() == lhs && rhs.denominator() == 1)
      */
-    template <typename T>
-    bool operator==(T lhs, const Fraction<T> &rhs) {
+    template <typename T> bool operator==(T lhs, const Fraction<T>& rhs) {
         return rhs.numerator() == lhs && rhs.denominator() == 1;
     }
 
@@ -807,8 +819,7 @@ namespace fractions {
      * @param rhs Fraction to compare
      * @return true if lhs is less than rhs
      */
-    template <typename T>
-    bool operator<(T lhs, const Fraction<T> &rhs) {
+    template <typename T> bool operator<(T lhs, const Fraction<T>& rhs) {
         if (rhs.denominator() == 1 || lhs == 0) {
             return lhs < rhs.numerator();
         }
@@ -821,8 +832,7 @@ namespace fractions {
      * @param rhs Fraction to compare
      * @return true if lhs is greater than rhs
      */
-    template <typename T>
-    bool operator>(T lhs, const Fraction<T> &rhs) {
+    template <typename T> bool operator>(T lhs, const Fraction<T>& rhs) {
         if (rhs.denominator() == 1 || lhs == 0) {
             return lhs > rhs.numerator();
         }
@@ -835,10 +845,7 @@ namespace fractions {
      * @param rhs Fraction to compare
      * @return true if lhs is less than or equal to rhs
      */
-    template <typename T>
-    bool operator<=(T lhs, const Fraction<T> &rhs) {
-        return !(lhs > rhs);
-    }
+    template <typename T> bool operator<=(T lhs, const Fraction<T>& rhs) { return !(lhs > rhs); }
 
     /**
      * @brief Greater-than-or-equal comparison between integer and Fraction
@@ -846,10 +853,7 @@ namespace fractions {
      * @param rhs Fraction to compare
      * @return true if lhs is greater than or equal to rhs
      */
-    template <typename T>
-    bool operator>=(T lhs, const Fraction<T> &rhs) {
-        return !(lhs < rhs);
-    }
+    template <typename T> bool operator>=(T lhs, const Fraction<T>& rhs) { return !(lhs < rhs); }
 
     /**
      * Arithmetic operators for integer on left side
@@ -860,8 +864,7 @@ namespace fractions {
      * @param rhs Fraction to add
      * @return Result of lhs + rhs as new Fraction
      */
-    template <typename T>
-    Fraction<T> operator+(T lhs, const Fraction<T> &rhs) {
+    template <typename T> Fraction<T> operator+(T lhs, const Fraction<T>& rhs) {
         return Fraction<T>(lhs) + rhs;
     }
 
@@ -871,8 +874,7 @@ namespace fractions {
      * @param rhs Fraction to subtract
      * @return Result of lhs - rhs as new Fraction
      */
-    template <typename T>
-    Fraction<T> operator-(T lhs, const Fraction<T> &rhs) {
+    template <typename T> Fraction<T> operator-(T lhs, const Fraction<T>& rhs) {
         return Fraction<T>(lhs) - rhs;
     }
 
@@ -882,8 +884,7 @@ namespace fractions {
      * @param rhs Fraction to multiply
      * @return Result of lhs * rhs as new Fraction
      */
-    template <typename T>
-    Fraction<T> operator*(T lhs, const Fraction<T> &rhs) {
+    template <typename T> Fraction<T> operator*(T lhs, const Fraction<T>& rhs) {
         return Fraction<T>(lhs) * rhs;
     }
 
@@ -893,8 +894,7 @@ namespace fractions {
      * @param rhs Fraction to divide by
      * @return Result of lhs / rhs as new Fraction
      */
-    template <typename T>
-    Fraction<T> operator/(T lhs, const Fraction<T> &rhs) {
+    template <typename T> Fraction<T> operator/(T lhs, const Fraction<T>& rhs) {
         return Fraction<T>(lhs) / rhs;
     }
 

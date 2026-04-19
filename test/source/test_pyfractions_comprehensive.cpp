@@ -2,11 +2,12 @@
  *  Distributed under the MIT License (See accompanying file /LICENSE )
  */
 #include <doctest/doctest.h>
-#include <fractions/pyfractions.hpp>
-#include <sstream>
-#include <limits>
-#include <type_traits>
+
 #include <cmath>
+#include <fractions/pyfractions.hpp>
+#include <limits>
+#include <sstream>
+#include <type_traits>
 
 using namespace fractions;
 
@@ -105,9 +106,9 @@ TEST_CASE("Compound assignment operators") {
 
     SUBCASE("Chained compound operations") {
         Fraction<int64_t> f(1, 2);
-        f += Fraction<int64_t>(1, 3);  // 1/2 + 1/3 = 5/6
-        f *= Fraction<int64_t>(2, 5);  // 5/6 * 2/5 = 1/3
-        f -= Fraction<int64_t>(1, 15); // 1/3 - 1/15 = 4/15
+        f += Fraction<int64_t>(1, 3);   // 1/2 + 1/3 = 5/6
+        f *= Fraction<int64_t>(2, 5);   // 5/6 * 2/5 = 1/3
+        f -= Fraction<int64_t>(1, 15);  // 1/3 - 1/15 = 4/15
         CHECK(f.numerator() == 4);
         CHECK(f.denominator() == 15);
     }
@@ -342,7 +343,7 @@ TEST_CASE("Different integer types") {
         Fraction<int32_t> f(3, 4);
         CHECK(f.numerator() == 3);
         CHECK(f.denominator() == 4);
-        
+
         auto sum = f + Fraction<int32_t>(1, 4);
         CHECK(sum.numerator() == 1);
         CHECK(sum.denominator() == 1);
@@ -352,7 +353,7 @@ TEST_CASE("Different integer types") {
         Fraction<int64_t> f(3, 4);
         CHECK(f.numerator() == 3);
         CHECK(f.denominator() == 4);
-        
+
         auto sum = f + Fraction<int64_t>(1, 4);
         CHECK(sum.numerator() == 1);
         CHECK(sum.denominator() == 1);
@@ -540,8 +541,10 @@ TEST_CASE("Comparison overflow safety") {
     }
 
     SUBCASE("Mixed large values") {
-        Fraction<int64_t> f1(std::numeric_limits<int64_t>::max() / 2, std::numeric_limits<int64_t>::max() / 3);
-        Fraction<int64_t> f2(std::numeric_limits<int64_t>::max() / 3, std::numeric_limits<int64_t>::max() / 2);
+        Fraction<int64_t> f1(std::numeric_limits<int64_t>::max() / 2,
+                             std::numeric_limits<int64_t>::max() / 3);
+        Fraction<int64_t> f2(std::numeric_limits<int64_t>::max() / 3,
+                             std::numeric_limits<int64_t>::max() / 2);
         CHECK(f1 > f2);
         CHECK(f2 < f1);
     }
@@ -622,10 +625,10 @@ TEST_CASE("Conversion methods edge cases") {
 
     SUBCASE("round ties to even") {
         Fraction<int64_t> f1(5, 2);  // 2.5
-        CHECK(f1.round() == 2);  // Ties to even
+        CHECK(f1.round() == 2);      // Ties to even
 
         Fraction<int64_t> f2(7, 2);  // 3.5
-        CHECK(f2.round() == 4);  // Ties to even
+        CHECK(f2.round() == 4);      // Ties to even
     }
 
     SUBCASE("to_double precision") {

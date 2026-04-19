@@ -1,16 +1,19 @@
 
 #include <doctest/doctest.h>
+
 #include <fractions/extfractions.hpp>
 #include <sstream>
 
 using namespace fractions;
 
-template <typename T, typename U>
-auto add(const ExtFraction<T>& lhs, const ExtFraction<U>& rhs) {
+template <typename T, typename U> auto add(const ExtFraction<T>& lhs, const ExtFraction<U>& rhs) {
     using common_type = decltype(T() + U());
-    auto common_denom = lcm(static_cast<common_type>(lhs.denom()), static_cast<common_type>(rhs.denom()));
-    auto lhs_numer = static_cast<common_type>(lhs.numer()) * (common_denom / static_cast<common_type>(lhs.denom()));
-    auto rhs_numer = static_cast<common_type>(rhs.numer()) * (common_denom / static_cast<common_type>(rhs.denom()));
+    auto common_denom
+        = lcm(static_cast<common_type>(lhs.denom()), static_cast<common_type>(rhs.denom()));
+    auto lhs_numer = static_cast<common_type>(lhs.numer())
+                     * (common_denom / static_cast<common_type>(lhs.denom()));
+    auto rhs_numer = static_cast<common_type>(rhs.numer())
+                     * (common_denom / static_cast<common_type>(rhs.denom()));
     return ExtFraction<common_type>(lhs_numer + rhs_numer, common_denom);
 }
 
@@ -20,13 +23,13 @@ auto operator+(const ExtFraction<T>& lhs, const ExtFraction<U>& rhs) {
 }
 
 namespace fractions {
-    template <> CONSTEXPR14 auto gcd_recur<short>(const short &__m, const short &__n) -> short {
+    template <> CONSTEXPR14 auto gcd_recur<short>(const short& __m, const short& __n) -> short {
         if (__n == 0) {
             return abs(__m);
         }
         return gcd_recur<short>(__n, __m % __n);
     }
-}
+}  // namespace fractions
 
 TEST_CASE("ExtFraction with mixed types") {
     ExtFraction<int> f_int(1, 2);
@@ -52,8 +55,6 @@ TEST_CASE("Stream insertion") {
     ss << frac;
     CHECK(ss.str() == "(3/4)");
 }
-
-
 
 TEST_CASE("Large numbers") {
     ExtFraction<long long> frac1(1000000000000LL, 2000000000000LL);
