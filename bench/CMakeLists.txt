@@ -17,6 +17,4 @@ add_executable(bench_comparison bench_comparison.cpp)
 target_link_libraries(bench_comparison benchmark::benchmark benchmark::benchmark_main)
 
 # Set output directory
-set_target_properties(bench_comparison PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-)
+set_target_properties(bench_comparison PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
