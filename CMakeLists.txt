@@ -35,7 +35,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME spdlog
-  GIT_TAG v1.14.1
+  GIT_TAG v1.12.0
   GITHUB_REPOSITORY gabime/spdlog
   OPTIONS "SPDLOG_INSTALL YES" # create an installable target
 )
