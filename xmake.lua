@@ -23,7 +23,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", { public = true })
     end
 elseif is_plat("windows") then
-    add_cxflags("/W4 /WX /wd4819 /wd4996 /wd4530", { force = true })
+    add_cxflags("/W4 /WX /wd4459 /wd4819 /wd4996 /wd4530", { force = true })
 end
 
 -- header only package

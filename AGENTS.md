@@ -229,8 +229,8 @@ This library ALLOWS zero denominators:
 
 ## Dependencies
 
-- **fmt** (10.2.1) - String formatting
-- **spdlog** (1.12.0) - Logging (optional)
+- **fmt** (12.1.0) - String formatting
+- **spdlog** (1.17.0) - Logging (optional)
 - **doctest** (2.4.11) - Testing framework
 - **RapidCheck** (master) - Property-based testing (tests only)
 
