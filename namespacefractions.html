@@ -69,7 +69,12 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>
+              struct <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>
+            </dt>
+            <dd><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;<a href="structfractions_1_1Fraction.html#a6d9818f952bea331a6f139aa8a352378" class="m-doc">typename</a> <a href="structfractions_1_1Fraction.html#a6d9818f952bea331a6f139aa8a352378" class="m-doc">T</a>&gt;</div>
+              class <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>
             </dt>
             <dd><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
           </dl>
@@ -79,38 +84,92 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename T&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5d9bff4c2f3d48ac2b74476a29a1d664" class="m-doc">abs</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">T</a>&amp; a) -&gt; typename std::enable_if&lt; std::is_unsigned&lt; T &gt;::value, T &gt;::type -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2f023d5df0d583ce90e02a2d8f21c111" class="m-doc">abs</a>(</span><span class="m-doc-wrap">const T&amp; val_a) -&gt; typename std::enable_if&lt; std::is_unsigned&lt; T &gt;::value, T &gt;::type -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd></dd>
             <dt>
               <div class="m-doc-template">template&lt;typename _Mn&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#af72449c163ae56313d0402e53711b4ae" class="m-doc">gcd_recur</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#af72449c163ae56313d0402e53711b4ae" class="m-doc">gcd_recur</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd></dd>
             <dt>
               <div class="m-doc-template">template&lt;typename _Mn&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5e780e101d2932c0f27d0abafbfe06b8" class="m-doc">gcd</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e780e101d2932c0f27d0abafbfe06b8" class="m-doc">gcd</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd></dd>
             <dt>
               <div class="m-doc-template">template&lt;typename _Mn&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a023226d0dd55931052cf1f275758c737" class="m-doc">lcm</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn -&gt; <a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a023226d0dd55931052cf1f275758c737" class="m-doc">lcm</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a23927e9b67c774f90015caba83addbdf" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; bool</span>
+            </dt>
+            <dd>Equality comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af61a11c2d2c66c13a52a624dcf6200c4" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; bool</span>
+            </dt>
+            <dd>Less-than comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aba792472b3e75d0955bd7798df27497b" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; bool</span>
+            </dt>
+            <dd>Greater-than comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af198547a4d15e4a762bac2aa8ee97879" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; bool</span>
+            </dt>
+            <dd>Less-than-or-equal comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7ea1e2886ff588822a85346be9fcd533" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; bool</span>
+            </dt>
+            <dd>Greater-than-or-equal comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a78cc3e5eea27f0d0326cf2774686a558" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;</span>
+            </dt>
+            <dd>Addition operator for integer on left side.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5cf6136e58d41b3ca3028d4124fa2739" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;</span>
+            </dt>
+            <dd>Subtraction operator for integer on left side.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a400a25ba19b890e286a3ae2238dee5f1" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;</span>
+            </dt>
+            <dd>Multiplication operator for integer on left side.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e677f86345ca9e58ea413932f2a74c0" class="m-doc">operator/</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs) -&gt; <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;</span>
+            </dt>
+            <dd>Division operator for integer on left side.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a5d9bff4c2f3d48ac2b74476a29a1d664"><div>
+          <section class="m-doc-details" id="a2f023d5df0d583ce90e02a2d8f21c111"><div>
             <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="fractions_8hpp.html">&lt;fractions/fractions.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="extfractions_8hpp.html">&lt;fractions/extfractions.hpp&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a> fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5d9bff4c2f3d48ac2b74476a29a1d664" class="m-doc-self">abs</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">T</a>&amp; a) -&gt; typename std::enable_if&lt; std::is_unsigned&lt; T &gt;::value, T &gt;::type</span></span>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2f023d5df0d583ce90e02a2d8f21c111" class="m-doc-self">abs</a>(</span><span class="m-doc-wrap">const T&amp; val_a) -&gt; typename std::enable_if&lt; std::is_unsigned&lt; T &gt;::value, T &gt;::type</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -127,7 +186,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>a&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>val_a&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The input value.</td>
                 </tr>
               </tbody>
@@ -138,16 +197,26 @@
                 </tr>
               </tfoot>
             </table>
-<p>Returns the absolute value of the input.</p><p>For unsigned types, simply returns the input value.</p><p>Computes the absolute value of the given signed integer value. Returns the input if it is positive, otherwise returns the negation of the input.</p>
+<p>Returns the absolute value of the input.</p><p>For unsigned types, simply returns the input value.</p><pre class="m-code">+---+    abs()    +---+
+| 5 |  ------&gt;    | 5 |
++---+             +---+
+
++----+    abs()    +---+
+| -5 |  ------&gt;    | 5 |
++----+             +---+
+
++---+    abs()    +---+
+| 0 |  ------&gt;    | 0 |
++---+             +---+</pre><p>Computes the absolute value of the given signed integer value. Returns the input if it is positive, otherwise returns the negation of the input.</p>
           </div></section>
           <section class="m-doc-details" id="af72449c163ae56313d0402e53711b4ae"><div>
             <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="fractions_8hpp.html">&lt;fractions/fractions.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="extfractions_8hpp.html">&lt;fractions/extfractions.hpp&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename _Mn&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a> fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af72449c163ae56313d0402e53711b4ae" class="m-doc-self">gcd_recur</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn</span></span>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af72449c163ae56313d0402e53711b4ae" class="m-doc-self">gcd_recur</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -181,16 +250,25 @@
             </table>
 <p>Computes the greatest common divider (GCD) of two integers recursively using Euclid&#x27;s algorithm.</p><p>Example:</p><pre class="m-code"><span class="n">gcd_recur</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
 <span class="n">gcd_recur</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
-<span class="n">gcd_recur</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span></pre>
+<span class="n">gcd_recur</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span></pre><pre class="m-code">gcd(48, 18)
+     |
+     v
+gcd(18, 12)
+     |
+     v
+gcd(12, 6)
+     |
+     v
+gcd(6, 0) = 6</pre>
           </div></section>
           <section class="m-doc-details" id="a5e780e101d2932c0f27d0abafbfe06b8"><div>
             <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="fractions_8hpp.html">&lt;fractions/fractions.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="extfractions_8hpp.html">&lt;fractions/extfractions.hpp&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename _Mn&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a> fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e780e101d2932c0f27d0abafbfe06b8" class="m-doc-self">gcd</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn</span></span>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e780e101d2932c0f27d0abafbfe06b8" class="m-doc-self">gcd</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -228,12 +306,12 @@
           </div></section>
           <section class="m-doc-details" id="a023226d0dd55931052cf1f275758c737"><div>
             <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="fractions_8hpp.html">&lt;fractions/fractions.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="extfractions_8hpp.html">&lt;fractions/extfractions.hpp&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename _Mn&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="fractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <a href="structfractions_1_1Fraction.html" class="m-doc">auto</a> fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a023226d0dd55931052cf1f275758c737" class="m-doc-self">lcm</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __m,
-              <a href="structfractions_1_1Fraction.html" class="m-doc">const</a> <a href="structfractions_1_1Fraction.html" class="m-doc">_<wbr />Mn</a>&amp; __n) -&gt; _Mn</span></span>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a023226d0dd55931052cf1f275758c737" class="m-doc-self">lcm</a>(</span><span class="m-doc-wrap">const _Mn&amp; __m,
+              const _Mn&amp; __n) -&gt; _Mn</span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
@@ -265,7 +343,305 @@
                 </tr>
               </tfoot>
             </table>
-<p>Computes the least common multiple of two integers.</p><p>Uses the formula lcm(a, b) = (abs(a) / gcd(a, b)) * abs(b).</p>
+<p>Computes the least common multiple of two integers.</p><p>Uses the formula lcm(a, b) = (abs(a) / gcd(a, b)) * abs(b).</p><pre class="m-code">lcm(4, 6) = 12
+
+4 = 2^2
+6 = 2^1 * 3^1
+lcm = 2^2 * 3^1 = 12
+
++-----+       +-----+       +--------+
+|  4  |  lcm  |  6  |  =   |   12   |
++-----+       +-----+       +--------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a23927e9b67c774f90015caba83addbdf"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a23927e9b67c774f90015caba83addbdf" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Equality comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to compare</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true if rhs equals lhs (i.e., rhs.numerator() == lhs &amp;&amp; rhs.denominator() == 1)</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Comparison operators for integer on left side</p>
+          </div></section>
+          <section class="m-doc-details" id="af61a11c2d2c66c13a52a624dcf6200c4"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af61a11c2d2c66c13a52a624dcf6200c4" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Less-than comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to compare</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true if lhs is less than rhs</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aba792472b3e75d0955bd7798df27497b"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aba792472b3e75d0955bd7798df27497b" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Greater-than comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to compare</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true if lhs is greater than rhs</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af198547a4d15e4a762bac2aa8ee97879"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af198547a4d15e4a762bac2aa8ee97879" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Less-than-or-equal comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to compare</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true if lhs is less than or equal to rhs</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7ea1e2886ff588822a85346be9fcd533"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7ea1e2886ff588822a85346be9fcd533" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Greater-than-or-equal comparison between integer and <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to compare</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to compare</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true if lhs is greater than or equal to rhs</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a78cc3e5eea27f0d0326cf2774686a558"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt; fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a78cc3e5eea27f0d0326cf2774686a558" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Addition operator for integer on left side.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to add</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to add</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Result of lhs + rhs as new <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Arithmetic operators for integer on left side</p>
+          </div></section>
+          <section class="m-doc-details" id="a5cf6136e58d41b3ca3028d4124fa2739"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt; fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5cf6136e58d41b3ca3028d4124fa2739" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Subtraction operator for integer on left side.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to subtract</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to subtract</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Result of lhs - rhs as new <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a400a25ba19b890e286a3ae2238dee5f1"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt; fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a400a25ba19b890e286a3ae2238dee5f1" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Multiplication operator for integer on left side.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to multiply</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to multiply</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Result of lhs * rhs as new <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3e677f86345ca9e58ea413932f2a74c0"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="pyfractions_8hpp.html">&lt;fractions/pyfractions.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt; fractions::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3e677f86345ca9e58ea413932f2a74c0" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">T lhs,
+              const <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>&lt;T&gt;&amp; rhs)</span></span>
+            </h3>
+            <p>Division operator for integer on left side.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>Integer to divide</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td><a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a> to divide by</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Result of lhs / rhs as new <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a></td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
       </div>

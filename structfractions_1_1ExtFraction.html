@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>fractions::ExtFraction struct | Fractions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Fractions</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="extfractions_8hpp.html">&lt;fractions/extfractions.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacefractions.html">fractions</a>::<wbr/></span>ExtFraction <span class="m-thin">struct</span>
+        </h1>
+        <p><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#comparison-operators">Comparison operators</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>Example:</p><pre class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="n">f</span><span class="p">.</span><span class="n">numer</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">f</span><span class="p">.</span><span class="n">denom</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span></pre><pre class="m-code">+-------+
+|  a    |    =  ExtFraction&lt;T&gt;
+| ---   |
+|  b    |
++-------+
+
+a = numerator
+b = denominator</pre>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acaffcc508a9bfcbebc91af4290032d87" class="m-doc">ExtFraction</a>(</span><span class="m-doc-wrap">T numer,
+              T denom) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a></span>
+            </dt>
+            <dd>denominator</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a995d6959bc5c36e646e32d0419cf9a70" class="m-doc">normalize</a>(</span><span class="m-doc-wrap">) -&gt; T -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6e7a31b06b496db1f77dc7ca9deeb4e4" class="m-doc">keep_denom_positive</a>(</span><span class="m-doc-wrap">) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac1cb967a9b440fe39c47e9b32883a474" class="m-doc">reduce</a>(</span><span class="m-doc-wrap">) -&gt; T -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e479d44853e11767e9005b4486e6730" class="m-doc">ExtFraction</a>(</span><span class="m-doc-wrap">T&amp;&amp; numer) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0b8bc7aae0e5e25569c7aab6b2029812" class="m-doc">ExtFraction</a>(</span><span class="m-doc-wrap">const T&amp; numer) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af8d23169cbdc723cd19e7d73e98d7983" class="m-doc">ExtFraction</a>(</span><span class="m-doc-wrap">) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4ed3fd320ed4d32b8a847c5a8871b118" class="m-doc">numer</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const T &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac426f1629bfe8b46c9c8b126b4f3d8b8" class="m-doc">denom</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const T &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4e6c6a2ee0d6d719b7e88ca6491b344f" class="m-doc">cross</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; T -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a71e8f27f6b647e642d13f9810e7e638c" class="m-doc">reciprocal</a>(</span><span class="m-doc-wrap">) -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void</span>
+            </dt>
+            <dd>Inverts the numerator and denominator of the fraction to calculate its reciprocal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9267133aec0736f1960386840ac8e3a8" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1ca28fb0395f72792a8f61d8f2d22e4e" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">T rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a78637b6db754c194a463e6f4aeb44c09" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4872ab1393e5bb5e38b0b90da5eee6b0" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">T rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acd05565ecc9a5455ac567b9da1883b55" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aacfe4e42a127b4c95ac16b593d82d19d" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; other) const -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a14ba4e1d28e332b249ae6e1d50c3c9ec" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; other) const -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac0592970a87b67c3c431283665b2dbcf" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7d2ae4dd906ae1eaa7c055400b9de08c" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7482cc335e4ea008dc96f414ca11592e" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2c08354402133f7f87d6345e8bcb684e" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaccc89ef25002e90d86552d9fa7dbb73" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a76b443352a7d476f689af9769a9e36e3" class="m-doc">operator--</a>(</span><span class="m-doc-wrap">) -&gt; ExtFraction &amp; -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4d1f05aded9b4d09fd07723eb5b8c7b" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">int) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8dfb0430ae1298202122812fefefc3c2" class="m-doc">operator--</a>(</span><span class="m-doc-wrap">int) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aab84a419a3d4c6cc540ca18b5ba8451b" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) -&gt; ExtFraction &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a10e02b00b5ccc099e387b8a855db0b82">
+              T <a href="#a10e02b00b5ccc099e387b8a855db0b82" class="m-doc-self">_numer</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afc40636a9b558a8bf46e2d30a8cadf99">
+              T <a href="#afc40636a9b558a8bf46e2d30a8cadf99" class="m-doc-self">_denom</a>
+            </dt>
+            <dd>numerator</dd>
+          </dl>
+        </section>
+        <section id="comparison-operators">
+          <h2><a href="#comparison-operators">Comparison operators</a></h2>
+<p>==, !=, &lt;, &gt;, &lt;=, &gt;= etc.</p>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a386bdce856759d11b85966882a50e285" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0f4d601d17ddcfa08dd1f14214308529" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6eb9c22c8416c64f40fd547d2c660b92" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa0a3e1c0b302f1abc5bbd2e669fd26a7" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a655c2ec328d5eec2ab430275453e3230" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1a1441a75fd1a94eded2b657586dd0c4" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0fdd446fdd7fede5669237b1d6a179d5" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae84f2b7ec254e95aa3600d68f934f4bc" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const T&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a79ceb146cab65f9674f535ca4325d6b5" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const T&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5ad000a4f941d847eb42a3e29c92c83f" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a144e73862282f04fd0df19f7b8ef342b" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3eb86616dffa8dcc15f3c2c6b09776e5" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b1bcc455e934a99301fa35df34a1ec1" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0973a82d5d301fce7731c12c64dc343c" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abdec69bffeb51a382ed6ac2e1bd12b5b" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8bd136c911d538d87afea3ce8c5da5be" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aabb682b5ffb8ac7ffd0afeb784b61b01" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af96fab4661fd72eec667954914b5048e" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad2ab4947a44885f67f0bbe76ba55a684" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aabd97f02265a6c8311d20dbc08835460" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f84d9e0c52d20b683704ac1faed1996" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae4ad6585e4268b063502efaeaf953b9c" class="m-doc">operator/</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af736f27937caecb7392cbe0f7c3d8ee1" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a28bdf57e398930c64d1d39d61229d150" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad7db25dad61336ba85c674d1b5cb09f9" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const T&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a00d73d18b78c56c6ff84ffd3aa57aadb" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af6aa3f77825cd46f0dc4e5e28425efe3" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a27d33a8ddb8e807f0df717fb51ddd9b2" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction -&gt; <a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename _Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a828d9b7fb1b30ceefccaca63008c622e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">_Stream&amp; out_stream,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; _Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="acaffcc508a9bfcbebc91af4290032d87"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acaffcc508a9bfcbebc91af4290032d87" class="m-doc-self">ExtFraction</a>(</span><span class="m-doc-wrap">T numer,
+              T denom)</span></span>
+            </h3>
+            <p>denominator</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The numerator</td>
+                </tr>
+                <tr>
+                  <td>denom&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The denominator</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructs a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> (Extended <a href="structfractions_1_1Fraction.html" class="m-doc">Fraction</a>) object from the given numerator and denominator.</p><p>Normalizes the fraction after construction.</p><p>Example: <code class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// f = 1/2</span></code></p><pre class="m-code">numer = 6, denom = 8
+     |
+     v
++-------+
+|  6    |     normalize()      +-------+
+| ---   |  ----------------&gt;   |  3    |
+|  8    |                      | ---   |
++-------+                      |  4    |
+                               +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a995d6959bc5c36e646e32d0419cf9a70"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a995d6959bc5c36e646e32d0419cf9a70" class="m-doc-self">normalize</a>(</span><span class="m-doc-wrap">) -&gt; T</span></span>
+            </h3>
+<p>Normalizes the fraction to a canonical form where the denominator is always non-negative and co-prime with the numerator.</p><pre class="m-code">+-------+    normalize()    +-------+
+|  6    |  --------------&gt;  |  3    |
+| ---   |                  | ---   |
+|  8    |                  |  4    |
++-------+                  +-------+
+
++-------+    normalize()    +-------+
+|  -3   |  --------------&gt;  |  3    |
+| ---   |                  | ---   |
+|  -4   |                  |  4    |
++-------+                  +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a6e7a31b06b496db1f77dc7ca9deeb4e4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6e7a31b06b496db1f77dc7ca9deeb4e4" class="m-doc-self">keep_denom_positive</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+<p>Normalizes the fraction by making the denominator positive. If the denominator is negative, both numerator and denominator are negated. This ensures the denominator is always positive.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac1cb967a9b440fe39c47e9b32883a474"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac1cb967a9b440fe39c47e9b32883a474" class="m-doc-self">reduce</a>(</span><span class="m-doc-wrap">) -&gt; T</span></span>
+            </h3>
+<p>Normalizes the fraction to a canonical form by making the numerator and denominator coprime. The gcd of the numerator and denominator is computed and used to divide out any common factors.</p><p>Example:</p><pre class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w"> </span><span class="c1">// f = 1/3</span>
+<span class="n">f</span><span class="p">.</span><span class="n">reduce</span><span class="p">();</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="a5e479d44853e11767e9005b4486e6730"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e479d44853e11767e9005b4486e6730" class="m-doc-self">ExtFraction</a>(</span><span class="m-doc-wrap">T&amp;&amp; numer) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The numerator.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructs a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> object from the given numerator.</p><p>The denominator is initialized to 1.</p><p>Example:</p><pre class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// f = 2/1</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">numer</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">denom</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="a0b8bc7aae0e5e25569c7aab6b2029812"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0b8bc7aae0e5e25569c7aab6b2029812" class="m-doc-self">ExtFraction</a>(</span><span class="m-doc-wrap">const T&amp; numer) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">numer&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The numerator.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Constructs a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> object from the given numerator.</p><p>The denominator is initialized to 1.</p><p>Example:</p><pre class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// f = 2/1</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="af8d23169cbdc723cd19e7d73e98d7983"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af8d23169cbdc723cd19e7d73e98d7983" class="m-doc-self">ExtFraction</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+<p>Constructs a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> object with numerator initialized to 0 and denominator initialized to 1.</p><p>Example:</p><pre class="m-code"><span class="n">ExtFraction</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w"> </span><span class="c1">// f = 0/1</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">numer</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="a4ed3fd320ed4d32b8a847c5a8871b118"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4ed3fd320ed4d32b8a847c5a8871b118" class="m-doc-self">numer</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const T &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A const reference to the numerator.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the numerator of the fraction.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac426f1629bfe8b46c9c8b126b4f3d8b8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac426f1629bfe8b46c9c8b126b4f3d8b8" class="m-doc-self">denom</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; const T &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A const reference to the denominator.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Gets the denominator of the fraction.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4e6c6a2ee0d6d719b7e88ca6491b344f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4e6c6a2ee0d6d719b7e88ca6491b344f" class="m-doc-self">cross</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; T</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The right-hand fraction to compute the cross product with.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The computed cross product.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Computes the cross product of this fraction and another fraction.</p><p>The cross product is defined as: cross(a/b, c/d) = a*d - b*c</p><p>This can be used to compute the determinant of a 2x2 matrix with the two fractions as the entries on the diagonal.</p><p>Example:</p><p>cross(ExtFraction(1,2), ExtFraction(3,4)) = -1 cross(ExtFraction(1,2), ExtFraction(1,2)) = 0 cross(ExtFraction(1,2), <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>(-1,2)) = 0</p><pre class="m-code"> a     c
+--- x ---  =  a*d - b*c
+ b     d
+
+ +-------+     +-------+
+ |  a    |     |  c    |
+ | ---   |  x  | ---   |  =  a*d - b*c
+ |  b    |     |  d    |
+ +-------+     +-------+
+
+ cross(1/2, 3/4) = 1*4 - 2*3 = -2</pre>
+          </div></section>
+          <section class="m-doc-details" id="a71e8f27f6b647e642d13f9810e7e638c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> void fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a71e8f27f6b647e642d13f9810e7e638c" class="m-doc-self">reciprocal</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Inverts the numerator and denominator of the fraction to calculate its reciprocal.</p>
+<pre class="m-code">+-------+    reciprocal()    +-------+
+|  a    |   ----------&gt;     |  b    |
+| ---   |                   | ---   |
+|  b    |                   |  a    |
++-------+                   +-------+
+
++-------+    reciprocal()    +-------+
+|  2    |   ----------&gt;     |  3    |
+| ---   |                   | ---   |
+|  3    |                   |  2    |
++-------+                   +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a9267133aec0736f1960386840ac8e3a8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9267133aec0736f1960386840ac8e3a8" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after multiplication.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by the given <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs and assigns the result to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Normalizes this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and rhs before multiplying. Updates the numerator and denominator of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the result.</p><pre class="m-code"> a     c     a*c
+--- * --- = -----
+ b     d     b*d
+
+ +-------+     +-------+     +---------+
+ |  a    |     |  c    |     |   a*c   |
+ | ---   |  *  | ---   |  =  |  -----  |
+ |  b    |     |  d    |     |   b*d   |
+ +-------+     +-------+     +---------+
+
+ +-------+     +-------+     +-------+
+ |  1    |     |  2    |     |  2    |
+ | ---   |  *  | ---   |  =  | ---   |
+ |  2    |     |  3    |     |  6    |
+ +-------+     +-------+     +-------+
+
+      normalize
+ +-------+ ----------&gt; +-------+
+ |  2    |             |  1    |
+ | ---   |             | ---   |
+ |  6    |             |  3    |
+ +-------+             +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a1ca28fb0395f72792a8f61d8f2d22e4e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1ca28fb0395f72792a8f61d8f2d22e4e" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">T rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The integer to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after multiplication.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by the given integer rhs and assigns the result to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Normalizes this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> before multiplying. Updates the numerator of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the result and retains the existing denominator.</p>
+          </div></section>
+          <section class="m-doc-details" id="a78637b6db754c194a463e6f4aeb44c09"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a78637b6db754c194a463e6f4aeb44c09" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to divide by.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after division.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by the given <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs and assigns the result to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Swaps the denominator of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the numerator of rhs. Normalizes this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and rhs before dividing. Updates the numerator and denominator of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the result.</p><pre class="m-code"> a     c     a     d     a*d
+--- / --- = --- * --- = -----
+ b     d     b     c     b*c
+
+ +-------+     +-------+     +-------+     +---------+
+ |  a    |     |  c    |     |  a    |     |   a*d   |
+ | ---   |  /  | ---   |  =  | ---   |  *  |  -----  |
+ |  b    |     |  d    |     |  b    |     |   b*c   |
+ +-------+     +-------+     +-------+     +---------+
+
+ +-------+     +-------+     +-------+
+ |  1    |     |  2    |     |  3    |
+ | ---   |  /  | ---   |  =  | ---   |
+ |  2    |     |  3    |     |  4    |
+ +-------+     +-------+     +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a4872ab1393e5bb5e38b0b90da5eee6b0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4872ab1393e5bb5e38b0b90da5eee6b0" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">T rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The integer to divide this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after dividing by rhs.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by the integer rhs and assigns the result to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Divides the numerator of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by rhs and updates it with the result.</p>
+          </div></section>
+          <section class="m-doc-details" id="acd05565ecc9a5455ac567b9da1883b55"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd05565ecc9a5455ac567b9da1883b55" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; ExtFraction</span></span>
+            </h3>
+<p>Negates this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by negating its numerator.</p><p>Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the negated numerator.</p>
+          </div></section>
+          <section class="m-doc-details" id="aacfe4e42a127b4c95ac16b593d82d19d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aacfe4e42a127b4c95ac16b593d82d19d" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; other) const -&gt; ExtFraction</span></span>
+            </h3>
+<p>Adds this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs.</p><p>Finds the lowest common denominator and converts both Fractions to it. Then adds the numerators and returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with the result. Handles zero denominators by returning a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with a zero denominator.</p><pre class="m-code"> a     c     a*d + b*c
+--- + --- = ---------
+ b     d       b*d
+
+ +-------+     +-------+     +-----------+
+ |  a    |     |  c    |     | a*d+b*c   |
+ | ---   |  +  | ---   |  =  | ------    |
+ |  b    |     |  d    |     |  b*d      |
+ +-------+     +-------+     +-----------+
+
+ +-------+     +-------+     +-------+
+ |  1    |     |  1    |     |  5    |
+ | ---   |  +  | ---   |  =  | ---   |
+ |  2    |     |  3    |     |  6    |
+ +-------+     +-------+     +-------+</pre>
+          </div></section>
+          <section class="m-doc-details" id="a14ba4e1d28e332b249ae6e1d50c3c9ec"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a14ba4e1d28e332b249ae6e1d50c3c9ec" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; other) const -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to subtract from this one.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts another <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Negates the passed in <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>, then adds it to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac0592970a87b67c3c431283665b2dbcf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac0592970a87b67c3c431283665b2dbcf" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The integer to subtract.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the difference.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts an integer from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Converts the integer rhs to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> with denominator 1 and subtracts it from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7d2ae4dd906ae1eaa7c055400b9de08c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7d2ae4dd906ae1eaa7c055400b9de08c" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to add.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after adding.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds another <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>If the denominators are equal, simply add the numerators. Otherwise, find the greatest common divisor of both denominators, multiply the numerators by the denominator over the gcd, add the new numerators, multiply by the product of the original denominators, and reduce to lowest terms.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7482cc335e4ea008dc96f414ca11592e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7482cc335e4ea008dc96f414ca11592e" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to subtract.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after subtracting.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts another <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>If the denominators are equal, simply subtract the numerators. Otherwise, find the greatest common divisor of both denominators, multiply the numerators by the denominator over the gcd, subtract the new numerators, multiply by the product of the original denominators, and reduce to lowest terms.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2c08354402133f7f87d6345e8bcb684e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2c08354402133f7f87d6345e8bcb684e" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The T (integer) to add.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after adding.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds a T (integer) to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>If the denominator is 1, simply add to the numerator. Otherwise, multiply the T by the denominator and add to the numerator. Then, reduce to lowest terms.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaccc89ef25002e90d86552d9fa7dbb73"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaccc89ef25002e90d86552d9fa7dbb73" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after incrementing.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Increments this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by 1.</p><p>Adds 1 to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a></p>
+          </div></section>
+          <section class="m-doc-details" id="a76b443352a7d476f689af9769a9e36e3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a76b443352a7d476f689af9769a9e36e3" class="m-doc-self">operator--</a>(</span><span class="m-doc-wrap">) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A reference to this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after decrementing.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Decrements this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by 1.</p><p>Subtracts 1 from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by calling <a href="structfractions_1_1ExtFraction.html#a7482cc335e4ea008dc96f414ca11592e" class="m-doc">operator-=()</a> with a T (integer) value of 1.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab4d1f05aded9b4d09fd07723eb5b8c7b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4d1f05aded9b4d09fd07723eb5b8c7b" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">int) -&gt; ExtFraction</span></span>
+            </h3>
+<p>Post-increment operator.</p><p>Makes a copy of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>, increments the copy, and returns the copy.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8dfb0430ae1298202122812fefefc3c2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8dfb0430ae1298202122812fefefc3c2" class="m-doc-self">operator--</a>(</span><span class="m-doc-wrap">int) -&gt; ExtFraction</span></span>
+            </h3>
+<p>Post-decrement operator.</p><p>Makes a copy of this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>, decrements the copy, and returns the copy.</p>
+          </div></section>
+          <section class="m-doc-details" id="aab84a419a3d4c6cc540ca18b5ba8451b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab84a419a3d4c6cc540ca18b5ba8451b" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) -&gt; ExtFraction &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The integer to subtract.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this fraction after subtracting.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts an integer from this fraction.</p><p>If the denominator is 1, simply subtract from the numerator. Otherwise, multiply the integer by the denominator and subtract from the numerator. Then, reduce to lowest terms.</p>
+          </div></section>
+          <section class="m-doc-details" id="a386bdce856759d11b85966882a50e285"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a386bdce856759d11b85966882a50e285" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare against.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if the fractions are not equal, false if they are equal.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction for inequality against another fraction.</p><p>Returns true if this fraction and the given fraction represent different rational values, false if they are equal. Uses the equality operator to compare the two fractions.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0f4d601d17ddcfa08dd1f14214308529"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f4d601d17ddcfa08dd1f14214308529" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is greater than rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another fraction for greater than.</p><p>Returns true if this fraction is greater than the other fraction, false otherwise. Greater than is determined by converting to a common denominator and comparing the resulting numerators.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6eb9c22c8416c64f40fd547d2c660b92"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6eb9c22c8416c64f40fd547d2c660b92" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is greater than or equal to the other fraction, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another fraction for greater than or equal to.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa0a3e1c0b302f1abc5bbd2e669fd26a7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa0a3e1c0b302f1abc5bbd2e669fd26a7" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is less than or equal to the other fraction, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another fraction for less than or equal to.</p>
+          </div></section>
+          <section class="m-doc-details" id="a655c2ec328d5eec2ab430275453e3230"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a655c2ec328d5eec2ab430275453e3230" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is greater than the other T integer, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another T integer for greater than.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1a1441a75fd1a94eded2b657586dd0c4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1a1441a75fd1a94eded2b657586dd0c4" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is less than or equal to the other T integer, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another T integer for less than or equal to.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0fdd446fdd7fede5669237b1d6a179d5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0fdd446fdd7fede5669237b1d6a179d5" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const T&amp; rhs) const -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if this fraction is greater than or equal to the other T integer, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another T integer for greater than or equal to.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae84f2b7ec254e95aa3600d68f934f4bc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae84f2b7ec254e95aa3600d68f934f4bc" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const T&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side fraction to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side integer to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs == rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to an integer value for equality.</p><p>Returns true if the fraction is equal to the integer, false otherwise. The fraction is considered equal if its normalized value matches the integer when the denominator is 1.</p><p>Example: ExtFraction(1, 1) == 1 -&gt; true ExtFraction(1, 2) == 2 -&gt; false ExtFraction(1, 2) == 3 -&gt; false</p>
+          </div></section>
+          <section class="m-doc-details" id="a79ceb146cab65f9674f535ca4325d6b5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79ceb146cab65f9674f535ca4325d6b5" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const T&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side fraction to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side integer to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs &lt; rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to an integer value for less than.</p><p>Returns true if this fraction is less than the integer, false otherwise. The fraction is considered less if its normalized value is less than the integer when the denominator is 1.</p><p>Example: ExtFraction(1, 1) &lt; 1 -&gt; false ExtFraction(1, 2) &lt; 2 -&gt; true ExtFraction(1, 2) &lt; 3 -&gt; true</p>
+          </div></section>
+          <section class="m-doc-details" id="a5ad000a4f941d847eb42a3e29c92c83f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ad000a4f941d847eb42a3e29c92c83f" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side integer to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs &lt; rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares an integer value to this fraction for less than.</p><p>Returns true if the integer is less than this fraction, false otherwise. The fraction is considered greater if its normalized value is greater than the integer when the denominator is 1.</p><p>Example: 1 &lt; ExtFraction(1, 1) -&gt; false 2 &lt; ExtFraction(1, 2) -&gt; false 3 &lt; ExtFraction(7, 2) -&gt; true</p>
+          </div></section>
+          <section class="m-doc-details" id="a144e73862282f04fd0df19f7b8ef342b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a144e73862282f04fd0df19f7b8ef342b" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side integer to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs == rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares an integer value to this fraction for equality.</p><p>Returns true if the integer is equal to this fraction, false otherwise. Equality is checked by comparing the integer to the normalized value of the fraction.</p><p>Example: 1 == ExtFraction(1, 1) -&gt; true 2 == ExtFraction(1, 2) -&gt; false 3 == ExtFraction(7, 2) -&gt; false</p>
+          </div></section>
+          <section class="m-doc-details" id="a3eb86616dffa8dcc15f3c2c6b09776e5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3eb86616dffa8dcc15f3c2c6b09776e5" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side fraction to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs == rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another fraction for equality.</p><p>Returns true if the two fractions represent the same rational value, false otherwise. Equality is checked by normalizing both fractions to a common denominator and comparing the numerators.</p><p>Example: ExtFraction(1, 1) == ExtFraction(1, 1) -&gt; true ExtFraction(1, 2) == ExtFraction(2, 4) -&gt; true ExtFraction(1, 2) == ExtFraction(3, 4) -&gt; false</p>
+          </div></section>
+          <section class="m-doc-details" id="a4b1bcc455e934a99301fa35df34a1ec1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b1bcc455e934a99301fa35df34a1ec1" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand side fraction to compare.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand side fraction to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs &lt; rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares this fraction to another fraction for less than.</p><p>Returns true if this fraction is less than the other fraction, false otherwise. Less than is determined by converting both fractions to a common denominator and comparing the resulting numerators.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0973a82d5d301fce7731c12c64dc343c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0973a82d5d301fce7731c12c64dc343c" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The T integer on the left hand side.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs is greater than rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares a T integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> for greater than.</p><p>This is a friend function that allows comparing a T integer on the left hand side to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</p>
+          </div></section>
+          <section class="m-doc-details" id="abdec69bffeb51a382ed6ac2e1bd12b5b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abdec69bffeb51a382ed6ac2e1bd12b5b" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The T integer on the left hand side.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs is less than or equal to rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares a T integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> for less than or equal to.</p><p>This is a friend function that allows comparing a T integer on the left hand side to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8bd136c911d538d87afea3ce8c5da5be"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto fractions::<wbr />ExtFraction&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8bd136c911d538d87afea3ce8c5da5be" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; bool</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The T integer on the left hand side.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>True if lhs is greater than or equal to rhs, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares a T integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> for greater than or equal to.</p><p>This is a friend function that allows comparing a T integer on the left hand side to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> on the right hand side.</p>
+          </div></section>
+          <section class="m-doc-details" id="aabb682b5ffb8ac7ffd0afeb784b61b01"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aabb682b5ffb8ac7ffd0afeb784b61b01" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies the given <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs by the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs.</p><p>Normalizes lhs and rhs before multiplying. Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</p>
+          </div></section>
+          <section class="m-doc-details" id="af96fab4661fd72eec667954914b5048e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af96fab4661fd72eec667954914b5048e" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand integer to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies the given <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs by the integer rhs.</p><p>Normalizes lhs before multiplying. Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad2ab4947a44885f67f0bbe76ba55a684"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2ab4947a44885f67f0bbe76ba55a684" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The left hand integer to multiply.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The right hand <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs by the integer lhs.</p><p>Normalizes rhs before multiplying. Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result of the multiplication.</p>
+          </div></section>
+          <section class="m-doc-details" id="aabd97f02265a6c8311d20dbc08835460"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aabd97f02265a6c8311d20dbc08835460" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after division.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs by the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs.</p><p>Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9f84d9e0c52d20b683704ac1faed1996"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9f84d9e0c52d20b683704ac1faed1996" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after division.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs by the integer rhs.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae4ad6585e4268b063502efaeaf953b9c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae4ad6585e4268b063502efaeaf953b9c" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> after division.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Divides the integer lhs by the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs.</p><p>Returns a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the result.</p>
+          </div></section>
+          <section class="m-doc-details" id="af736f27937caecb7392cbe0f7c3d8ee1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af736f27937caecb7392cbe0f7c3d8ee1" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs,
+              const T&amp; rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to add to.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The integer to add.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the sum.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and an integer.</p><p>Converts the integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and adds it to the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs.</p>
+          </div></section>
+          <section class="m-doc-details" id="a28bdf57e398930c64d1d39d61229d150"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28bdf57e398930c64d1d39d61229d150" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> rhs) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to add to.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The integer to add.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the sum.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds an integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Converts the integer rhs to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and adds it to the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> lhs.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad7db25dad61336ba85c674d1b5cb09f9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad7db25dad61336ba85c674d1b5cb09f9" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const T&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>The integer to subtract.</td>
+                </tr>
+                <tr>
+                  <td>frac</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to subtract from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the difference.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts a T integer from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>Subtracts the integer val from this <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> frac. Returns the result as a new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a00d73d18b78c56c6ff84ffd3aa57aadb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a00d73d18b78c56c6ff84ffd3aa57aadb" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>The integer to add.</td>
+                </tr>
+                <tr>
+                  <td>frac</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to add to.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the sum.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds an integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>This friend function allows adding an integer and a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by converting the integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and delegating to the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> += operator.</p>
+          </div></section>
+          <section class="m-doc-details" id="af6aa3f77825cd46f0dc4e5e28425efe3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6aa3f77825cd46f0dc4e5e28425efe3" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>The integer to subtract.</td>
+                </tr>
+                <tr>
+                  <td>frac</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to subtract from.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the difference.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Subtracts an integer from a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>This allows subtracting an integer from a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> by first converting the integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a27d33a8ddb8e807f0df717fb51ddd9b2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="extfractions_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a27d33a8ddb8e807f0df717fb51ddd9b2" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">int&amp;&amp; val,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; ExtFraction</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">val</td>
+                  <td>The integer value to multiply.</td>
+                </tr>
+                <tr>
+                  <td>frac</td>
+                  <td>The <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to multiply.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> containing the product.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Multiplies an integer by a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>.</p><p>This friend function converts the integer to a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> and delegates to the <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> *= operator to perform the multiplication.</p>
+          </div></section>
+          <section class="m-doc-details" id="a828d9b7fb1b30ceefccaca63008c622e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename _Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a828d9b7fb1b30ceefccaca63008c622e" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">_Stream&amp; out_stream,
+              const <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a>&amp; frac) -&gt; _Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">_Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out_stream&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>frac&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>_Stream&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Overloads the stream output operator to print a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to a stream.</p><p>This allows printing a <a href="structfractions_1_1ExtFraction.html" class="m-doc">ExtFraction</a> to an output stream in the format &quot;(numerator/denominator)&quot;.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Fractions. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
