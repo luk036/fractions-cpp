@@ -625,10 +625,10 @@ TEST_CASE("Conversion methods edge cases") {
 
     SUBCASE("round ties to even") {
         Fraction<int64_t> f1(5, 2);  // 2.5
-        CHECK_EQ(f1.round(), 2);      // Ties to even
+        CHECK_EQ(f1.round(), 2);     // Ties to even
 
         Fraction<int64_t> f2(7, 2);  // 3.5
-        CHECK_EQ(f2.round(), 4);      // Ties to even
+        CHECK_EQ(f2.round(), 4);     // Ties to even
     }
 
     SUBCASE("to_double precision") {
