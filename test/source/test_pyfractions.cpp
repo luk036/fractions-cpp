@@ -101,20 +101,20 @@ TEST_SUITE("Python Fractions Implementation Comparison") {
 
         CHECK_EQ(f1, f3);
         CHECK_NE(f1, f2);
-        CHECK(f1 > f2);
-        CHECK(f2 < f1);
-        CHECK(f1 >= f3);
-        CHECK(f1 >= f2);
-        CHECK(f2 <= f1);
-        CHECK(f3 <= f1);
+        CHECK_GT(f1, f2);
+        CHECK_LT(f2, f1);
+        CHECK_GE(f1, f3);
+        CHECK_GE(f1, f2);
+        CHECK_LE(f2, f1);
+        CHECK_LE(f3, f1);
 
         // Comparison with integers
         CHECK_NE(f1, 0);  // 1/2 != 0
         CHECK_NE(f1, 1);  // 1/2 != 1
-        CHECK(f1 < 1);
-        CHECK(f1 > 0);
-        CHECK(f1 <= 1);
-        CHECK(f1 >= 0);
+        CHECK_LT(f1, 1);
+        CHECK_GT(f1, 0);
+        CHECK_LE(f1, 1);
+        CHECK_GE(f1, 0);
     }
 
     TEST_CASE("Integer Operations") {
@@ -307,8 +307,8 @@ TEST_SUITE("Python Fractions Implementation Comparison") {
         fractions::Fraction<T> very_large(max_val, max_val - 1);
 
         // These should not crash
-        CHECK(large_num > large_denom);
-        CHECK(large_denom < large_num);
+        CHECK_GT(large_num, large_denom);
+        CHECK_LT(large_denom, large_num);
 
         // Test arithmetic with large values
         fractions::Fraction<T> f1(max_val / 2, 1);
@@ -316,31 +316,31 @@ TEST_SUITE("Python Fractions Implementation Comparison") {
 
         // Addition should handle overflow gracefully
         auto sum = f1 + f2;
-        CHECK(sum.numerator() < max_val);  // Should be normalized/approximated
+        CHECK_LT(sum.numerator(), max_val);  // Should be normalized/approximated
 
         // Multiplication with large values
         fractions::Fraction<T> f3(max_val / 1000, max_val / 1000);
         auto product = f3 * f3;
-        CHECK(product.numerator() <= max_val);
-        CHECK(product.denominator() <= max_val);
+        CHECK_LE(product.numerator(), max_val);
+        CHECK_LE(product.denominator(), max_val);
 
         // Division by large values
         fractions::Fraction<T> f4(max_val, 1);
         fractions::Fraction<T> f5(1, max_val);
         auto division = f4 / f5;
-        CHECK(division.numerator() <= max_val);
-        CHECK(division.denominator() <= max_val);
+        CHECK_LE(division.numerator(), max_val);
+        CHECK_LE(division.denominator(), max_val);
 
         // Test floor_div with large values
         fractions::Fraction<T> f6(max_val, 1);
         fractions::Fraction<T> f7(2, 1);
         auto floor_result = f6.floor_div(f7);
-        CHECK(floor_result > 0);
+        CHECK_GT(floor_result, 0);
 
         // Test modulo with large values
         fractions::Fraction<T> f8(max_val - 1, 1);
         fractions::Fraction<T> f9(max_val / 2, 1);
         auto mod_result = f8 % f9;
-        CHECK(mod_result.numerator() < f9.numerator());
+        CHECK_LT(mod_result.numerator(), f9.numerator());
     }
 }

@@ -82,10 +82,10 @@ TEST_CASE("ExtFraction boundary and edge cases") {
         CHECK_EQ(inf, inf);
         CHECK_EQ(neg_inf, neg_inf);
         CHECK_EQ(nan, nan);
-        CHECK(zero < inf);
-        CHECK(pos < inf);
-        CHECK(neg_inf < zero);
-        CHECK(neg_inf < pos);
+        CHECK_LT(zero, inf);
+        CHECK_LT(pos, inf);
+        CHECK_LT(neg_inf, zero);
+        CHECK_LT(neg_inf, pos);
         CHECK_EQ(inf * pos, inf);
         CHECK_EQ(pos * inf, inf);
         CHECK_EQ(inf / zero, inf);
@@ -142,14 +142,14 @@ TEST_CASE("ExtFraction comparison edge cases") {
 
         CHECK_EQ(zero, 0);
         CHECK_EQ(0, zero);
-        CHECK(pos > 0);
-        CHECK(0 < pos);
-        CHECK(neg < 0);
-        CHECK(0 > neg);
-        CHECK(small_pos > 0);
-        CHECK(0 < small_pos);
-        CHECK(large_pos > 0);
-        CHECK(0 < large_pos);
+        CHECK_GT(pos, 0);
+        CHECK_LT(0, pos);
+        CHECK_LT(neg, 0);
+        CHECK_GT(0, neg);
+        CHECK_GT(small_pos, 0);
+        CHECK_LT(0, small_pos);
+        CHECK_GT(large_pos, 0);
+        CHECK_LT(0, large_pos);
     }
 
     SUBCASE("Comparing very close fractions") {
@@ -157,10 +157,10 @@ TEST_CASE("ExtFraction comparison edge cases") {
         ExtFraction<int> f2(998, 999);
         ExtFraction<int> f3(1000, 1001);
 
-        CHECK(f1 > f2);
-        CHECK(f1 < f3);
-        CHECK(f2 < f1);
-        CHECK(f3 > f1);
+        CHECK_GT(f1, f2);
+        CHECK_LT(f1, f3);
+        CHECK_LT(f2, f1);
+        CHECK_GT(f3, f1);
     }
 
     SUBCASE("Transitivity of comparisons") {
@@ -168,12 +168,12 @@ TEST_CASE("ExtFraction comparison edge cases") {
         ExtFraction<int> b(1, 3);
         ExtFraction<int> c(1, 2);
 
-        CHECK(a < b);
-        CHECK(b < c);
-        CHECK(a < c);
-        CHECK(c > b);
-        CHECK(b > a);
-        CHECK(c > a);
+        CHECK_LT(a, b);
+        CHECK_LT(b, c);
+        CHECK_LT(a, c);
+        CHECK_GT(c, b);
+        CHECK_GT(b, a);
+        CHECK_GT(c, a);
     }
 }
 
@@ -267,8 +267,8 @@ TEST_CASE("ExtFraction cross product method") {
         ExtFraction<int> f2(1, 3);
 
         // If a/b < c/d, then a*d - b*c < 0
-        CHECK(f1.cross(f2) > 0);  // 1/2 > 1/3
-        CHECK(f2.cross(f1) < 0);
+        CHECK_GT(f1.cross(f2), 0);  // 1/2 > 1/3
+        CHECK_LT(f2.cross(f1), 0);
     }
 }
 
@@ -568,15 +568,15 @@ TEST_CASE("ExtFraction ordering completeness") {
         };
 
         for (int i = 0; i < 8; ++i) {
-            CHECK(f[i] < f[i + 1]);
-            CHECK(f[i + 1] > f[i]);
-            CHECK(f[i] <= f[i + 1]);
-            CHECK(f[i + 1] >= f[i]);
+            CHECK_LT(f[i], f[i + 1]);
+            CHECK_GT(f[i + 1], f[i]);
+            CHECK_LE(f[i], f[i + 1]);
+            CHECK_GE(f[i + 1], f[i]);
         }
 
         for (int i = 0; i < 9; ++i) {
-            CHECK(f[i] <= f[i]);
-            CHECK(f[i] >= f[i]);
+            CHECK_LE(f[i], f[i]);
+            CHECK_GE(f[i], f[i]);
             CHECK_EQ(f[i], f[i]);
             CHECK_FALSE(f[i] != f[i]);
         }

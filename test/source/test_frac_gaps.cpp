@@ -476,25 +476,25 @@ TEST_CASE("Comparison with negative values") {
     ExtFraction<int> zero(0, 1);
 
     SUBCASE("Negative fraction comparison") {
-        CHECK(neg_half < neg_third);
-        CHECK(neg_third > neg_half);
+        CHECK_LT(neg_half, neg_third);
+        CHECK_GT(neg_third, neg_half);
         CHECK_NE(neg_half, neg_third);
     }
 
     SUBCASE("Negative vs positive") {
-        CHECK(neg_half < pos_half);
-        CHECK(pos_half > neg_half);
-        CHECK(neg_half < zero);
-        CHECK(zero > neg_half);
+        CHECK_LT(neg_half, pos_half);
+        CHECK_GT(pos_half, neg_half);
+        CHECK_LT(neg_half, zero);
+        CHECK_GT(zero, neg_half);
     }
 
     SUBCASE("Negative vs integer") {
-        CHECK(neg_half < 0);
-        CHECK(0 > neg_half);
-        CHECK(neg_half < 1);
-        CHECK(1 > neg_half);
-        CHECK(-1 < neg_half);
-        CHECK(neg_half > -1);
+        CHECK_LT(neg_half, 0);
+        CHECK_GT(0, neg_half);
+        CHECK_LT(neg_half, 1);
+        CHECK_GT(1, neg_half);
+        CHECK_LT(-1, neg_half);
+        CHECK_GT(neg_half, -1);
     }
 }
 

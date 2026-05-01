@@ -529,15 +529,15 @@ TEST_CASE("Comparison overflow safety") {
     SUBCASE("Large numerator comparison") {
         Fraction<int64_t> f1(std::numeric_limits<int64_t>::max() / 2, 1);
         Fraction<int64_t> f2(std::numeric_limits<int64_t>::max() / 3, 1);
-        CHECK(f1 > f2);
-        CHECK(f2 < f1);
+        CHECK_GT(f1, f2);
+        CHECK_LT(f2, f1);
     }
 
     SUBCASE("Large denominator comparison") {
         Fraction<int64_t> f1(1, std::numeric_limits<int64_t>::max() / 2);
         Fraction<int64_t> f2(1, std::numeric_limits<int64_t>::max() / 3);
-        CHECK(f1 < f2);
-        CHECK(f2 > f1);
+        CHECK_LT(f1, f2);
+        CHECK_GT(f2, f1);
     }
 
     SUBCASE("Mixed large values") {
@@ -545,16 +545,16 @@ TEST_CASE("Comparison overflow safety") {
                              std::numeric_limits<int64_t>::max() / 3);
         Fraction<int64_t> f2(std::numeric_limits<int64_t>::max() / 3,
                              std::numeric_limits<int64_t>::max() / 2);
-        CHECK(f1 > f2);
-        CHECK(f2 < f1);
+        CHECK_GT(f1, f2);
+        CHECK_LT(f2, f1);
     }
 
     SUBCASE("Negative large values") {
         Fraction<int64_t> f1(-std::numeric_limits<int64_t>::max() / 2, 1);
         Fraction<int64_t> f2(-std::numeric_limits<int64_t>::max() / 3, 1);
         // -max/2 < -max/3 is FALSE (more negative is smaller)
-        CHECK(f2 < f1);  // -max/3 is less negative than -max/2
-        CHECK(f1 > f2);
+        CHECK_LT(f2, f1);  // -max/3 is less negative than -max/2
+        CHECK_GT(f1, f2);
     }
 }
 
@@ -567,7 +567,7 @@ TEST_CASE("Arithmetic overflow handling") {
         Fraction<T> f2(max_val / 2, 1);
         auto sum = f1 + f2;
         // Should handle overflow gracefully without crashing
-        CHECK(sum.denominator() > 0);
+        CHECK_GT(sum.denominator(), 0);
     }
 
     SUBCASE("Multiplication overflow handling") {
@@ -575,7 +575,7 @@ TEST_CASE("Arithmetic overflow handling") {
         Fraction<T> f2(max_val / 100, 1);
         auto product = f1 * f2;
         // Should handle overflow gracefully without crashing
-        CHECK(product.denominator() > 0);
+        CHECK_GT(product.denominator(), 0);
     }
 
     SUBCASE("Division overflow handling") {
@@ -583,7 +583,7 @@ TEST_CASE("Arithmetic overflow handling") {
         Fraction<T> f2(1, max_val);
         auto result = f1 / f2;
         // Should handle overflow gracefully without crashing
-        CHECK(result.denominator() > 0);
+        CHECK_GT(result.denominator(), 0);
     }
 }
 

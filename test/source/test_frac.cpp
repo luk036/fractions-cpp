@@ -52,13 +52,13 @@ TEST_CASE("ExtFraction<int> abs") {
 TEST_CASE("ExtFraction<int> less than") {
     const auto a = ExtFraction<int>{3, 4};
     const auto b = ExtFraction<int>{5, 6};
-    CHECK(a < b);
+    CHECK_LT(a, b);
 }
 
 TEST_CASE("ExtFraction<int> greater than") {
     const auto a = ExtFraction<int>{3, 4};
     const auto b = ExtFraction<int>{5, 6};
-    CHECK(!(a > b));
+    CHECK_FALSE(a > b);
 }
 
 TEST_CASE("ExtFraction<int>::operator==") {
@@ -97,23 +97,23 @@ TEST_CASE("ExtFraction<int>::operator== with non-zero numerator and non-zero den
 TEST_CASE("ExtFraction<int>::operator<=") {
     const auto a = ExtFraction<int>{1, 2};
     const auto b = ExtFraction<int>{2, 4};
-    CHECK(a <= b);
+    CHECK_LE(a, b);
 }
 
 TEST_CASE("ExtFraction<int>::operator>=") {
     const auto a = ExtFraction<int>{1, 2};
     const auto b = ExtFraction<int>{2, 4};
-    CHECK(a >= b);
+    CHECK_GE(a, b);
 }
 
 TEST_CASE("ExtFraction<int>::operator<= with zero denominator and non-zero numerator") {
     const auto a = ExtFraction<int>{1, 0};
-    CHECK(a <= a);
+    CHECK_LE(a, a);
 }
 
 TEST_CASE("ExtFraction<int>::operator>= with zero denominator and non-zero numerator") {
     const auto a = ExtFraction<int>{1, 0};
-    CHECK(a >= a);
+    CHECK_GE(a, a);
 }
 
 TEST_CASE("ExtFraction<int>::operator+=") {
@@ -195,12 +195,12 @@ TEST_CASE("ExtFraction Special Cases") {
     const auto nan = ExtFraction<int>{0, 0};
     const auto zero = ExtFraction<int>{0, 1};
 
-    CHECK(-inf < zero);
-    CHECK(zero < inf);
-    CHECK(-inf < posf);
-    CHECK(posf < inf);
+    CHECK_LT(-inf, zero);
+    CHECK_LT(zero, inf);
+    CHECK_LT(-inf, posf);
+    CHECK_LT(posf, inf);
     CHECK_EQ(inf, inf);
-    CHECK(-inf < inf);
+    CHECK_LT(-inf, inf);
     CHECK_EQ(inf, inf * posf);
     CHECK_EQ(inf, inf * inf);
     CHECK_EQ(inf, posf / zero);
@@ -328,38 +328,38 @@ TEST_CASE("ExtFraction comparison operators") {
     }
 
     SUBCASE("less than") {
-        CHECK(quarter < half);
-        CHECK(negative_half < quarter);
-        CHECK(negative_half < 0);
-        CHECK(0 < half);
+        CHECK_LT(quarter, half);
+        CHECK_LT(negative_half, quarter);
+        CHECK_LT(negative_half, 0);
+        CHECK_LT(0, half);
         CHECK_FALSE(half < quarter);
         CHECK_FALSE(half < half);
     }
 
     SUBCASE("greater than") {
-        CHECK(half > quarter);
-        CHECK(quarter > negative_half);
-        CHECK(half > 0);
-        CHECK(0 > negative_half);
+        CHECK_GT(half, quarter);
+        CHECK_GT(quarter, negative_half);
+        CHECK_GT(half, 0);
+        CHECK_GT(0, negative_half);
         CHECK_FALSE(quarter > half);
         CHECK_FALSE(half > half);
     }
 
     SUBCASE("less than or equal") {
-        CHECK(quarter <= half);
-        CHECK(half <= half);
-        CHECK(half <= two_quarters);
-        CHECK(negative_half <= 0);
-        CHECK(0 <= half);
+        CHECK_LE(quarter, half);
+        CHECK_LE(half, half);
+        CHECK_LE(half, two_quarters);
+        CHECK_LE(negative_half, 0);
+        CHECK_LE(0, half);
         CHECK_FALSE(half <= quarter);
     }
 
     SUBCASE("greater than or equal") {
-        CHECK(half >= quarter);
-        CHECK(half >= half);
-        CHECK(two_quarters >= half);
-        CHECK(half >= 0);
-        CHECK(0 >= negative_half);
+        CHECK_GE(half, quarter);
+        CHECK_GE(half, half);
+        CHECK_GE(two_quarters, half);
+        CHECK_GE(half, 0);
+        CHECK_GE(0, negative_half);
         CHECK_FALSE(quarter >= half);
     }
 }
@@ -510,6 +510,6 @@ TEST_CASE("ExtFraction operator<") {
     const auto p = ExtFraction<int>{val_a, val_b};
     const auto q = ExtFraction<int>{val_c, val_d};
 
-    CHECK(p < q);
+    CHECK_LT(p, q);
     // CHECK_NE(p, 0);
 }
