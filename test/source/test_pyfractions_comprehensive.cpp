@@ -37,41 +37,41 @@ TEST_CASE("Copy and move semantics") {
     SUBCASE("Copy constructor") {
         Fraction<int64_t> f1(3, 4);
         Fraction<int64_t> f2(f1);
-        CHECK(f2.numerator() == 3);
-        CHECK(f2.denominator() == 4);
-        CHECK(f1.numerator() == 3);  // Original unchanged
+        CHECK_EQ(f2.numerator(), 3);
+        CHECK_EQ(f2.denominator(), 4);
+        CHECK_EQ(f1.numerator(), 3);  // Original unchanged
     }
 
     SUBCASE("Move constructor") {
         Fraction<int64_t> f1(3, 4);
         Fraction<int64_t> f2(std::move(f1));
-        CHECK(f2.numerator() == 3);
-        CHECK(f2.denominator() == 4);
+        CHECK_EQ(f2.numerator(), 3);
+        CHECK_EQ(f2.denominator(), 4);
     }
 
     SUBCASE("Copy assignment") {
         Fraction<int64_t> f1(3, 4);
         Fraction<int64_t> f2(1, 2);
         f2 = f1;
-        CHECK(f2.numerator() == 3);
-        CHECK(f2.denominator() == 4);
-        CHECK(f1.numerator() == 3);  // Original unchanged
+        CHECK_EQ(f2.numerator(), 3);
+        CHECK_EQ(f2.denominator(), 4);
+        CHECK_EQ(f1.numerator(), 3);  // Original unchanged
     }
 
     SUBCASE("Move assignment") {
         Fraction<int64_t> f1(3, 4);
         Fraction<int64_t> f2(1, 2);
         f2 = std::move(f1);
-        CHECK(f2.numerator() == 3);
-        CHECK(f2.denominator() == 4);
+        CHECK_EQ(f2.numerator(), 3);
+        CHECK_EQ(f2.denominator(), 4);
     }
 
     SUBCASE("Self-assignment") {
         Fraction<int64_t> f1(3, 4);
         Fraction<int64_t>& ref = f1;
         f1 = ref;  // Assignment through reference to avoid direct self-assignment warning
-        CHECK(f1.numerator() == 3);
-        CHECK(f1.denominator() == 4);
+        CHECK_EQ(f1.numerator(), 3);
+        CHECK_EQ(f1.denominator(), 4);
     }
 }
 
@@ -79,29 +79,29 @@ TEST_CASE("Compound assignment operators") {
     SUBCASE("operator+=") {
         Fraction<int64_t> f(1, 2);
         f += Fraction<int64_t>(1, 3);
-        CHECK(f.numerator() == 5);
-        CHECK(f.denominator() == 6);
+        CHECK_EQ(f.numerator(), 5);
+        CHECK_EQ(f.denominator(), 6);
     }
 
     SUBCASE("operator-=") {
         Fraction<int64_t> f(1, 2);
         f -= Fraction<int64_t>(1, 3);
-        CHECK(f.numerator() == 1);
-        CHECK(f.denominator() == 6);
+        CHECK_EQ(f.numerator(), 1);
+        CHECK_EQ(f.denominator(), 6);
     }
 
     SUBCASE("operator*=") {
         Fraction<int64_t> f(2, 3);
         f *= Fraction<int64_t>(3, 4);
-        CHECK(f.numerator() == 1);
-        CHECK(f.denominator() == 2);
+        CHECK_EQ(f.numerator(), 1);
+        CHECK_EQ(f.denominator(), 2);
     }
 
     SUBCASE("operator/=") {
         Fraction<int64_t> f(2, 3);
         f /= Fraction<int64_t>(3, 4);
-        CHECK(f.numerator() == 8);
-        CHECK(f.denominator() == 9);
+        CHECK_EQ(f.numerator(), 8);
+        CHECK_EQ(f.denominator(), 9);
     }
 
     SUBCASE("Chained compound operations") {
@@ -109,8 +109,8 @@ TEST_CASE("Compound assignment operators") {
         f += Fraction<int64_t>(1, 3);   // 1/2 + 1/3 = 5/6
         f *= Fraction<int64_t>(2, 5);   // 5/6 * 2/5 = 1/3
         f -= Fraction<int64_t>(1, 15);  // 1/3 - 1/15 = 4/15
-        CHECK(f.numerator() == 4);
-        CHECK(f.denominator() == 15);
+        CHECK_EQ(f.numerator(), 4);
+        CHECK_EQ(f.denominator(), 15);
     }
 }
 
@@ -119,31 +119,31 @@ TEST_CASE("Round with ndigits parameter") {
         Fraction<int64_t> f(35, 10);  // 3.5 -> rounds to 4 (ties to even)
         auto rounded = f.round(1);
         // round() returns 4, then 4 * 10 / 10 = 4/1
-        CHECK(rounded.numerator() == 4);
-        CHECK(rounded.denominator() == 1);
+        CHECK_EQ(rounded.numerator(), 4);
+        CHECK_EQ(rounded.denominator(), 1);
     }
 
     SUBCASE("Round to 2 decimal places") {
         Fraction<int64_t> f(3567, 1000);  // 3.567 -> rounds to 4
         auto rounded = f.round(2);
         // round() returns 4, then 4 * 100 / 100 = 4/1
-        CHECK(rounded.numerator() == 4);
-        CHECK(rounded.denominator() == 1);
+        CHECK_EQ(rounded.numerator(), 4);
+        CHECK_EQ(rounded.denominator(), 1);
     }
 
     SUBCASE("Round to 0 decimal places (integer)") {
         Fraction<int64_t> f(35, 10);  // 3.5 -> rounds to 4 (ties to even)
         auto rounded = f.round(0);
-        CHECK(rounded.numerator() == 4);
-        CHECK(rounded.denominator() == 1);
+        CHECK_EQ(rounded.numerator(), 4);
+        CHECK_EQ(rounded.denominator(), 1);
     }
 
     SUBCASE("Round negative ndigits") {
         Fraction<int64_t> f(3567, 1000);  // 3.567 -> rounds to 4
         auto rounded = f.round(-1);
         // round() returns 4, then 4 * 10 / 10 = 4/1
-        CHECK(rounded.numerator() == 4);
-        CHECK(rounded.denominator() == 1);
+        CHECK_EQ(rounded.numerator(), 4);
+        CHECK_EQ(rounded.denominator(), 1);
     }
 }
 
@@ -206,26 +206,26 @@ TEST_CASE("Integer arithmetic operators on left side") {
 
     SUBCASE("operator+ with integer on left") {
         auto result = one + f;
-        CHECK(result.numerator() == 3);
-        CHECK(result.denominator() == 2);
+        CHECK_EQ(result.numerator(), 3);
+        CHECK_EQ(result.denominator(), 2);
     }
 
     SUBCASE("operator- with integer on left") {
         auto result = one - f;
-        CHECK(result.numerator() == 1);
-        CHECK(result.denominator() == 2);
+        CHECK_EQ(result.numerator(), 1);
+        CHECK_EQ(result.denominator(), 2);
     }
 
     SUBCASE("operator* with integer on left") {
         auto result = two * f;
-        CHECK(result.numerator() == 1);
-        CHECK(result.denominator() == 1);
+        CHECK_EQ(result.numerator(), 1);
+        CHECK_EQ(result.denominator(), 1);
     }
 
     SUBCASE("operator/ with integer on left") {
         auto result = one / f;
-        CHECK(result.numerator() == 2);
-        CHECK(result.denominator() == 1);
+        CHECK_EQ(result.numerator(), 2);
+        CHECK_EQ(result.denominator(), 1);
     }
 }
 
@@ -289,26 +289,26 @@ TEST_CASE("is_integer method") {
 TEST_CASE("as_integer_ratio method") {
     SUBCASE("Basic fractions") {
         auto ratio = Fraction<int64_t>(3, 4).as_integer_ratio();
-        CHECK(ratio.first == 3);
-        CHECK(ratio.second == 4);
+        CHECK_EQ(ratio.first, 3);
+        CHECK_EQ(ratio.second, 4);
     }
 
     SUBCASE("Normalized fractions") {
         auto ratio = Fraction<int64_t>(6, 8).as_integer_ratio();
-        CHECK(ratio.first == 3);  // Normalized
-        CHECK(ratio.second == 4);
+        CHECK_EQ(ratio.first, 3);  // Normalized
+        CHECK_EQ(ratio.second, 4);
     }
 
     SUBCASE("Negative fractions") {
         auto ratio = Fraction<int64_t>(-3, 4).as_integer_ratio();
-        CHECK(ratio.first == -3);
-        CHECK(ratio.second == 4);
+        CHECK_EQ(ratio.first, -3);
+        CHECK_EQ(ratio.second, 4);
     }
 
     SUBCASE("Integer fractions") {
         auto ratio = Fraction<int64_t>(4, 2).as_integer_ratio();
-        CHECK(ratio.first == 2);  // Normalized
-        CHECK(ratio.second == 1);
+        CHECK_EQ(ratio.first, 2);  // Normalized
+        CHECK_EQ(ratio.second, 1);
     }
 }
 
@@ -317,52 +317,52 @@ TEST_CASE("Hash function consistency") {
         Fraction<int64_t> f1(1, 2);
         Fraction<int64_t> f2(2, 4);
         Fraction<int64_t> f3(-1, -2);
-        CHECK(f1.hash() == f2.hash());
-        CHECK(f1.hash() == f3.hash());
+        CHECK_EQ(f1.hash(), f2.hash());
+        CHECK_EQ(f1.hash(), f3.hash());
     }
 
     SUBCASE("Different fractions likely have different hashes") {
         Fraction<int64_t> f1(1, 2);
         Fraction<int64_t> f2(1, 3);
         Fraction<int64_t> f3(2, 3);
-        CHECK(f1.hash() != f2.hash());
-        CHECK(f1.hash() != f3.hash());
-        CHECK(f2.hash() != f3.hash());
+        CHECK_NE(f1.hash(), f2.hash());
+        CHECK_NE(f1.hash(), f3.hash());
+        CHECK_NE(f2.hash(), f3.hash());
     }
 
     SUBCASE("Hash is consistent across operations") {
         Fraction<int64_t> f1(1, 2);
         Fraction<int64_t> f2(1, 2);
-        CHECK(f1.hash() == f2.hash());
-        CHECK(f1.hash() == f1.hash());  // Same object
+        CHECK_EQ(f1.hash(), f2.hash());
+        CHECK_EQ(f1.hash(), f1.hash());  // Same object
     }
 }
 
 TEST_CASE("Different integer types") {
     SUBCASE("int32_t type") {
         Fraction<int32_t> f(3, 4);
-        CHECK(f.numerator() == 3);
-        CHECK(f.denominator() == 4);
+        CHECK_EQ(f.numerator(), 3);
+        CHECK_EQ(f.denominator(), 4);
 
         auto sum = f + Fraction<int32_t>(1, 4);
-        CHECK(sum.numerator() == 1);
-        CHECK(sum.denominator() == 1);
+        CHECK_EQ(sum.numerator(), 1);
+        CHECK_EQ(sum.denominator(), 1);
     }
 
     SUBCASE("int64_t type") {
         Fraction<int64_t> f(3, 4);
-        CHECK(f.numerator() == 3);
-        CHECK(f.denominator() == 4);
+        CHECK_EQ(f.numerator(), 3);
+        CHECK_EQ(f.denominator(), 4);
 
         auto sum = f + Fraction<int64_t>(1, 4);
-        CHECK(sum.numerator() == 1);
-        CHECK(sum.denominator() == 1);
+        CHECK_EQ(sum.numerator(), 1);
+        CHECK_EQ(sum.denominator(), 1);
     }
 
     SUBCASE("Large numbers with int64_t") {
         Fraction<int64_t> f(123456789, 987654321);
-        CHECK(f.numerator() == 13717421);
-        CHECK(f.denominator() == 109739369);
+        CHECK_EQ(f.numerator(), 13717421);
+        CHECK_EQ(f.denominator(), 109739369);
     }
 }
 
@@ -371,35 +371,35 @@ TEST_CASE("Stream output scenarios") {
         Fraction<int64_t> f(3, 4);
         std::stringstream ss;
         ss << f;
-        CHECK(ss.str() == "3/4");
+        CHECK_EQ(ss.str(), "3/4");
     }
 
     SUBCASE("Integer") {
         Fraction<int64_t> f(5, 1);
         std::stringstream ss;
         ss << f;
-        CHECK(ss.str() == "5");
+        CHECK_EQ(ss.str(), "5");
     }
 
     SUBCASE("Negative fraction") {
         Fraction<int64_t> f(-3, 4);
         std::stringstream ss;
         ss << f;
-        CHECK(ss.str() == "-3/4");
+        CHECK_EQ(ss.str(), "-3/4");
     }
 
     SUBCASE("Negative integer") {
         Fraction<int64_t> f(-5, 1);
         std::stringstream ss;
         ss << f;
-        CHECK(ss.str() == "-5");
+        CHECK_EQ(ss.str(), "-5");
     }
 
     SUBCASE("Zero") {
         Fraction<int64_t> f(0, 1);
         std::stringstream ss;
         ss << f;
-        CHECK(ss.str() == "0");
+        CHECK_EQ(ss.str(), "0");
     }
 
     SUBCASE("Multiple fractions in stream") {
@@ -407,7 +407,7 @@ TEST_CASE("Stream output scenarios") {
         Fraction<int64_t> f2(3, 4);
         std::stringstream ss;
         ss << f1 << " + " << f2 << " = " << (f1 + f2);
-        CHECK(ss.str() == "1/2 + 3/4 = 5/4");
+        CHECK_EQ(ss.str(), "1/2 + 3/4 = 5/4");
     }
 }
 
@@ -416,35 +416,35 @@ TEST_CASE("Floor division edge cases") {
         Fraction<int64_t> f1(7, 3);
         Fraction<int64_t> f2(2, 3);
         // (7/3) / (2/3) = 7/2 = 3.5 -> floor = 3
-        CHECK(f1.floor_div(f2) == 3);
+        CHECK_EQ(f1.floor_div(f2), 3);
     }
 
     SUBCASE("Negative division") {
         Fraction<int64_t> f1(-7, 3);
         Fraction<int64_t> f2(2, 3);
         // (-7/3) / (2/3) = -7/2 = -3.5 -> floor = -4
-        CHECK(f1.floor_div(f2) == -4);  // Floor division
+        CHECK_EQ(f1.floor_div(f2), -4);  // Floor division
     }
 
     SUBCASE("Division with negative divisor") {
         Fraction<int64_t> f1(7, 3);
         Fraction<int64_t> f2(-2, 3);
         // (7/3) / (-2/3) = -7/2 = -3.5 -> floor = -4
-        CHECK(f1.floor_div(f2) == -4);
+        CHECK_EQ(f1.floor_div(f2), -4);
     }
 
     SUBCASE("Both negative") {
         Fraction<int64_t> f1(-7, 3);
         Fraction<int64_t> f2(-2, 3);
         // (-7/3) / (-2/3) = 7/2 = 3.5 -> floor = 3
-        CHECK(f1.floor_div(f2) == 3);
+        CHECK_EQ(f1.floor_div(f2), 3);
     }
 
     SUBCASE("Exact division") {
         Fraction<int64_t> f1(6, 3);
         Fraction<int64_t> f2(2, 3);
         // (6/3) / (2/3) = 2 / (2/3) = 3
-        CHECK(f1.floor_div(f2) == 3);
+        CHECK_EQ(f1.floor_div(f2), 3);
     }
 }
 
@@ -453,8 +453,8 @@ TEST_CASE("Modulo edge cases") {
         Fraction<int64_t> f1(7, 3);
         Fraction<int64_t> f2(2, 3);
         auto result = f1 % f2;
-        CHECK(result.numerator() == 1);
-        CHECK(result.denominator() == 3);
+        CHECK_EQ(result.numerator(), 1);
+        CHECK_EQ(result.denominator(), 3);
     }
 
     SUBCASE("Negative modulo") {
@@ -463,65 +463,65 @@ TEST_CASE("Modulo edge cases") {
         auto result = f1 % f2;
         // (-7/3) % (2/3) = (-7) % 2 / 9 = -1/9, but denominator gets normalized
         // -1/9 = -1/9 (already normalized)
-        CHECK(result.numerator() == -1);
-        CHECK(result.denominator() == 3);  // Denominator is 3*3/gcd
+        CHECK_EQ(result.numerator(), -1);
+        CHECK_EQ(result.denominator(), 3);  // Denominator is 3*3/gcd
     }
 
     SUBCASE("Modulo with negative divisor") {
         Fraction<int64_t> f1(7, 3);
         Fraction<int64_t> f2(-2, 3);
         auto result = f1 % f2;
-        CHECK(result.numerator() == 1);
-        CHECK(result.denominator() == 3);
+        CHECK_EQ(result.numerator(), 1);
+        CHECK_EQ(result.denominator(), 3);
     }
 
     SUBCASE("Exact division modulo") {
         Fraction<int64_t> f1(6, 3);
         Fraction<int64_t> f2(2, 3);
         auto result = f1 % f2;
-        CHECK(result.numerator() == 0);
-        CHECK(result.denominator() == 1);
+        CHECK_EQ(result.numerator(), 0);
+        CHECK_EQ(result.denominator(), 1);
     }
 }
 
 TEST_CASE("Power operation edge cases") {
     SUBCASE("Power of zero") {
         Fraction<int64_t> f(2, 3);
-        CHECK(f.pow(0) == Fraction<int64_t>(1, 1));
-        CHECK(Fraction<int64_t>(0, 1).pow(0) == Fraction<int64_t>(1, 1));
+        CHECK_EQ(f.pow(0), Fraction<int64_t>(1, 1));
+        CHECK_EQ(Fraction<int64_t>(0, 1).pow(0), Fraction<int64_t>(1, 1));
     }
 
     SUBCASE("Power of one") {
         Fraction<int64_t> f(2, 3);
-        CHECK(f.pow(1) == f);
+        CHECK_EQ(f.pow(1), f);
     }
 
     SUBCASE("Negative base with even exponent") {
         Fraction<int64_t> f(-2, 3);
         auto result = f.pow(2);
-        CHECK(result.numerator() == 4);
-        CHECK(result.denominator() == 9);
+        CHECK_EQ(result.numerator(), 4);
+        CHECK_EQ(result.denominator(), 9);
     }
 
     SUBCASE("Negative base with odd exponent") {
         Fraction<int64_t> f(-2, 3);
         auto result = f.pow(3);
-        CHECK(result.numerator() == -8);
-        CHECK(result.denominator() == 27);
+        CHECK_EQ(result.numerator(), -8);
+        CHECK_EQ(result.denominator(), 27);
     }
 
     SUBCASE("Negative exponent with positive base") {
         Fraction<int64_t> f(2, 3);
         auto result = f.pow(-2);
-        CHECK(result.numerator() == 9);
-        CHECK(result.denominator() == 4);
+        CHECK_EQ(result.numerator(), 9);
+        CHECK_EQ(result.denominator(), 4);
     }
 
     SUBCASE("Negative exponent with negative base") {
         Fraction<int64_t> f(-2, 3);
         auto result = f.pow(-2);
-        CHECK(result.numerator() == 9);
-        CHECK(result.denominator() == 4);
+        CHECK_EQ(result.numerator(), 9);
+        CHECK_EQ(result.denominator(), 4);
     }
 }
 
@@ -590,95 +590,95 @@ TEST_CASE("Arithmetic overflow handling") {
 TEST_CASE("Conversion methods edge cases") {
     SUBCASE("to_int with positive fraction") {
         Fraction<int64_t> f(7, 3);
-        CHECK(f.to_int() == 2);
+        CHECK_EQ(f.to_int(), 2);
     }
 
     SUBCASE("to_int with negative fraction") {
         Fraction<int64_t> f(-7, 3);
-        CHECK(f.to_int() == -2);
+        CHECK_EQ(f.to_int(), -2);
     }
 
     SUBCASE("to_int with zero") {
         Fraction<int64_t> f(0, 1);
-        CHECK(f.to_int() == 0);
+        CHECK_EQ(f.to_int(), 0);
     }
 
     SUBCASE("floor with positive fraction") {
         Fraction<int64_t> f(7, 3);
-        CHECK(f.floor() == 2);
+        CHECK_EQ(f.floor(), 2);
     }
 
     SUBCASE("floor with negative fraction") {
         Fraction<int64_t> f(-7, 3);
-        CHECK(f.floor() == -2);  // Integer division, not floor division
+        CHECK_EQ(f.floor(), -2);  // Integer division, not floor division
     }
 
     SUBCASE("ceil with positive fraction") {
         Fraction<int64_t> f(7, 3);
-        CHECK(f.ceil() == 3);
+        CHECK_EQ(f.ceil(), 3);
     }
 
     SUBCASE("ceil with negative fraction") {
         Fraction<int64_t> f(-7, 3);
-        CHECK(f.ceil() == -2);
+        CHECK_EQ(f.ceil(), -2);
     }
 
     SUBCASE("round ties to even") {
         Fraction<int64_t> f1(5, 2);  // 2.5
-        CHECK(f1.round() == 2);      // Ties to even
+        CHECK_EQ(f1.round(), 2);      // Ties to even
 
         Fraction<int64_t> f2(7, 2);  // 3.5
-        CHECK(f2.round() == 4);      // Ties to even
+        CHECK_EQ(f2.round(), 4);      // Ties to even
     }
 
     SUBCASE("to_double precision") {
         Fraction<int64_t> f(1, 3);
         double result = f.to_double();
-        CHECK(result == doctest::Approx(0.3333333333333333));
+        CHECK_EQ(result, doctest::Approx(0.3333333333333333));
     }
 
     SUBCASE("to_float precision") {
         Fraction<int64_t> f(1, 3);
         float result = f.to_float();
-        CHECK(result == doctest::Approx(0.3333333f));
+        CHECK_EQ(result, doctest::Approx(0.3333333f));
     }
 }
 
 TEST_CASE("Normalization behavior") {
     SUBCASE("Negative denominator normalization") {
         Fraction<int64_t> f1(1, -2);
-        CHECK(f1.numerator() == -1);
-        CHECK(f1.denominator() == 2);
+        CHECK_EQ(f1.numerator(), -1);
+        CHECK_EQ(f1.denominator(), 2);
 
         Fraction<int64_t> f2(-1, -2);
-        CHECK(f2.numerator() == 1);
-        CHECK(f2.denominator() == 2);
+        CHECK_EQ(f2.numerator(), 1);
+        CHECK_EQ(f2.denominator(), 2);
     }
 
     SUBCASE("GCD reduction") {
         Fraction<int64_t> f1(12, 18);
-        CHECK(f1.numerator() == 2);
-        CHECK(f1.denominator() == 3);
+        CHECK_EQ(f1.numerator(), 2);
+        CHECK_EQ(f1.denominator(), 3);
 
         Fraction<int64_t> f2(25, 35);
-        CHECK(f2.numerator() == 5);
-        CHECK(f2.denominator() == 7);
+        CHECK_EQ(f2.numerator(), 5);
+        CHECK_EQ(f2.denominator(), 7);
     }
 
     SUBCASE("Zero normalization") {
         Fraction<int64_t> f1(0, 5);
-        CHECK(f1.numerator() == 0);
-        CHECK(f1.denominator() == 1);
+        CHECK_EQ(f1.numerator(), 0);
+        CHECK_EQ(f1.denominator(), 1);
 
         Fraction<int64_t> f2(0, -10);
-        CHECK(f2.numerator() == 0);
-        CHECK(f2.denominator() == 1);
+        CHECK_EQ(f2.numerator(), 0);
+        CHECK_EQ(f2.denominator(), 1);
     }
 
     SUBCASE("Unity normalization") {
         Fraction<int64_t> f1(5, 5);
-        CHECK(f1.numerator() == 1);
-        CHECK(f1.denominator() == 1);
+        CHECK_EQ(f1.numerator(), 1);
+        CHECK_EQ(f1.denominator(), 1);
     }
 }
 
@@ -690,8 +690,8 @@ TEST_CASE("Complex expression evaluation") {
 
         // ((a + b) * c) / a
         auto result = ((a + b) * c) / a;
-        CHECK(result.numerator() == 5);
-        CHECK(result.denominator() == 12);
+        CHECK_EQ(result.numerator(), 5);
+        CHECK_EQ(result.denominator(), 12);
     }
 
     SUBCASE("Long chain of operations") {
@@ -700,8 +700,8 @@ TEST_CASE("Complex expression evaluation") {
         f *= Fraction<int64_t>(2, 5);  // 1/3
         f -= Fraction<int64_t>(1, 6);  // 1/6
         f /= Fraction<int64_t>(2, 3);  // 1/4
-        CHECK(f.numerator() == 1);
-        CHECK(f.denominator() == 4);
+        CHECK_EQ(f.numerator(), 1);
+        CHECK_EQ(f.denominator(), 4);
     }
 
     SUBCASE("Nested operations") {
@@ -712,8 +712,8 @@ TEST_CASE("Complex expression evaluation") {
 
         auto result = (a + b) * (c + d);
         // (1/2 + 1/3) * (1/4 + 1/5) = (5/6) * (9/20) = 45/120 = 3/8
-        CHECK(result.numerator() == 3);
-        CHECK(result.denominator() == 8);
+        CHECK_EQ(result.numerator(), 3);
+        CHECK_EQ(result.denominator(), 8);
     }
 }
 
@@ -722,22 +722,22 @@ TEST_CASE("Special values") {
         Fraction<int64_t> one(1, 1);
         Fraction<int64_t> f(1, 2);
 
-        CHECK(one * f == f);
-        CHECK(f * one == f);
-        CHECK(one / f == Fraction<int64_t>(2, 1));
-        CHECK(f / one == f);
-        CHECK(one + f == Fraction<int64_t>(3, 2));
-        CHECK(f + one == Fraction<int64_t>(3, 2));
+        CHECK_EQ(one * f, f);
+        CHECK_EQ(f * one, f);
+        CHECK_EQ(one / f, Fraction<int64_t>(2, 1));
+        CHECK_EQ(f / one, f);
+        CHECK_EQ(one + f, Fraction<int64_t>(3, 2));
+        CHECK_EQ(f + one, Fraction<int64_t>(3, 2));
     }
 
     SUBCASE("Negative one") {
         Fraction<int64_t> neg_one(-1, 1);
         Fraction<int64_t> f(1, 2);
 
-        CHECK(neg_one * f == -f);
-        CHECK(f * neg_one == -f);
-        CHECK(neg_one / f == Fraction<int64_t>(-2, 1));
-        CHECK(f / neg_one == -f);
+        CHECK_EQ(neg_one * f, -f);
+        CHECK_EQ(f * neg_one, -f);
+        CHECK_EQ(neg_one / f, Fraction<int64_t>(-2, 1));
+        CHECK_EQ(f / neg_one, -f);
     }
 }
 
@@ -748,10 +748,10 @@ TEST_CASE("Equality after normalization") {
         Fraction<int64_t> f3(3, 6);
         Fraction<int64_t> f4(-1, -2);
 
-        CHECK(f1 == f2);
-        CHECK(f2 == f3);
-        CHECK(f1 == f3);
-        CHECK(f1 == f4);
+        CHECK_EQ(f1, f2);
+        CHECK_EQ(f2, f3);
+        CHECK_EQ(f1, f3);
+        CHECK_EQ(f1, f4);
     }
 
     SUBCASE("Different fractions") {
@@ -759,8 +759,8 @@ TEST_CASE("Equality after normalization") {
         Fraction<int64_t> f2(1, 3);
         Fraction<int64_t> f3(2, 3);
 
-        CHECK(f1 != f2);
-        CHECK(f2 != f3);
-        CHECK(f1 != f3);
+        CHECK_NE(f1, f2);
+        CHECK_NE(f2, f3);
+        CHECK_NE(f1, f3);
     }
 }

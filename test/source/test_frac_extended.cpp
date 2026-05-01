@@ -37,15 +37,15 @@ TEST_CASE("ExtFraction with mixed types") {
 
     SUBCASE("int and long") {
         auto result = f_int + f_long;
-        CHECK(result.numer() == 5);
-        CHECK(result.denom() == 4);
+        CHECK_EQ(result.numer(), 5);
+        CHECK_EQ(result.denom(), 4);
     }
 
     SUBCASE("int and short") {
         ExtFraction<short> f_short(1, 4);
         auto result = f_int + f_short;
-        CHECK(result.numer() == 3);
-        CHECK(result.denom() == 4);
+        CHECK_EQ(result.numer(), 3);
+        CHECK_EQ(result.denom(), 4);
     }
 }
 
@@ -53,12 +53,12 @@ TEST_CASE("Stream insertion") {
     ExtFraction<int> frac(3, 4);
     std::stringstream ss;
     ss << frac;
-    CHECK(ss.str() == "(3/4)");
+    CHECK_EQ(ss.str(), "(3/4)");
 }
 
 TEST_CASE("Large numbers") {
     ExtFraction<long long> frac1(1000000000000LL, 2000000000000LL);
     frac1.normalize();
-    CHECK(frac1.numer() == 1);
-    CHECK(frac1.denom() == 2);
+    CHECK_EQ(frac1.numer(), 1);
+    CHECK_EQ(frac1.denom(), 2);
 }

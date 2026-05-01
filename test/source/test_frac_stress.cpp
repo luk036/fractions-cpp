@@ -25,7 +25,7 @@ TEST_CASE("ExtFraction<long long> stress tests") {
             f += ExtFraction<long long>(1, 1000);
         }
         // The result should be 1/2 + 1000/1000 = 1/2 + 1 = 3/2
-        CHECK(f == ExtFraction<long long>(3, 2));
+        CHECK_EQ(f, ExtFraction<long long>(3, 2));
     }
 
     SUBCASE("Normalization with large numbers") {
@@ -33,7 +33,7 @@ TEST_CASE("ExtFraction<long long> stress tests") {
         long long num = 2 * large_common_divisor;
         long long den = 3 * large_common_divisor;
         ExtFraction<long long> f(num, den);
-        CHECK(f.numer() == 2);
-        CHECK(f.denom() == 3);
+        CHECK_EQ(f.numer(), 2);
+        CHECK_EQ(f.denom(), 3);
     }
 }
