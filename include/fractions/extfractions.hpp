@@ -26,7 +26,7 @@ namespace fractions {
      * @param[in] val_a The input value.
      * @return The absolute value of the input.
      *
-     * ```svgbob
+     * @verbatim
      *    +---+    abs()    +---+
      *    | 5 |  ------>    | 5 |
      *    +---+             +---+
@@ -38,7 +38,7 @@ namespace fractions {
      *    +---+    abs()    +---+
      *    | 0 |  ------>    | 0 |
      *    +---+             +---+
-     * ```
+     * @endverbatim
      */
     template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<std::is_unsigned<T>::value, T>::type {
@@ -64,18 +64,18 @@ namespace fractions {
      *
      * Example:
      *
-     * ```
+     * @verbatim
      * gcd_recur(12, 8) = 4
      * gcd_recur(12, 4) = 4
      * gcd_recur(4, 4) = 4
-     * ```
+     * @endverbatim
      *
      * @tparam _Mn The integer type.
      * @param __m The first integer.
      * @param __n The second integer.
      * @return The GCD of __m and __n.
      *
-     * ```svgbob
+     * @verbatim
      *    gcd(48, 18)
      *         |
      *         v
@@ -86,7 +86,7 @@ namespace fractions {
      *         |
      *         v
      *    gcd(6, 0) = 6
-     * ```
+     * @endverbatim
      */
     template <typename _Mn> CONSTEXPR14 auto gcd_recur(const _Mn& __m, const _Mn& __n) -> _Mn {
         if (__n == 0) {
@@ -101,11 +101,11 @@ namespace fractions {
      *
      * Example:
      *
-     * ```
+     * @verbatim
      * gcd(0, 8) = 8
      * gcd(12, 4) = 4
      * gcd(4, 4) = 4
-     * ```
+     * @endverbatim
      *
      * @tparam _Mn The integer type.
      * @param __m The first integer.
@@ -129,7 +129,7 @@ namespace fractions {
      * @param __n The second integer.
      * @return The least common multiple of __m and __n.
      *
-     * ```svgbob
+     * @verbatim
      *    lcm(4, 6) = 12
      *
      *    4 = 2^2
@@ -139,7 +139,7 @@ namespace fractions {
      *    +-----+       +-----+       +--------+
      *    |  4  |  lcm  |  6  |  =   |   12   |
      *    +-----+       +-----+       +--------+
-     * ```
+     * @endverbatim
      */
     template <typename _Mn> CONSTEXPR14 auto lcm(const _Mn& __m, const _Mn& __n) -> _Mn {
         if (__m == 0 || __n == 0) {
@@ -153,14 +153,14 @@ namespace fractions {
      *
      * Example:
      *
-     * ```
+     * @verbatim
      * ExtFraction<int> f(1, 2);
      * f.numer() = 1;
      * f.denom() = 2;
-     * ```
+     * @endverbatim
      * @tparam T
      *
-     * ```svgbob
+     * @verbatim
      *    +-------+
      *    |  a    |    =  ExtFraction<T>
      *    | ---   |
@@ -169,7 +169,7 @@ namespace fractions {
      *
      *    a = numerator
      *    b = denominator
-     * ```
+     * @endverbatim
      */
     template <typename T> struct ExtFraction {
         T _numer;  /// numerator
@@ -182,13 +182,13 @@ namespace fractions {
          * Normalizes the fraction after construction.
          *
          * Example:
-         * ```
+         * @verbatim
          * ExtFraction<int> f(1, 2); // f = 1/2
-         * ```
+         * @endverbatim
          * @param[in] numer The numerator
          * @param[in] denom The denominator
          *
-         * ```svgbob
+         * @verbatim
          *    numer = 6, denom = 8
          *         |
          *         v
@@ -198,7 +198,7 @@ namespace fractions {
          *    |  8    |                      | ---   |
          *    +-------+                      |  4    |
          *                                   +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 ExtFraction(T numer, T denom)
             : _numer{std::move(numer)}, _denom{std::move(denom)} {
@@ -209,7 +209,7 @@ namespace fractions {
          * Normalizes the fraction to a canonical form where the denominator
          * is always non-negative and co-prime with the numerator.
          *
-         * ```svgbob
+         * @verbatim
          *    +-------+    normalize()    +-------+
          *    |  6    |  -------------->  |  3    |
          *    | ---   |                  | ---   |
@@ -221,7 +221,7 @@ namespace fractions {
          *    | ---   |                  | ---   |
          *    |  -4   |                  |  4    |
          *    +-------+                  +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto normalize() -> T {
             this->keep_denom_positive();
@@ -246,10 +246,10 @@ namespace fractions {
          * is computed and used to divide out any common factors.
          *
          * Example:
-         * ```
+         * @verbatim
          * ExtFraction<int> f(2, 6); // f = 1/3
          * f.reduce();
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto reduce() -> T {
             T common = gcd(this->_numer, this->_denom);
@@ -266,10 +266,10 @@ namespace fractions {
          * The denominator is initialized to 1.
          *
          * Example:
-         * ```
+         * @verbatim
          * ExtFraction<int> f(2); // f = 2/1
          * assert(f.numer() == 2 && f.denom() == 1);
-         * ```
+         * @endverbatim
          * @param[in] numer The numerator.
          */
         CONSTEXPR14 explicit ExtFraction(T&& numer) : _numer{std::move(numer)}, _denom(1) {}
@@ -280,10 +280,10 @@ namespace fractions {
          * The denominator is initialized to 1.
          *
          * Example:
-         * ```
+         * @verbatim
          * ExtFraction<int> f(2); // f = 2/1
          * assert(f == ExtFraction<int>(2, 1));
-         * ```
+         * @endverbatim
          * @param[in] numer The numerator.
          */
         CONSTEXPR14 explicit ExtFraction(const T& numer) : _numer{numer}, _denom(1) {}
@@ -293,10 +293,10 @@ namespace fractions {
          * initialized to 1.
          *
          * Example:
-         * ```
+         * @verbatim
          * ExtFraction<int> f; // f = 0/1
          * assert(f.numer() == 0);
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 ExtFraction() : _numer(0), _denom(1) {}
 
@@ -332,7 +332,7 @@ namespace fractions {
          * @param[in] rhs The right-hand fraction to compute the cross product with.
          * @return The computed cross product.
          *
-         * ```svgbob
+         * @verbatim
          *    a     c
          *   --- x ---  =  a*d - b*c
          *    b     d
@@ -344,7 +344,7 @@ namespace fractions {
          *    +-------+     +-------+
          *
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto cross(const ExtFraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
@@ -611,7 +611,7 @@ namespace fractions {
          * @brief Inverts the numerator and denominator of the fraction to calculate
          * its reciprocal.
          *
-         * ```svgbob
+         * @verbatim
          *    +-------+    reciprocal()    +-------+
          *    |  a    |   ---------->     |  b    |
          *    | ---   |                   | ---   |
@@ -623,7 +623,7 @@ namespace fractions {
          *    | ---   |                   | ---   |
          *    |  3    |                   |  2    |
          *    +-------+                   +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
@@ -640,7 +640,7 @@ namespace fractions {
          * @param rhs The ExtFraction to multiply.
          * @return A reference to this ExtFraction after multiplication.
          *
-         * ```svgbob
+         * @verbatim
          *    a     c     a*c
          *   --- * --- = -----
          *    b     d     b*d
@@ -663,7 +663,7 @@ namespace fractions {
          *    | ---   |             | ---   |
          *    |  6    |             |  3    |
          *    +-------+             +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto operator*=(ExtFraction rhs) -> ExtFraction& {
             std::swap(this->_numer, rhs._numer);
@@ -746,7 +746,7 @@ namespace fractions {
          * @param rhs The ExtFraction to divide by.
          * @return A reference to this ExtFraction after division.
          *
-         * ```svgbob
+         * @verbatim
          *    a     c     a     d     a*d
          *   --- / --- = --- * --- = -----
          *    b     d     b     c     b*c
@@ -762,7 +762,7 @@ namespace fractions {
          *    | ---   |  /  | ---   |  =  | ---   |
          *    |  2    |     |  3    |     |  4    |
          *    +-------+     +-------+     +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto operator/=(ExtFraction rhs) -> ExtFraction& {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
@@ -851,7 +851,7 @@ namespace fractions {
          * Then adds the numerators and returns a new ExtFraction with the result.
          * Handles zero denominators by returning a ExtFraction with a zero denominator.
          *
-         * ```svgbob
+         * @verbatim
          *    a     c     a*d + b*c
          *   --- + --- = ---------
          *    b     d       b*d
@@ -867,7 +867,7 @@ namespace fractions {
          *    | ---   |  +  | ---   |  =  | ---   |
          *    |  2    |     |  3    |     |  6    |
          *    +-------+     +-------+     +-------+
-         * ```
+         * @endverbatim
          */
         CONSTEXPR14 auto operator+(const ExtFraction& other) const -> ExtFraction {
             if (this->_denom == other._denom) {

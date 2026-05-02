@@ -148,11 +148,11 @@ friend auto operator<<(_Stream& out_stream, const Fraction& frac) -> _Stream& {
 - Include ASCII diagrams in docstrings for math operations:
 ```cpp
 /** 
- * ```svgbob
+ * @verbatim
  *    a     c     a*d + b*c
  *   --- + --- = ---------
  *    b     d       b*d
- * ```
+ * @endverbatim
  */
 ```
 
