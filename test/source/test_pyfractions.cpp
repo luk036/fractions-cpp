@@ -4,7 +4,7 @@
  */
 
 #include <doctest/doctest.h>
-
+#include <sstream>
 #include "fractions/extfractions.hpp"
 #include "fractions/pyfractions.hpp"
 
