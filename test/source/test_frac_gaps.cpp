@@ -304,7 +304,8 @@ TEST_CASE("LCM edge cases") {
 
     SUBCASE("LCM and GCD relationship") {
         // lcm(a, b) * gcd(a, b) = |a * b|
-        int a = 12, b = 18;
+        int a = 12;
+        int b = 18;
         CHECK_EQ(lcm(a, b) * gcd(a, b), 12 * 18);
     }
 }

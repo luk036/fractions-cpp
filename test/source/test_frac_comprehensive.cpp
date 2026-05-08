@@ -572,11 +572,11 @@ TEST_CASE("ExtFraction ordering completeness") {
             CHECK_GE(f[i + 1], f[i]);
         }
 
-        for (int i = 0; i < 9; ++i) {
-            CHECK_LE(f[i], f[i]);
-            CHECK_GE(f[i], f[i]);
-            CHECK_EQ(f[i], f[i]);
-            CHECK_FALSE(f[i] != f[i]);
+        for (auto & i : f) {
+            CHECK_LE(i, i);
+            CHECK_GE(i, i);
+            CHECK_EQ(i, i);
+            CHECK_FALSE(i != i);
         }
     }
 }
