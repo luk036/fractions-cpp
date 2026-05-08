@@ -3,11 +3,9 @@
  */
 #include <doctest/doctest.h>
 
-#include <cmath>
 #include <fractions/pyfractions.hpp>
 #include <limits>
 #include <sstream>
-#include <type_traits>
 
 using namespace fractions;
 
@@ -36,7 +34,7 @@ using namespace fractions;
 TEST_CASE("Copy and move semantics") {
     SUBCASE("Copy constructor") {
         Fraction<int64_t> f1(3, 4);
-        Fraction<int64_t> f2(f1);
+        const Fraction<int64_t>& f2(f1);
         CHECK_EQ(f2.numerator(), 3);
         CHECK_EQ(f2.denominator(), 4);
         CHECK_EQ(f1.numerator(), 3);  // Original unchanged
@@ -640,7 +638,7 @@ TEST_CASE("Conversion methods edge cases") {
     SUBCASE("to_float precision") {
         Fraction<int64_t> f(1, 3);
         float result = f.to_float();
-        CHECK_EQ(result, doctest::Approx(0.3333333f));
+        CHECK_EQ(result, doctest::Approx(0.3333333F));
     }
 }
 

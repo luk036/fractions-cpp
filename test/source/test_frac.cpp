@@ -219,8 +219,8 @@ TEST_CASE("ExtFraction Special Cases") {
 
 TEST_CASE("abs function") {
     SUBCASE("unsigned types") {
-        CHECK_EQ(abs(5u), 5u);
-        CHECK_EQ(abs(0u), 0u);
+        CHECK_EQ(abs(5U), 5U);
+        CHECK_EQ(abs(0U), 0U);
     }
 
     SUBCASE("signed types") {
@@ -489,7 +489,7 @@ TEST_CASE("ExtFraction with different types") {
     }
 
     // SUBCASE("unsigned") {
-    //     ExtFraction<unsigned> f(3u, 6u);
+    //     ExtFraction<unsigned> f(3U, 6U);
     //     CHECK_EQ(f.numer(), 1);
     //     CHECK_EQ(f.denom(), 2);
     // }

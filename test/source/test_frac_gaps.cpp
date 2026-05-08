@@ -6,7 +6,6 @@
 #include <fractions/extfractions.hpp>
 #include <limits>
 #include <sstream>
-#include <type_traits>
 
 using namespace fractions;
 
@@ -184,24 +183,24 @@ TEST_CASE("Comparison operators with int&& (rvalue)") {
     ExtFraction<int> f(1, 2);
 
     SUBCASE("operator+ with int&&") {
-        auto result = std::move(1) + f;
+        auto result = 1 + f;
         CHECK_EQ(result, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("operator- with int&&") {
-        auto result = std::move(1) - f;
+        auto result = 1 - f;
         CHECK_EQ(result, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("operator* with int&&") {
-        auto result = std::move(2) * f;
+        auto result = 2 * f;
         CHECK_EQ(result, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("operator< with int&& (comparison)") {
         // Note: operator< with int&& is not defined, but operator+ is
         // This tests that the rvalue versions work correctly
-        auto sum = std::move(1) + f;
+        auto sum = 1 + f;
         CHECK_EQ(sum, ExtFraction<int>(3, 2));
     }
 }
@@ -216,9 +215,9 @@ TEST_CASE("abs function edge cases") {
     }
 
     SUBCASE("With unsigned types") {
-        CHECK_EQ(abs(0u), 0u);
-        CHECK_EQ(abs(1u), 1u);
-        CHECK_EQ(abs(100u), 100u);
+        CHECK_EQ(abs(0U), 0U);
+        CHECK_EQ(abs(1U), 1U);
+        CHECK_EQ(abs(100U), 100U);
     }
 
     SUBCASE("With long type") {

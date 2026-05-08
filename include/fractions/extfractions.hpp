@@ -70,10 +70,10 @@ namespace fractions {
      * gcd_recur(4, 4) = 4
      * @endverbatim
      *
-     * @tparam _Mn The integer type.
-     * @param __m The first integer.
-     * @param __n The second integer.
-     * @return The GCD of __m and __n.
+     * @tparam Mn The integer type.
+     * @param _m The first integer.
+     * @param _n The second integer.
+     * @return The GCD of _m and _n.
      *
      * @verbatim
      *    gcd(48, 18)
@@ -88,11 +88,11 @@ namespace fractions {
      *    gcd(6, 0) = 6
      * @endverbatim
      */
-    template <typename _Mn> CONSTEXPR14 auto gcd_recur(const _Mn& __m, const _Mn& __n) -> _Mn {
-        if (__n == 0) {
-            return abs(__m);
+    template <typename Mn> CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
+        if (_n == 0) {
+            return abs(_m);
         }
-        return gcd_recur(__n, __m % __n);
+        return gcd_recur(_n, _m % _n);
     }
 
     /**
@@ -107,16 +107,16 @@ namespace fractions {
      * gcd(4, 4) = 4
      * @endverbatim
      *
-     * @tparam _Mn The integer type.
-     * @param __m The first integer.
-     * @param __n The second integer.
-     * @return The GCD of __m and __n.
+     * @tparam Mn The integer type.
+     * @param _m The first integer.
+     * @param _n The second integer.
+     * @return The GCD of _m and _n.
      */
-    template <typename _Mn> CONSTEXPR14 auto gcd(const _Mn& __m, const _Mn& __n) -> _Mn {
-        if (__m == 0) {
-            return abs(__n);
+    template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
+        if (_m == 0) {
+            return abs(_n);
         }
-        return gcd_recur(__m, __n);
+        return gcd_recur(_m, _n);
     }
 
     /**
@@ -124,10 +124,10 @@ namespace fractions {
      *
      * Uses the formula lcm(a, b) = (abs(a) / gcd(a, b)) * abs(b).
      *
-     * @tparam _Mn The integer type.
-     * @param __m The first integer.
-     * @param __n The second integer.
-     * @return The least common multiple of __m and __n.
+     * @tparam Mn The integer type.
+     * @param _m The first integer.
+     * @param _n The second integer.
+     * @return The least common multiple of _m and _n.
      *
      * @verbatim
      *    lcm(4, 6) = 12
@@ -141,11 +141,11 @@ namespace fractions {
      *    +-----+       +-----+       +--------+
      * @endverbatim
      */
-    template <typename _Mn> CONSTEXPR14 auto lcm(const _Mn& __m, const _Mn& __n) -> _Mn {
-        if (__m == 0 || __n == 0) {
+    template <typename Mn> CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
+        if (_m == 0 || _n == 0) {
             return 0;
         }
-        return (abs(__m) / gcd(__m, __n)) * abs(__n);
+        return (abs(_m) / gcd(_m, _n)) * abs(_n);
     }
 
     /**
@@ -1096,7 +1096,7 @@ namespace fractions {
          * @param rhs The integer to subtract.
          * @return A reference to this fraction after subtracting.
          */
-        inline auto operator-=(const T& rhs) -> ExtFraction& {
+        auto operator-=(const T& rhs) -> ExtFraction& {
             if (this->_denom == 1) {
                 this->_numer -= rhs;
                 return *this;
@@ -1176,13 +1176,13 @@ namespace fractions {
          * This allows printing a ExtFraction to an output stream in the format
          * "(numerator/denominator)".
          *
-         * @tparam _Stream
+         * @tparam Stream
          * @param[in] out_stream
          * @param[in] frac
-         * @return _Stream&
+         * @return Stream&
          */
-        template <typename _Stream>
-        friend auto operator<<(_Stream& out_stream, const ExtFraction& frac) -> _Stream& {
+        template <typename Stream>
+        friend auto operator<<(Stream& out_stream, const ExtFraction& frac) -> Stream& {
             out_stream << "(" << frac.numer() << "/" << frac.denom() << ")";
             return out_stream;
         }

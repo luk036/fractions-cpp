@@ -4,9 +4,7 @@
 #include <doctest/doctest.h>
 
 #include <fractions/extfractions.hpp>
-#include <limits>
 #include <sstream>
-#include <type_traits>
 
 using namespace fractions;
 

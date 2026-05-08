@@ -23,11 +23,11 @@ auto operator+(const ExtFraction<T>& lhs, const ExtFraction<U>& rhs) {
 }
 
 namespace fractions {
-    template <> CONSTEXPR14 auto gcd_recur<short>(const short& __m, const short& __n) -> short {
-        if (__n == 0) {
-            return abs(__m);
+    template <> CONSTEXPR14 auto gcd_recur<short>(const short& _m, const short& _n) -> short {
+        if (_n == 0) {
+            return abs(_m);
         }
-        return gcd_recur<short>(__n, __m % __n);
+        return gcd_recur<short>(_n, _m % _n);
     }
 }  // namespace fractions
 

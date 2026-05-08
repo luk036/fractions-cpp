@@ -174,7 +174,7 @@ TEST_SUITE("Python Fractions Implementation Comparison") {
         CHECK_EQ(f.to_double(), doctest::Approx(2.3333333333333335));
 
         // to_float
-        CHECK_EQ(f.to_float(), doctest::Approx(2.3333333f));
+        CHECK_EQ(f.to_float(), doctest::Approx(2.3333333F));
     }
 
     TEST_CASE("String Representation") {

@@ -136,16 +136,16 @@ $$
 ### Implementation
 
 ```cpp
-template <typename _Mn>
-CONSTEXPR14 auto gcd_recur(const _Mn& __m, const _Mn& __n) -> _Mn {
-    if (__n == 0) return abs(__m);
-    return gcd_recur(__n, __m % __n);
+template <typename Mn>
+CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
+    if (_n == 0) return abs(_m);
+    return gcd_recur(_n, _m % _n);
 }
 
-template <typename _Mn>
-CONSTEXPR14 auto lcm(const _Mn& __m, const _Mn& __n) -> _Mn {
-    if (__m == 0 || __n == 0) return 0;
-    return (abs(__m) / gcd(__m, __n)) * abs(__n);
+template <typename Mn>
+CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
+    if (_m == 0 || _n == 0) return 0;
+    return (abs(_m) / gcd(_m, _n)) * abs(_n);
 }
 ```
 
