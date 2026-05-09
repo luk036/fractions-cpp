@@ -112,7 +112,7 @@ cmake --build build
 
 **SFINAE for overloads**:
 ```cpp
-template <typename T> auto abs(const T& val_a) -> 
+template <typename T> auto abs(const T& val_a) ->
     typename std::enable_if<std::is_unsigned<T>::value, T>::type { ... }
 ```
 
@@ -147,7 +147,7 @@ friend auto operator<<(Stream& out_stream, const Fraction& frac) -> Stream& {
 - Use Doxygen-style comments with `@`, `@file`, `@tparam`, etc.
 - Include ASCII diagrams in docstrings for math operations:
 ```cpp
-/** 
+/**
  * @verbatim
  *    a     c     a*d + b*c
  *   --- + --- = ---------

@@ -88,15 +88,15 @@ graph TD
     A[include/fractions/] --> B[fractions.hpp]
     A --> C[extfractions.hpp]
     A --> D[pyfractions.hpp]
-    
+
     B --> E[Fraction<T>]
     C --> F[ExtFraction<T>]
     D --> G[PyFraction]
-    
+
     E -.-> H[GCD/LCM]
     F -.-> H
     G -.-> H
-    
+
     style A fill:#f9f,stroke:#333
     style B fill:#bbf,stroke:#333
     style C fill:#bbf,stroke:#333
@@ -121,7 +121,7 @@ include/fractions/
 ### Greatest Common Divisor (Euclidean Algorithm)
 
 $$
-\gcd(a, b) = \begin{cases} 
+\gcd(a, b) = \begin{cases}
 |a| & \text{if } b = 0 \\
 \gcd(b, a \bmod b) & \text{otherwise}
 \end{cases}
@@ -160,12 +160,12 @@ template <typename T>
 struct Fraction {
     T _numer;  // numerator
     T _denom;  // denominator
-    
+
     // Constructors
     Fraction();                    // 0/1
     Fraction(T numer);             // numer/1
     Fraction(T numer, T denom);    // numer/denom
-    
+
     // Accessors
     auto numer() const noexcept -> const T&;
     auto denom() const noexcept -> const T&;
@@ -207,7 +207,7 @@ graph LR
     D --> E["-6/8 → 3/-4"]
     E --> F["Keep denom positive"]
     F --> G["3/4"]
-    
+
     style A fill:#ff6b6b
     style G fill:#51cf66
 ```
@@ -303,7 +303,7 @@ friend CONSTEXPR14 auto operator<(const Fraction& lhs, const Fraction& rhs) -> b
 
 ```cpp
 a == b   // Equality
-a != b   // Inequality  
+a != b   // Inequality
 a < b    // Less than
 a > b    // Greater than
 a <= b   // Less or equal
@@ -702,7 +702,7 @@ graph TD
     B -->|Build| C[Awesome Apps]
     C -->|Share| D[⭐ Star]
     D -->|Feedback| A
-    
+
     style A fill:#ff6b6b
     style D fill:#51cf66
 ```

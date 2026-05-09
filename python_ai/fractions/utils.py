@@ -14,15 +14,15 @@ T = TypeVar('T', int, float, complex)
 def abs_value(val: T) -> T:
     """
     Returns the absolute value of the input.
-    
+
     For unsigned types, simply returns the input value.
-    
+
     Args:
         val: The input value.
-        
+
     Returns:
         The absolute value of the input.
-        
+
     Examples:
         >>> abs_value(5)
         5
@@ -40,14 +40,14 @@ def gcd_recur(m: T, n: T) -> T:
     """
     Computes the greatest common divisor (GCD) of two integers recursively
     using Euclid's algorithm.
-    
+
     Args:
         m: The first integer.
         n: The second integer.
-        
+
     Returns:
         The GCD of m and n.
-        
+
     Examples:
         >>> gcd_recur(12, 8)
         4
@@ -65,14 +65,14 @@ def gcd(m: T, n: T) -> T:
     """
     Computes the greatest common divisor (GCD) of two integers recursively
     using Euclid's algorithm.
-    
+
     Args:
         m: The first integer.
         n: The second integer.
-        
+
     Returns:
         The GCD of m and n.
-        
+
     Examples:
         >>> gcd(0, 8)
         8
@@ -89,20 +89,20 @@ def gcd(m: T, n: T) -> T:
 def lcm(m: T, n: T) -> T:
     """
     Computes the least common multiple of two integers.
-    
+
     Uses the formula lcm(a, b) = (abs(a) / gcd(a, b)) * abs(b).
-    
+
     Args:
         m: The first integer.
         n: The second integer.
-        
+
     Returns:
         The least common multiple of m and n.
-        
+
     Examples:
         >>> lcm(4, 6)
         12
-        
+
         4 = 2^2
         6 = 2^1 * 3^1
         lcm = 2^2 * 3^1 = 12

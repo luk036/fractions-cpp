@@ -20,7 +20,7 @@ def main():
     print("Fractions Library - Python Implementation with Type Annotations")
     print("=" * 65)
     print()
-    
+
     # Basic operations
     print("Basic Operations:")
     print("-" * 20)
@@ -32,7 +32,7 @@ def main():
     print(f"a * b = {a * b}")
     print(f"a / b = {a / b}")
     print()
-    
+
     # Zero denominator support
     print("Zero Denominator Support:")
     print("-" * 30)
@@ -44,7 +44,7 @@ def main():
     print(f"nan = {nan}")
     print(f"zero / nan = {zero / nan}")
     print()
-    
+
     # Type annotations
     print("Type Annotations:")
     print("-" * 20)
@@ -52,7 +52,7 @@ def main():
     print("  Fraction[int] - for integer fractions")
     print("  Fraction[float] - for float fractions")
     print()
-    
+
     # Utility functions
     print("Utility Functions:")
     print("-" * 20)
@@ -60,7 +60,7 @@ def main():
     print(f"lcm(4, 6) = {lcm(4, 6)}")
     print(f"abs_value(-5) = {abs_value(-5)}")
     print()
-    
+
     print("Demo completed successfully!")
 
 

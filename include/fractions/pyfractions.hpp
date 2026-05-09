@@ -43,6 +43,11 @@ namespace fractions {
       public:
         using value_type = T;
 
+        /**
+         * Destructor
+         */
+        ~Fraction() = default;
+
       private:
         T _numerator;
         T _denominator;
@@ -176,8 +181,10 @@ namespace fractions {
          * - Compute result with smaller intermediate values
          */
         Fraction operator+(const Fraction& other) const {
-            T na = _numerator, da = _denominator;
-            T nb = other._numerator, db = other._denominator;
+            T na = _numerator;
+            T da = _denominator;
+            T nb = other._numerator;
+            T db = other._denominator;
 
             T g = _gcd(da, db);
 
@@ -193,7 +200,7 @@ namespace fractions {
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
                     T approx_num = static_cast<T>(
-                        std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                        std::round(result * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -213,7 +220,7 @@ namespace fractions {
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(
-                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    std::round(result * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -255,8 +262,10 @@ namespace fractions {
          * Subtraction - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1
          */
         Fraction operator-(const Fraction& other) const {
-            T na = _numerator, da = _denominator;
-            T nb = other._numerator, db = other._denominator;
+            T na = _numerator;
+            T da = _denominator;
+            T nb = other._numerator;
+            T db = other._denominator;
 
             T g = _gcd(da, db);
 
@@ -272,7 +281,7 @@ namespace fractions {
                     T approx_den = std::min(da * db, max_den);
                     if (approx_den < 0) approx_den = -approx_den;
                     T approx_num = static_cast<T>(
-                        std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                        std::round(result * static_cast<double>(approx_den)));
                     T g_approx = _gcd(approx_num, approx_den);
                     return Fraction(approx_num / g_approx, approx_den / g_approx);
                 }
@@ -292,7 +301,7 @@ namespace fractions {
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(
-                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    std::round(result * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -339,8 +348,10 @@ namespace fractions {
          * - Divide before multiplying to keep numbers small
          */
         Fraction operator*(const Fraction& other) const {
-            T na = _numerator, da = _denominator;
-            T nb = other._numerator, db = other._denominator;
+            T na = _numerator;
+            T da = _denominator;
+            T nb = other._numerator;
+            T db = other._denominator;
 
             T g1 = _gcd(na, db);
             if (g1 > 1) {
@@ -365,7 +376,7 @@ namespace fractions {
                 T approx_den = std::min(db * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(
-                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    std::round(result * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -377,13 +388,15 @@ namespace fractions {
          * Division - optimized algorithm (inverse of multiplication)
          */
         Fraction operator/(const Fraction& other) const {
-            T nb = other._numerator, db = other._denominator;
+            T nb = other._numerator;
+            T db = other._denominator;
 
             if (nb == 0) {
                 throw std::runtime_error("Fraction division by zero");
             }
 
-            T na = _numerator, da = _denominator;
+            T na = _numerator;
+            T da = _denominator;
 
             T g1 = _gcd(na, nb);
             if (g1 > 1) {
@@ -408,7 +421,7 @@ namespace fractions {
                 T approx_den = std::min(nb * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(
-                    std::round(static_cast<double>(result) * static_cast<double>(approx_den)));
+                    std::round(result * static_cast<double>(approx_den)));
                 T g_approx = _gcd(approx_num, approx_den);
                 return Fraction(approx_num / g_approx, approx_den / g_approx);
             }
@@ -621,14 +634,13 @@ namespace fractions {
             if ((numerator_product >= 0) == (denominator_product > 0)) {
                 // Same sign or numerator is 0 - simple division
                 return numerator_product / denominator_product;
-            } else {
-                // Different signs - need to adjust for floor
-                T quotient = numerator_product / denominator_product;
-                if (numerator_product % denominator_product != 0) {
-                    return quotient - 1;
-                }
-                return quotient;
             }
+            // Different signs - need to adjust for floor
+            T quotient = numerator_product / denominator_product;
+            if (numerator_product % denominator_product != 0) {
+                return quotient - 1;
+            }
+            return quotient;
         }
 
         /**
@@ -639,7 +651,8 @@ namespace fractions {
                 throw std::runtime_error("Modulo by zero");
             }
 
-            T da = _denominator, db = other._denominator;
+            T da = _denominator;
+            T db = other._denominator;
 
             // Check for potential overflow in multiplications
             bool overflow_risk
@@ -659,7 +672,7 @@ namespace fractions {
                 if (new_denominator < 0) new_denominator = -new_denominator;
 
                 T new_numerator = static_cast<T>(
-                    std::round(static_cast<double>(result) * static_cast<double>(new_denominator)));
+                    std::round(result * static_cast<double>(new_denominator)));
 
                 // Normalize the result
                 T g = _gcd(new_numerator, new_denominator);
@@ -682,18 +695,16 @@ namespace fractions {
             if (exponent >= 0) {
                 return Fraction(static_cast<T>(std::pow(_numerator, exponent)),
                                 static_cast<T>(std::pow(_denominator, exponent)));
-            } else {
-                if (_numerator == 0) {
-                    throw std::runtime_error("Fraction(0, 0)");
-                }
-                if (_numerator > 0) {
-                    return Fraction(static_cast<T>(std::pow(_denominator, -exponent)),
-                                    static_cast<T>(std::pow(_numerator, -exponent)));
-                } else {
-                    return Fraction(static_cast<T>(std::pow(-_denominator, -exponent)),
-                                    static_cast<T>(std::pow(-_numerator, -exponent)));
-                }
             }
+            if (_numerator == 0) {
+                throw std::runtime_error("Fraction(0, 0)");
+            }
+            if (_numerator > 0) {
+                return Fraction(static_cast<T>(std::pow(_denominator, -exponent)),
+                                static_cast<T>(std::pow(_numerator, -exponent)));
+            }
+            return Fraction(static_cast<T>(std::pow(-_denominator, -exponent)),
+                            static_cast<T>(std::pow(-_numerator, -exponent)));
         }
 
         /**
@@ -717,9 +728,8 @@ namespace fractions {
         T ceil() const {
             if (_numerator >= 0) {
                 return (_numerator + _denominator - 1) / _denominator;
-            } else {
-                return _numerator / _denominator;
             }
+            return _numerator / _denominator;
         }
 
         /**
@@ -731,12 +741,12 @@ namespace fractions {
 
             if (remainder * 2 < _denominator) {
                 return floor_val;
-            } else if (remainder * 2 > _denominator) {
-                return floor_val + 1;
-            } else {
-                // Tie case: round to even
-                return (floor_val % 2 == 0) ? floor_val : floor_val + 1;
             }
+            if (remainder * 2 > _denominator) {
+                return floor_val + 1;
+            }
+            // Tie case: round to even
+            return (floor_val % 2 == 0) ? floor_val : floor_val + 1;
         }
 
         /**

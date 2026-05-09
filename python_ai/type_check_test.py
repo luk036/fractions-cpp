@@ -21,21 +21,21 @@ def test_type_annotations() -> None:
     # Test with int type
     int_frac: Fraction[int] = Fraction[int](1, 2)
     print(f"int_frac: {int_frac}")
-    
+
     # Test with float type
     float_frac: Fraction[float] = Fraction[float](1.5, 2.5)
     print(f"float_frac: {float_frac}")
-    
+
     # Test utility functions with type annotations
     gcd_result: int = gcd(12, 8)
     print(f"gcd_result: {gcd_result}")
-    
+
     lcm_result: int = lcm(4, 6)
     print(f"lcm_result: {lcm_result}")
-    
+
     abs_result: int = abs_value(-5)
     print(f"abs_result: {abs_result}")
-    
+
     # Test operations with type annotations
     result: Fraction[int] = int_frac + Fraction[int](1, 3)
     print(f"result: {result}")
@@ -46,9 +46,9 @@ def main() -> None:
     print("Type Annotation Tests")
     print("=" * 25)
     print()
-    
+
     test_type_annotations()
-    
+
     print()
     print("Type annotation tests completed!")
     print()
