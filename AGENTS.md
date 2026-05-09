@@ -128,8 +128,8 @@ friend CONSTEXPR14 auto operator==(const Fraction& lhs, const T& rhs) -> bool { 
 
 **Stream output**:
 ```cpp
-template <typename _Stream>
-friend auto operator<<(_Stream& out_stream, const Fraction& frac) -> _Stream& {
+template <typename Stream>
+friend auto operator<<(Stream& out_stream, const Fraction& frac) -> Stream& {
     out_stream << "(" << frac.numer() << "/" << frac.denom() << ")";
     return out_stream;
 }
