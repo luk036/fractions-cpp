@@ -23,7 +23,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", { public = true })
     end
 elseif is_plat("windows") then
-    add_cxflags("/utf-8 /W4 /WX /wd5285", { force = true })
+    add_cxflags("/utf-8 /W4 /WX", { force = true })
 end
 
 -- header only package
