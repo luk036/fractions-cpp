@@ -231,7 +231,7 @@ This library ALLOWS zero denominators:
 
 - **fmt** (12.1.0) - String formatting
 - **spdlog** (1.17.0) - Logging (optional)
-- **doctest** (2.4.11) - Testing framework
+- **doctest** (2.5.2) - Testing framework
 - **RapidCheck** (master) - Property-based testing (tests only)
 
 ## Git Workflow
