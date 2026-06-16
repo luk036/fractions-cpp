@@ -53,7 +53,10 @@ namespace fractions {
         T _denominator;
 
         /**
-         * Helper function to compute GCD
+         * @brief Compute the greatest common divisor of two integers.
+         * @param[in] a First integer.
+         * @param[in] b Second integer.
+         * @return GCD of a and b.
          */
         static CONSTEXPR14 T _gcd(T a, T b) {
             a = a < 0 ? -a : a;
@@ -67,8 +70,10 @@ namespace fractions {
         }
 
         /**
-         * Internal constructor from coprime integers (bypasses normalization)
-         * Used for optimized internal operations
+         * @brief Internal constructor for pre-normalized values (bypasses normalization).
+         * @param[in] numerator The numerator value.
+         * @param[in] denominator The denominator value.
+         * @param[in] skip_normalize Unused flag to distinguish from public constructor.
          */
         Fraction(T numerator, T denominator, bool skip_normalize)
             : _numerator(numerator), _denominator(denominator) {
@@ -77,18 +82,22 @@ namespace fractions {
 
       public:
         /**
-         * Default constructor: Fraction(0, 1)
+         * @brief Default constructor: Fraction(0, 1)
          */
         Fraction() : _numerator(0), _denominator(1) {}
 
         /**
-         * Constructor from integer: Fraction(n) = n/1
+         * @brief Construct a Fraction from an integer value.
+         * @param[in] numerator Integer value (denominator = 1).
          */
         explicit Fraction(T numerator) : _numerator(numerator), _denominator(1) {}
 
         /**
-         * Constructor from numerator and denominator
-         * Normalizes the fraction to lowest terms
+         * @brief Construct a Fraction from numerator and denominator.
+         * Normalizes the fraction to lowest terms.
+         * @param[in] numerator The numerator value.
+         * @param[in] denominator The denominator value.
+         * @throws std::runtime_error If denominator is zero.
          */
         Fraction(T numerator, T denominator) {
             if (denominator == 0) {
@@ -107,20 +116,24 @@ namespace fractions {
         }
 
         /**
-         * Copy constructor
+         * @brief Copy constructor.
+         * @param[in] other Fraction to copy.
          */
         Fraction(const Fraction& other)
             : _numerator(other._numerator), _denominator(other._denominator) {}
 
         /**
-         * Move constructor
+         * @brief Move constructor.
+         * @param[in] other Fraction to move.
          */
         Fraction(Fraction&& other) noexcept
             : _numerator(std::move(other._numerator)),
               _denominator(std::move(other._denominator)) {}
 
         /**
-         * Copy assignment
+         * @brief Copy assignment operator.
+         * @param[in] other Fraction to copy.
+         * @return Reference to this.
          */
         Fraction& operator=(const Fraction& other) {
             if (this != &other) {
@@ -131,7 +144,9 @@ namespace fractions {
         }
 
         /**
-         * Move assignment
+         * @brief Move assignment operator.
+         * @param[in] other Fraction to move.
+         * @return Reference to this.
          */
         Fraction& operator=(Fraction&& other) noexcept {
             if (this != &other) {
@@ -142,32 +157,38 @@ namespace fractions {
         }
 
         /**
-         * Get numerator
+         * @brief Get the numerator.
+         * @return The numerator value.
          */
         CONSTEXPR14 T numerator() const noexcept { return _numerator; }
 
         /**
-         * Get denominator
+         * @brief Get the denominator.
+         * @return The denominator value.
          */
         CONSTEXPR14 T denominator() const noexcept { return _denominator; }
 
         /**
-         * Check if fraction is an integer
+         * @brief Check if the fraction is an integer (denominator == 1).
+         * @return true if denominator is 1, false otherwise.
          */
         CONSTEXPR14 bool is_integer() const noexcept { return _denominator == 1; }
 
         /**
-         * Get numerator and denominator as a pair
+         * @brief Get numerator and denominator as a pair.
+         * @return A pair of (numerator, denominator).
          */
         std::pair<T, T> as_integer_ratio() const { return {_numerator, _denominator}; }
 
         /**
-         * Negation operator
+         * @brief Negation operator.
+         * @return A new Fraction with negated numerator.
          */
         Fraction operator-() const { return Fraction(-_numerator, _denominator, true); }
 
         /**
-         * Absolute value
+         * @brief Absolute value.
+         * @return A new Fraction with non-negative numerator.
          */
         Fraction abs() const {
             return Fraction(_numerator < 0 ? -_numerator : _numerator, _denominator, true);
@@ -795,7 +816,11 @@ namespace fractions {
         }
 
         /**
-         * Stream output operator
+         * @brief Stream output operator.
+         * @tparam _OStream The output stream type.
+         * @param[in,out] os The output stream.
+         * @param[in] frac The fraction to output.
+         * @return Reference to the output stream.
          */
         template <typename _OStream>
         friend _OStream& operator<<(_OStream& os, const Fraction& frac) {
