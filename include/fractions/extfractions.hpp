@@ -1,6 +1,6 @@
 #pragma once
 
-/** @file include/extfractions.hpp
+/** @file extfractions.hpp
  *  This is a C++ Library header.
  */
 
@@ -46,12 +46,7 @@ namespace fractions {
     }
 
     /**
-     * Computes the absolute value of the given signed integer value.
-     * Returns the input if it is positive, otherwise returns the negation of the input.
-     *
-     * @tparam T The type of the input parameter.
-     * @param[in] val_a The input value.
-     * @return The absolute value of the input.
+     * @overload
      */
     template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<!std::is_unsigned<T>::value, T>::type {

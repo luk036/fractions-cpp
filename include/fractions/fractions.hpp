@@ -1,6 +1,6 @@
 #pragma once
 
-/** @file include/fractions.hpp
+/** @file fractions.hpp
  *  This is a C++ Library header.
  */
 
@@ -46,12 +46,7 @@ namespace fractions {
     }
 
     /**
-     * Computes the absolute value of the given signed integer value.
-     * Returns the input if it is positive, otherwise returns the negation of the input.
-     *
-     * @tparam T The type of the input parameter.
-     * @param[in] val_a The input value.
-     * @return The absolute value of the input.
+     * @overload
      */
     template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
@@ -64,7 +59,7 @@ namespace fractions {
      *
      * Example:
      *
-     * @endverbatim
+     * @verbatim
      * gcd_recur(12, 8) = 4
      * gcd_recur(12, 4) = 4
      * gcd_recur(4, 4) = 4
@@ -99,18 +94,15 @@ namespace fractions {
      * Computes the greatest common divider (GCD) of two integers recursively using Euclid's
      * algorithm.
      *
+     * @overload
+     *
      * Example:
      *
-     * @endverbatim
+     * @verbatim
      * gcd(0, 8) = 8
      * gcd(12, 4) = 4
      * gcd(4, 4) = 4
      * @endverbatim
-     *
-     * @tparam Mn The integer type.
-     * @param _m The first integer.
-     * @param _n The second integer.
-     * @return The GCD of _m and _n.
      */
     template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0) {
@@ -152,8 +144,7 @@ namespace fractions {
      * @brief Fraction
      *
      * Example:
-     *
-     * @endverbatim
+     * @verbatim
      * Fraction<int> f(1, 2);
      * f.numer() = 1;
      * f.denom() = 2;
@@ -182,7 +173,7 @@ namespace fractions {
          * Normalizes the fraction after construction.
          *
          * Example:
-         * @endverbatim
+         * @verbatim
          * Fraction<int> f(1, 2); // f = 1/2
          * @endverbatim
          * @param[in] numer The numerator
@@ -246,7 +237,7 @@ namespace fractions {
          * is computed and used to divide out any common factors.
          *
          * Example:
-         * @endverbatim
+         * @verbatim
          * Fraction<int> f(2, 6); // f = 1/3
          * f.reduce();
          * @endverbatim
@@ -266,7 +257,7 @@ namespace fractions {
          * The denominator is initialized to 1.
          *
          * Example:
-         * @endverbatim
+         * @verbatim
          * Fraction<int> f(2); // f = 2/1
          * assert(f.numer() == 2 && f.denom() == 1);
          * @endverbatim
@@ -280,7 +271,7 @@ namespace fractions {
          * The denominator is initialized to 1.
          *
          * Example:
-         * @endverbatim
+         * @verbatim
          * Fraction<int> f(2); // f = 2/1
          * assert(f == Fraction<int>(2, 1));
          * @endverbatim
@@ -293,7 +284,7 @@ namespace fractions {
          * initialized to 1.
          *
          * Example:
-         * @endverbatim
+         * @verbatim
          * Fraction<int> f; // f = 0/1
          * assert(f.numer() == 0);
          * @endverbatim

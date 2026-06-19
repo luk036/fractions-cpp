@@ -1,8 +1,7 @@
 #pragma once
 
-/** @file include/fractions/pyfractions.hpp
- *  C++ implementation of Python's fractions.py ExtFraction class
- *  This is a direct port for comparison with the existing ExtFraction implementation.
+/** @file pyfractions.hpp
+ *  This is a C++ Library header.
  */
 
 #include <cmath>
@@ -31,12 +30,13 @@ namespace fractions {
      * from Knuth's TAOCP.
      *
      * Key features:
+     * @verbatim
      * - Exact rational number representation
      * - Automatic normalization to lowest terms
      * - Optimized GCD-based arithmetic
      * - Overflow-safe operations with floating-point fallback
      * - Full comparison and arithmetic operator support
-     *
+     * @endverbatim
      * @tparam T Integer type for numerator and denominator (default: int64_t)
      */
     template <typename T = int64_t> class Fraction {
