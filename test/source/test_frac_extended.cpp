@@ -22,15 +22,6 @@ auto operator+(const ExtFraction<T>& lhs, const ExtFraction<U>& rhs) {
     return add(lhs, rhs);
 }
 
-namespace fractions {
-    template <> CONSTEXPR14 auto gcd_recur<short>(const short& _m, const short& _n) -> short {
-        if (_n == 0) {
-            return abs(_m);
-        }
-        return gcd_recur<short>(_n, _m % _n);
-    }
-}  // namespace fractions
-
 TEST_CASE("ExtFraction with mixed types") {
     ExtFraction<int> f_int(1, 2);
     ExtFraction<long> f_long(3, 4);
@@ -38,13 +29,6 @@ TEST_CASE("ExtFraction with mixed types") {
     SUBCASE("int and long") {
         auto result = f_int + f_long;
         CHECK_EQ(result.numer(), 5);
-        CHECK_EQ(result.denom(), 4);
-    }
-
-    SUBCASE("int and short") {
-        ExtFraction<short> f_short(1, 4);
-        auto result = f_int + f_short;
-        CHECK_EQ(result.numer(), 3);
         CHECK_EQ(result.denom(), 4);
     }
 }

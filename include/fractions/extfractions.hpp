@@ -88,10 +88,33 @@ namespace fractions {
      *    gcd(6, 0) = 6
      * @endverbatim
      */
-    template <typename Mn> CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
-        if (_n == 0) {
-            return abs(_m);
-        }
+    CONSTEXPR14 auto gcd_recur(long long _m, long long _n) -> long long {
+        if (_n == 0) return abs(_m);
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(unsigned long long _m, unsigned long long _n) -> unsigned long long {
+        if (_n == 0) return _m;
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(long _m, long _n) -> long {
+        if (_n == 0) return abs(_m);
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(unsigned long _m, unsigned long _n) -> unsigned long {
+        if (_n == 0) return _m;
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(int _m, int _n) -> int {
+        if (_n == 0) return abs(_m);
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(unsigned int _m, unsigned int _n) -> unsigned int {
+        if (_n == 0) return _m;
         return gcd_recur(_n, _m % _n);
     }
 
