@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['gcd_0',['gcd',['../namespacefractions.html#a0e60fd25da99a70c8a7ccbb60aa4b78a',1,'fractions']]],
+  ['gcd_5frecur_1',['gcd_recur',['../namespacefractions.html#a00cb6f02039cf2b0618c13e78e611fdb',1,'fractions::gcd_recur(long long _m, long long _n) -&gt; long long'],['../namespacefractions.html#a3c380bce47401c2e5b25ee0fd9690702',1,'fractions::gcd_recur(unsigned long long _m, unsigned long long _n) -&gt; unsigned long long'],['../namespacefractions.html#ae53eaecf4900fba5f375e4a8a1b9ecae',1,'fractions::gcd_recur(long _m, long _n) -&gt; long'],['../namespacefractions.html#a9318faf00a8d6c56f30231ccac34c4b9',1,'fractions::gcd_recur(unsigned long _m, unsigned long _n) -&gt; unsigned long'],['../namespacefractions.html#aa2125c2f7d8166cea9c42433eff1fca0',1,'fractions::gcd_recur(int _m, int _n) -&gt; int'],['../namespacefractions.html#af3a5c4d24322176fe88f01fc6ee7dd63',1,'fractions::gcd_recur(unsigned int _m, unsigned int _n) -&gt; unsigned int'],['../namespacefractions.html#a9e4aa4f68a0f28b4946acb385b016c96',1,'fractions::gcd_recur(const Mn &amp;_m, const Mn &amp;_n) -&gt; Mn']]]
+];
