@@ -1204,3 +1204,5 @@ namespace fractions {
         }
     };
 }  // namespace fractions
+
+#define FRACTIONS_FRACTIONS_HPP_INCLUDED
