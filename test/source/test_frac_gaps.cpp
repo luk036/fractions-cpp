@@ -3,6 +3,7 @@
  */
 #include <doctest/doctest.h>
 
+#include <fractions/fractions.hpp>
 #include <fractions/extfractions.hpp>
 #include <limits>
 #include <sstream>

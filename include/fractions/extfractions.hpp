@@ -17,34 +17,39 @@
 
 namespace fractions {
 
+#ifndef FRACTIONS_FRACTIONS_HPP_INCLUDED
     /**
-     * Returns the absolute value of the input.
+     * Computes the greatest common divisor (GCD) of two integers recursively using
+     * Euclid's algorithm.
      *
-     * For unsigned types, simply returns the input value.
-     *
-     * @tparam T The type of the input parameter.
-     * @param[in] val_a The input value.
-     * @return The absolute value of the input.
-     *
-     * @verbatim
-     *    +---+    abs()    +---+
-     *    | 5 |  ------>    | 5 |
-     *    +---+             +---+
-     *
-     *    +----+    abs()    +---+
-     *    | -5 |  ------>    | 5 |
-     *    +----+             +---+
-     *
-     *    +---+    abs()    +---+
-     *    | 0 |  ------>    | 0 |
-     *    +---+             +---+
-     * @endverbatim
-     *
-     * @f$ \gcd(m,n) = \gcd(|m|,|n|) @f$
+     * @tparam Mn The integer type.
+     * @param _m The first integer.
+     * @param _n The second integer.
+     * @return The GCD of _m and _n.
      */
-    template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
+    template <typename Mn>
+    CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
+        // DO NOT replace this tail recursion with a while loop.
+        // With -O3 the compiler optimizes this into a jump (tail-call elimination),
+        // making it faster than the iterative equivalent. This is intentional.
+        if (_n == 0) {
+            return _m < 0 ? -_m : _m;
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    /**
+     * Computes the greatest common divisor (GCD) of two integers.
+     *
+     * @tparam Mn The integer type.
+     * @param _m The first integer.
+     * @param _n The second integer.
+     * @return The GCD of _m and _n.
+     */
+    template <typename Mn>
+    CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0) {
-            return abs(_n);
+            return _n < 0 ? -_n : _n;
         }
         return gcd_recur(_m, _n);
     }
@@ -58,27 +63,17 @@ namespace fractions {
      * @param _m The first integer.
      * @param _n The second integer.
      * @return The least common multiple of _m and _n.
-     *
-     * @verbatim
-     *    lcm(4, 6) = 12
-     *
-     *    4 = 2^2
-     *    6 = 2^1 * 3^1
-     *    lcm = 2^2 * 3^1 = 12
-     *
-     *    +-----+       +-----+       +--------+
-     *    |  4  |  lcm  |  6  |  =   |   12   |
-     *    +-----+       +-----+       +--------+
-     * @endverbatim
-     *
-     * @f$ \operatorname{lcm}(a,b) = \frac{|a|}{\gcd(a,b)}\,|b| @f$
      */
-    template <typename Mn> CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
+    template <typename Mn>
+    CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0 || _n == 0) {
             return 0;
         }
-        return (abs(_m) / gcd(_m, _n)) * abs(_n);
+        Mn a = _m < 0 ? -_m : _m;
+        Mn b = _n < 0 ? -_n : _n;
+        return (a / gcd(a, b)) * b;
     }
+#endif
 
     /**
      * @brief ExtFraction
@@ -1139,4 +1134,20 @@ namespace fractions {
             return out_stream;
         }
     };
+
+    /**
+     * Returns the absolute value of an ExtFraction.
+     *
+     * @tparam T The underlying type of the ExtFraction.
+     * @param[in] val The ExtFraction to take the absolute value of.
+     * @return An ExtFraction with the absolute value of the input.
+     */
+    template <typename T>
+    CONSTEXPR14 auto abs(const ExtFraction<T>& val) -> ExtFraction<T> {
+        auto n = val.numer();
+        if (n < 0) {
+            n = static_cast<T>(-n);
+        }
+        return ExtFraction<T>{n, val.denom()};
+    }
 }  // namespace fractions
