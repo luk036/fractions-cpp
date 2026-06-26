@@ -39,96 +39,8 @@ namespace fractions {
      *    | 0 |  ------>    | 0 |
      *    +---+             +---+
      * @endverbatim
-     */
-    template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
-        typename std::enable_if<std::is_unsigned<T>::value, T>::type {
-        return val_a;
-    }
-
-    /**
-     * @overload
-     */
-    template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
-        typename std::enable_if<!std::is_unsigned<T>::value, T>::type {
-        return (val_a < 0) ? static_cast<T>(-val_a) : val_a;
-    }
-
-    /**
-     * Computes the greatest common divider (GCD) of two integers recursively
-     * using Euclid's algorithm.
      *
-     * Example:
-     *
-     * @verbatim
-     * gcd_recur(12, 8) = 4
-     * gcd_recur(12, 4) = 4
-     * gcd_recur(4, 4) = 4
-     * @endverbatim
-     *
-     * @tparam Mn The integer type.
-     * @param _m The first integer.
-     * @param _n The second integer.
-     * @return The GCD of _m and _n.
-     *
-     * @verbatim
-     *    gcd(48, 18)
-     *         |
-     *         v
-     *    gcd(18, 12)
-     *         |
-     *         v
-     *    gcd(12, 6)
-     *         |
-     *         v
-     *    gcd(6, 0) = 6
-     * @endverbatim
-     */
-    CONSTEXPR14 auto gcd_recur(long long _m, long long _n) -> long long {
-        if (_n == 0) return abs(_m);
-        return gcd_recur(_n, _m % _n);
-    }
-
-    CONSTEXPR14 auto gcd_recur(unsigned long long _m, unsigned long long _n) -> unsigned long long {
-        if (_n == 0) return _m;
-        return gcd_recur(_n, _m % _n);
-    }
-
-    CONSTEXPR14 auto gcd_recur(long _m, long _n) -> long {
-        if (_n == 0) return abs(_m);
-        return gcd_recur(_n, _m % _n);
-    }
-
-    CONSTEXPR14 auto gcd_recur(unsigned long _m, unsigned long _n) -> unsigned long {
-        if (_n == 0) return _m;
-        return gcd_recur(_n, _m % _n);
-    }
-
-    CONSTEXPR14 auto gcd_recur(int _m, int _n) -> int {
-        if (_n == 0) return abs(_m);
-        return gcd_recur(_n, _m % _n);
-    }
-
-    CONSTEXPR14 auto gcd_recur(unsigned int _m, unsigned int _n) -> unsigned int {
-        if (_n == 0) return _m;
-        return gcd_recur(_n, _m % _n);
-    }
-
-    /**
-     * Computes the greatest common divider (GCD) of two integers recursively using Euclid's
-     * algorithm.
-     *
-     * Example:
-     *
-     * @verbatim
-     * gcd(0, 8) = 8
-     * gcd(12, 4) = 4
-     * gcd(4, 4) = 4
-     * @endverbatim
-     *
-     * @tparam Mn The integer type.
-     * @param _m The first integer.
-     * @param _n The second integer.
-     * @return The GCD of _m and _n.
+     * @f$ \gcd(m,n) = \gcd(|m|,|n|) @f$
      */
     template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0) {
@@ -158,6 +70,8 @@ namespace fractions {
      *    |  4  |  lcm  |  6  |  =   |   12   |
      *    +-----+       +-----+       +--------+
      * @endverbatim
+     *
+     * @f$ \operatorname{lcm}(a,b) = \frac{|a|}{\gcd(a,b)}\,|b| @f$
      */
     template <typename Mn> CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0 || _n == 0) {
@@ -362,8 +276,10 @@ namespace fractions {
          *    +-------+     +-------+
          *
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-         * @endverbatim
-         */
+     * @endverbatim
+     *
+     * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
+     */
         CONSTEXPR14 auto cross(const ExtFraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
@@ -641,8 +557,10 @@ namespace fractions {
          *    | ---   |                   | ---   |
          *    |  3    |                   |  2    |
          *    +-------+                   +-------+
-         * @endverbatim
-         */
+     * @endverbatim
+     *
+     * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
+     */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
             this->keep_denom_positive();
@@ -682,6 +600,8 @@ namespace fractions {
          *    |  6    |             |  3    |
          *    +-------+             +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} @f$
          */
         CONSTEXPR14 auto operator*=(ExtFraction rhs) -> ExtFraction& {
             std::swap(this->_numer, rhs._numer);
@@ -716,6 +636,8 @@ namespace fractions {
          *
          * @param rhs The integer to multiply.
          * @return A reference to this ExtFraction after multiplication.
+         *
+         * @f$ \frac{a}{b} \cdot c = \frac{ac}{b} @f$
          */
         CONSTEXPR14 auto operator*=(T rhs) -> ExtFraction& {
             std::swap(this->_numer, rhs);
@@ -781,6 +703,8 @@ namespace fractions {
          *    |  2    |     |  3    |     |  4    |
          *    +-------+     +-------+     +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} @f$
          */
         CONSTEXPR14 auto operator/=(ExtFraction rhs) -> ExtFraction& {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
@@ -818,6 +742,8 @@ namespace fractions {
          *
          * @param rhs The integer to divide this ExtFraction by.
          * @return A reference to this ExtFraction after dividing by rhs.
+         *
+         * @f$ \frac{a}{b} / c = \frac{a}{bc} @f$
          */
         CONSTEXPR14 auto operator/=(T rhs) -> ExtFraction& {
             std::swap(this->_denom, rhs);
@@ -855,6 +781,8 @@ namespace fractions {
          * Negates this ExtFraction by negating its numerator.
          *
          * Returns a new ExtFraction with the negated numerator.
+         *
+         * @f$ -\frac{a}{b} = \frac{-a}{b} @f$
          */
         CONSTEXPR14 auto operator-() const -> ExtFraction {
             auto res = ExtFraction(*this);
@@ -886,6 +814,8 @@ namespace fractions {
          *    |  2    |     |  3    |     |  6    |
          *    +-------+     +-------+     +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} @f$
          */
         CONSTEXPR14 auto operator+(const ExtFraction& other) const -> ExtFraction {
             if (this->_denom == other._denom) {
@@ -971,6 +901,8 @@ namespace fractions {
          *
          * @param[in] rhs The ExtFraction to add.
          * @return A reference to this ExtFraction after adding.
+         *
+         * @f$ \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} @f$
          */
         CONSTEXPR14 auto operator+=(const ExtFraction& rhs) -> ExtFraction& {
             if (this->_denom == rhs._denom) {
@@ -1006,6 +938,8 @@ namespace fractions {
          *
          * @param rhs The ExtFraction to subtract.
          * @return A reference to this ExtFraction after subtracting.
+         *
+         * @f$ \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} @f$
          */
         CONSTEXPR14 auto operator-=(const ExtFraction& rhs) -> ExtFraction& {
             if (this->_denom == rhs._denom) {

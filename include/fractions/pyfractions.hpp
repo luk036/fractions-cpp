@@ -54,6 +54,9 @@ namespace fractions {
 
         /**
          * @brief Compute the greatest common divisor of two integers.
+         *
+         * @f$ \gcd(a,b) = \gcd(|a|,|b|) @f$ using Euclid's algorithm.
+         *
          * @param[in] a First integer.
          * @param[in] b Second integer.
          * @return GCD of a and b.
@@ -188,6 +191,9 @@ namespace fractions {
 
         /**
          * @brief Absolute value.
+         *
+         * @f$ \bigl|\frac{a}{b}\bigr| = \frac{|a|}{b} @f$
+         *
          * @return A new Fraction with non-negative numerator.
          */
         Fraction abs() const {
@@ -196,6 +202,8 @@ namespace fractions {
 
         /**
          * Addition - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1
+         *
+         * @f$ \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} @f$
          *
          * Uses GCD optimization to avoid large intermediate values:
          * - Find g = gcd(da, db)
@@ -280,6 +288,8 @@ namespace fractions {
 
         /**
          * Subtraction - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1
+         *
+         * @f$ \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} @f$
          */
         Fraction operator-(const Fraction& other) const {
             T na = _numerator;
@@ -361,6 +371,8 @@ namespace fractions {
         /**
          * Multiplication - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1
          *
+         * @f$ \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} @f$
+         *
          * Uses GCD optimization to reduce before multiplying:
          * - g1 = gcd(na, db)
          * - g2 = gcd(nb, da)
@@ -404,6 +416,8 @@ namespace fractions {
 
         /**
          * Division - optimized algorithm (inverse of multiplication)
+         *
+         * @f$ \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} @f$
          */
         Fraction operator/(const Fraction& other) const {
             T nb = other._numerator;
@@ -625,6 +639,8 @@ namespace fractions {
 
         /**
          * Integer division (floor)
+         *
+         * @f$ \left\lfloor \frac{a/b}{c/d} \right\rfloor = \left\lfloor \frac{ad}{bc} \right\rfloor @f$
          */
         T floor_div(const Fraction& other) const {
             if (other._numerator == 0) {
@@ -662,6 +678,8 @@ namespace fractions {
 
         /**
          * Modulo operation
+         *
+         * @f$ \frac{a}{b} \bmod \frac{c}{d} = \frac{(ad) \bmod (bc)}{bd} @f$
          */
         Fraction operator%(const Fraction& other) const {
             if (other._numerator == 0) {
@@ -707,6 +725,8 @@ namespace fractions {
 
         /**
          * Power operation (integer exponent only)
+         *
+         * @f$ \left(\frac{a}{b}\right)^n = \frac{a^n}{b^n} @f$
          */
         Fraction pow(int exponent) const {
             if (exponent >= 0) {
