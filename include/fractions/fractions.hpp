@@ -39,6 +39,8 @@ namespace fractions {
      *    | 0 |  ------>    | 0 |
      *    +---+             +---+
      * @endverbatim
+     *
+     * @f$ |a| = \begin{cases} a & a \ge 0 \\ -a & a < 0 \end{cases} @f$
      */
     template <typename T> CONSTEXPR14 auto abs(const T& val_a) ->
         typename std::enable_if<std::is_unsigned<T>::value, T>::type {
@@ -82,6 +84,8 @@ namespace fractions {
      *         v
      *    gcd(6, 0) = 6
      * @endverbatim
+     *
+     * @f$ \gcd(m,n) = \gcd(n, m \bmod n) @f$, with @f$ \gcd(m,0) = |m| @f$
      */
     template <typename Mn> CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
         if (_n == 0) {
@@ -103,6 +107,8 @@ namespace fractions {
      * gcd(12, 4) = 4
      * gcd(4, 4) = 4
      * @endverbatim
+     *
+     * @f$ \gcd(m,n) = \gcd(|m|,|n|) @f$
      */
     template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0) {
@@ -132,6 +138,8 @@ namespace fractions {
      *    |  4  |  lcm  |  6  |  =   |   12   |
      *    +-----+       +-----+       +--------+
      * @endverbatim
+     *
+     * @f$ \operatorname{lcm}(a,b) = \frac{|a|}{\gcd(a,b)}\,|b| @f$
      */
     template <typename Mn> CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0 || _n == 0) {
@@ -335,8 +343,10 @@ namespace fractions {
          *    +-------+     +-------+
          *
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-         * @endverbatim
-         */
+     * @endverbatim
+     *
+     * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
+     */
         CONSTEXPR14 auto cross(const Fraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
@@ -612,8 +622,10 @@ namespace fractions {
          *    | ---   |                   | ---   |
          *    |  3    |                   |  2    |
          *    +-------+                   +-------+
-         * @endverbatim
-         */
+     * @endverbatim
+     *
+     * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
+     */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
             this->keep_denom_positive();
@@ -653,6 +665,8 @@ namespace fractions {
          *    |  6    |             |  3    |
          *    +-------+             +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} @f$
          */
         CONSTEXPR14 auto operator*=(Fraction rhs) -> Fraction& {
             std::swap(this->_numer, rhs._numer);
@@ -687,6 +701,8 @@ namespace fractions {
          *
          * @param rhs The integer to multiply.
          * @return A reference to this Fraction after multiplication.
+         *
+         * @f$ \frac{a}{b} \cdot c = \frac{ac}{b} @f$
          */
         CONSTEXPR14 auto operator*=(T rhs) -> Fraction& {
             std::swap(this->_numer, rhs);
@@ -751,6 +767,8 @@ namespace fractions {
          *    |  2    |     |  3    |     |  4    |
          *    +-------+     +-------+     +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} @f$
          */
         CONSTEXPR14 auto operator/=(Fraction rhs) -> Fraction& {
             // Special case: 0/0 = 0/1 (zero divided by zero is zero)
@@ -788,6 +806,8 @@ namespace fractions {
          *
          * @param rhs The integer to divide this Fraction by.
          * @return A reference to this Fraction after dividing by rhs.
+         *
+         * @f$ \frac{a}{b} / c = \frac{a}{bc} @f$
          */
         CONSTEXPR14 auto operator/=(T rhs) -> Fraction& {
             std::swap(this->_denom, rhs);
@@ -825,6 +845,8 @@ namespace fractions {
          * Negates this Fraction by negating its numerator.
          *
          * Returns a new Fraction with the negated numerator.
+         *
+         * @f$ -\frac{a}{b} = \frac{-a}{b} @f$
          */
         CONSTEXPR14 auto operator-() const -> Fraction {
             auto res = Fraction(*this);
@@ -856,6 +878,8 @@ namespace fractions {
          *    |  2    |     |  3    |     |  6    |
          *    +-------+     +-------+     +-------+
          * @endverbatim
+         *
+         * @f$ \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} @f$
          */
         CONSTEXPR14 auto operator+(const Fraction& other) const -> Fraction {
             if (this->_denom == other._denom) {
@@ -941,6 +965,8 @@ namespace fractions {
          *
          * @param[in] rhs The Fraction to add.
          * @return A reference to this Fraction after adding.
+         *
+         * @f$ \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} @f$
          */
         CONSTEXPR14 auto operator+=(const Fraction& rhs) -> Fraction& {
             if (this->_denom == rhs._denom) {
@@ -976,6 +1002,8 @@ namespace fractions {
          *
          * @param rhs The Fraction to subtract.
          * @return A reference to this Fraction after subtracting.
+         *
+         * @f$ \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} @f$
          */
         CONSTEXPR14 auto operator-=(const Fraction& rhs) -> Fraction& {
             if (this->_denom == rhs._denom) {
