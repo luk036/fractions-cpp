@@ -620,6 +620,7 @@ TEST_CASE("Fraction<int> stream output") {
         std::stringstream ss;
         ss << a << " + " << b;
         CHECK_EQ(ss.str(), "(1/2) + (3/4)");
+    }
 }
 
 TEST_CASE("Fraction<int> with different int types") {
