@@ -1,76 +1,75 @@
 #include <doctest/doctest.h>
 
-#include <fractions/fractions.hpp>
 #include <fractions/extfractions.hpp>
 #include <sstream>
 
 using namespace fractions;
 
-TEST_CASE("Fraction<int> construction") {
+TEST_CASE("ExtFraction<int> construction") {
     SUBCASE("default constructor") {
-        Fraction<int> f;
+        ExtFraction<int> f;
         CHECK_EQ(f.numer(), 0);
         CHECK_EQ(f.denom(), 1);
     }
 
     SUBCASE("single argument copy constructor") {
         int n = 5;
-        Fraction<int> f(n);
+        ExtFraction<int> f(n);
         CHECK_EQ(f.numer(), 5);
         CHECK_EQ(f.denom(), 1);
     }
 
     SUBCASE("single argument rvalue constructor") {
-        Fraction<int> f(7);
+        ExtFraction<int> f(7);
         CHECK_EQ(f.numer(), 7);
         CHECK_EQ(f.denom(), 1);
     }
 
     SUBCASE("single argument negative") {
-        Fraction<int> f(-3);
+        ExtFraction<int> f(-3);
         CHECK_EQ(f.numer(), -3);
         CHECK_EQ(f.denom(), 1);
     }
 
     SUBCASE("two argument constructor normalizes") {
-        Fraction<int> f(2, 4);
+        ExtFraction<int> f(2, 4);
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("two argument constructor negative numerator") {
-        Fraction<int> f(-1, 2);
+        ExtFraction<int> f(-1, 2);
         CHECK_EQ(f.numer(), -1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("two argument constructor negative denominator flips sign") {
-        Fraction<int> f(1, -2);
+        ExtFraction<int> f(1, -2);
         CHECK_EQ(f.numer(), -1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("two argument constructor both negative") {
-        Fraction<int> f(-1, -2);
+        ExtFraction<int> f(-1, -2);
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("two argument constructor reduces") {
-        Fraction<int> f(6, 8);
+        ExtFraction<int> f(6, 8);
         CHECK_EQ(f.numer(), 3);
         CHECK_EQ(f.denom(), 4);
     }
 
     SUBCASE("two argument constructor zero numerator") {
-        Fraction<int> f(0, 5);
+        ExtFraction<int> f(0, 5);
         CHECK_EQ(f.numer(), 0);
         CHECK_EQ(f.denom(), 1);
     }
 }
 
-TEST_CASE("Fraction<int> accessors") {
-    Fraction<int> f(3, 4);
+TEST_CASE("ExtFraction<int> accessors") {
+    ExtFraction<int> f(3, 4);
     CHECK_EQ(f.numer(), 3);
     CHECK_EQ(f.denom(), 4);
 
@@ -78,23 +77,23 @@ TEST_CASE("Fraction<int> accessors") {
     CHECK(noexcept(f.denom()));
 }
 
-TEST_CASE("Fraction<int> keep_denom_positive") {
+TEST_CASE("ExtFraction<int> keep_denom_positive") {
     SUBCASE("already positive") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         f.keep_denom_positive();
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("negative denominator") {
-        Fraction<int> f(1, -2);
+        ExtFraction<int> f(1, -2);
         f.keep_denom_positive();
         CHECK_EQ(f.numer(), -1);
         CHECK_EQ(f.denom(), 2);
     }
 
     SUBCASE("both negative") {
-        Fraction<int> f(-1, -2);
+        ExtFraction<int> f(-1, -2);
         f.keep_denom_positive();
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
@@ -102,9 +101,9 @@ TEST_CASE("Fraction<int> keep_denom_positive") {
 
 }
 
-TEST_CASE("Fraction<int> reduce") {
+TEST_CASE("ExtFraction<int> reduce") {
     SUBCASE("already reduced") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         auto g = f.reduce();
         CHECK_EQ(g, 1);
         CHECK_EQ(f.numer(), 1);
@@ -112,21 +111,21 @@ TEST_CASE("Fraction<int> reduce") {
     }
 
     SUBCASE("reducible") {
-        Fraction<int> f(2, 4);
+        ExtFraction<int> f(2, 4);
         auto g = f.reduce();
         CHECK_EQ(g, 1);
     }
 
     SUBCASE("zero numerator") {
-        Fraction<int> f(0, 5);
+        ExtFraction<int> f(0, 5);
         auto g = f.reduce();
         CHECK_EQ(g, 1);
     }
 }
 
-TEST_CASE("Fraction<int> normalize") {
+TEST_CASE("ExtFraction<int> normalize") {
     SUBCASE("return value is gcd") {
-        Fraction<int> f(2, 4);
+        ExtFraction<int> f(2, 4);
         auto g = f.normalize();
         CHECK_EQ(g, 1);
         CHECK_EQ(f.numer(), 1);
@@ -134,13 +133,13 @@ TEST_CASE("Fraction<int> normalize") {
     }
 
     SUBCASE("already normalized") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         auto g = f.normalize();
         CHECK_EQ(g, 1);
     }
 
     SUBCASE("negative denominator") {
-        Fraction<int> f(2, -4);
+        ExtFraction<int> f(2, -4);
         auto g = f.normalize();
         CHECK_EQ(g, 1);
         CHECK_EQ(f.numer(), -1);
@@ -148,7 +147,7 @@ TEST_CASE("Fraction<int> normalize") {
     }
 
     SUBCASE("zero numerator") {
-        Fraction<int> f(0, 5);
+        ExtFraction<int> f(0, 5);
         auto g = f.normalize();
         CHECK_EQ(g, 1);
         CHECK_EQ(f.numer(), 0);
@@ -156,18 +155,18 @@ TEST_CASE("Fraction<int> normalize") {
     }
 
     SUBCASE("non-trivial gcd") {
-        Fraction<int> f(4, 8);
+        ExtFraction<int> f(4, 8);
         f.normalize();
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
 }
 
-TEST_CASE("Fraction<int> cross product") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(3, 4);
-    Fraction<int> c(2, 4);
-    Fraction<int> neg(-1, 2);
+TEST_CASE("ExtFraction<int> cross product") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(3, 4);
+    ExtFraction<int> c(2, 4);
+    ExtFraction<int> neg(-1, 2);
 
     SUBCASE("basic") {
         CHECK_EQ(a.cross(b), -2);
@@ -189,18 +188,18 @@ TEST_CASE("Fraction<int> cross product") {
     }
 
     SUBCASE("with zero") {
-        Fraction<int> zero(0, 1);
+        ExtFraction<int> zero(0, 1);
         CHECK_EQ(a.cross(zero), 1);
         CHECK_EQ(zero.cross(a), -1);
     }
 }
 
-TEST_CASE("Fraction<int> equality") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(2, 4);
-    Fraction<int> c(3, 4);
-    Fraction<int> neg(-1, 2);
-    Fraction<int> zero(0, 1);
+TEST_CASE("ExtFraction<int> equality") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(2, 4);
+    ExtFraction<int> c(3, 4);
+    ExtFraction<int> neg(-1, 2);
+    ExtFraction<int> zero(0, 1);
 
     SUBCASE("Fraction == Fraction") {
         CHECK_EQ(a, a);
@@ -210,7 +209,7 @@ TEST_CASE("Fraction<int> equality") {
     }
 
     SUBCASE("Fraction == T") {
-        Fraction<int> one(1, 1);
+        ExtFraction<int> one(1, 1);
         CHECK_EQ(one, 1);
         CHECK_EQ(1, one);
         CHECK_FALSE(a == 1);
@@ -233,11 +232,11 @@ TEST_CASE("Fraction<int> equality") {
     }
 }
 
-TEST_CASE("Fraction<int> less than") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(1, 3);
-    Fraction<int> c(2, 4);
-    Fraction<int> neg(-1, 2);
+TEST_CASE("ExtFraction<int> less than") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(1, 3);
+    ExtFraction<int> c(2, 4);
+    ExtFraction<int> neg(-1, 2);
 
     SUBCASE("Fraction < Fraction") {
         CHECK_LT(b, a);
@@ -246,7 +245,7 @@ TEST_CASE("Fraction<int> less than") {
     }
 
     SUBCASE("Fraction < T when denom == 1") {
-        Fraction<int> one(1, 1);
+        ExtFraction<int> one(1, 1);
         CHECK_LT(one, 2);
         CHECK_FALSE(one < 1);
     }
@@ -267,12 +266,12 @@ TEST_CASE("Fraction<int> less than") {
     }
 
     SUBCASE("T < Fraction with denom != 1 and lhs != 0") {
-        CHECK_LT(1, Fraction<int>(3, 2));
-        CHECK_FALSE(2 < Fraction<int>(3, 2));
+        CHECK_LT(1, ExtFraction<int>(3, 2));
+        CHECK_FALSE(2 < ExtFraction<int>(3, 2));
     }
 
     SUBCASE("T < Fraction when rhs denom == 1") {
-        Fraction<int> one(1, 1);
+        ExtFraction<int> one(1, 1);
         CHECK_LT(0, one);
         CHECK_FALSE(2 < one);
     }
@@ -283,9 +282,9 @@ TEST_CASE("Fraction<int> less than") {
     }
 }
 
-TEST_CASE("Fraction<int> greater than") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(1, 3);
+TEST_CASE("ExtFraction<int> greater than") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(1, 3);
 
     SUBCASE("Fraction > Fraction") {
         CHECK_GT(a, b);
@@ -303,11 +302,11 @@ TEST_CASE("Fraction<int> greater than") {
     }
 }
 
-TEST_CASE("Fraction<int> less than or equal") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(2, 4);
-    Fraction<int> c(3, 4);
-    Fraction<int> neg(-1, 2);
+TEST_CASE("ExtFraction<int> less than or equal") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(2, 4);
+    ExtFraction<int> c(3, 4);
+    ExtFraction<int> neg(-1, 2);
 
     SUBCASE("Fraction <= Fraction") {
         CHECK_LE(a, b);
@@ -324,16 +323,16 @@ TEST_CASE("Fraction<int> less than or equal") {
 
     SUBCASE("T <= Fraction") {
         CHECK_LE(0, a);
-        CHECK_LE(1, Fraction<int>(3, 2));
+        CHECK_LE(1, ExtFraction<int>(3, 2));
         CHECK_FALSE(2 <= a);
     }
 }
 
-TEST_CASE("Fraction<int> greater than or equal") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(2, 4);
-    Fraction<int> c(3, 4);
-    Fraction<int> neg(-1, 2);
+TEST_CASE("ExtFraction<int> greater than or equal") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(2, 4);
+    ExtFraction<int> c(3, 4);
+    ExtFraction<int> neg(-1, 2);
 
     SUBCASE("Fraction >= Fraction") {
         CHECK_GE(a, b);
@@ -355,30 +354,30 @@ TEST_CASE("Fraction<int> greater than or equal") {
     }
 }
 
-TEST_CASE("Fraction<int> arithmetic") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(1, 3);
-    Fraction<int> neg(-1, 2);
+TEST_CASE("ExtFraction<int> arithmetic") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(1, 3);
+    ExtFraction<int> neg(-1, 2);
 
     SUBCASE("addition Fraction + Fraction") {
-        CHECK_EQ(a + b, Fraction<int>(5, 6));
-        CHECK_EQ(a + a, Fraction<int>(1, 1));
-        CHECK_EQ(a + neg, Fraction<int>(0, 1));
+        CHECK_EQ(a + b, ExtFraction<int>(5, 6));
+        CHECK_EQ(a + a, ExtFraction<int>(1, 1));
+        CHECK_EQ(a + neg, ExtFraction<int>(0, 1));
     }
 
     SUBCASE("addition Fraction + T") {
-        CHECK_EQ(a + 1, Fraction<int>(3, 2));
+        CHECK_EQ(a + 1, ExtFraction<int>(3, 2));
         CHECK_EQ(a + 0, a);
     }
 
     SUBCASE("addition T + Fraction") {
-        CHECK_EQ(1 + a, Fraction<int>(3, 2));
+        CHECK_EQ(1 + a, ExtFraction<int>(3, 2));
         CHECK_EQ(0 + a, a);
     }
 
     SUBCASE("subtraction Fraction - Fraction") {
-        CHECK_EQ(a - b, Fraction<int>(1, 6));
-        CHECK_EQ(a - a, Fraction<int>(0, 1));
+        CHECK_EQ(a - b, ExtFraction<int>(1, 6));
+        CHECK_EQ(a - a, ExtFraction<int>(0, 1));
     }
 
     SUBCASE("subtraction Fraction - T") {
@@ -387,364 +386,364 @@ TEST_CASE("Fraction<int> arithmetic") {
     }
 
     SUBCASE("subtraction T - Fraction") {
-        CHECK_EQ(1 - a, Fraction<int>(1, 2));
+        CHECK_EQ(1 - a, ExtFraction<int>(1, 2));
         CHECK_EQ(0 - a, neg);
     }
 
     SUBCASE("multiplication Fraction * Fraction") {
-        CHECK_EQ(a * b, Fraction<int>(1, 6));
-        CHECK_EQ(a * a, Fraction<int>(1, 4));
+        CHECK_EQ(a * b, ExtFraction<int>(1, 6));
+        CHECK_EQ(a * a, ExtFraction<int>(1, 4));
     }
 
     SUBCASE("multiplication Fraction * T") {
-        CHECK_EQ(a * 2, Fraction<int>(1, 1));
-        CHECK_EQ(a * 0, Fraction<int>(0, 1));
+        CHECK_EQ(a * 2, ExtFraction<int>(1, 1));
+        CHECK_EQ(a * 0, ExtFraction<int>(0, 1));
     }
 
     SUBCASE("multiplication T * Fraction") {
-        CHECK_EQ(2 * a, Fraction<int>(1, 1));
-        CHECK_EQ(0 * a, Fraction<int>(0, 1));
+        CHECK_EQ(2 * a, ExtFraction<int>(1, 1));
+        CHECK_EQ(0 * a, ExtFraction<int>(0, 1));
     }
 
     SUBCASE("division Fraction / Fraction") {
-        CHECK_EQ(a / b, Fraction<int>(3, 2));
-        CHECK_EQ(a / a, Fraction<int>(1, 1));
+        CHECK_EQ(a / b, ExtFraction<int>(3, 2));
+        CHECK_EQ(a / a, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("division Fraction / T") {
-        CHECK_EQ(a / 2, Fraction<int>(1, 4));
+        CHECK_EQ(a / 2, ExtFraction<int>(1, 4));
     }
 
     SUBCASE("division T / Fraction") {
-        CHECK_EQ(1 / a, Fraction<int>(2, 1));
+        CHECK_EQ(1 / a, ExtFraction<int>(2, 1));
     }
 
     SUBCASE("negation") {
         CHECK_EQ(-a, neg);
         CHECK_EQ(-neg, a);
-        CHECK_EQ(-Fraction<int>(0, 1), Fraction<int>(0, 1));
+        CHECK_EQ(-ExtFraction<int>(0, 1), ExtFraction<int>(0, 1));
     }
 }
 
-TEST_CASE("Fraction<int> compound assignment") {
+TEST_CASE("ExtFraction<int> compound assignment") {
     SUBCASE("+= Fraction") {
-        auto f = Fraction<int>(1, 2);
-        f += Fraction<int>(1, 3);
-        CHECK_EQ(f, Fraction<int>(5, 6));
+        auto f = ExtFraction<int>(1, 2);
+        f += ExtFraction<int>(1, 3);
+        CHECK_EQ(f, ExtFraction<int>(5, 6));
     }
 
     SUBCASE("+= Fraction same denominator") {
-        auto f = Fraction<int>(1, 4);
-        f += Fraction<int>(2, 4);
-        CHECK_EQ(f, Fraction<int>(3, 4));
+        auto f = ExtFraction<int>(1, 4);
+        f += ExtFraction<int>(2, 4);
+        CHECK_EQ(f, ExtFraction<int>(3, 4));
     }
 
     SUBCASE("+= T") {
-        auto f = Fraction<int>(1, 2);
+        auto f = ExtFraction<int>(1, 2);
         f += 1;
-        CHECK_EQ(f, Fraction<int>(3, 2));
+        CHECK_EQ(f, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("+= T with denom == 1") {
-        auto f = Fraction<int>(1, 1);
+        auto f = ExtFraction<int>(1, 1);
         f += 2;
-        CHECK_EQ(f, Fraction<int>(3, 1));
+        CHECK_EQ(f, ExtFraction<int>(3, 1));
     }
 
     SUBCASE("-= Fraction") {
-        auto f = Fraction<int>(1, 2);
-        f -= Fraction<int>(1, 3);
-        CHECK_EQ(f, Fraction<int>(1, 6));
+        auto f = ExtFraction<int>(1, 2);
+        f -= ExtFraction<int>(1, 3);
+        CHECK_EQ(f, ExtFraction<int>(1, 6));
     }
 
     SUBCASE("-= Fraction same denominator") {
-        auto f = Fraction<int>(3, 4);
-        f -= Fraction<int>(1, 4);
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        auto f = ExtFraction<int>(3, 4);
+        f -= ExtFraction<int>(1, 4);
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("-= T") {
-        auto f = Fraction<int>(3, 2);
+        auto f = ExtFraction<int>(3, 2);
         f -= 1;
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("-= T with denom == 1") {
-        auto f = Fraction<int>(3, 1);
+        auto f = ExtFraction<int>(3, 1);
         f -= 2;
-        CHECK_EQ(f, Fraction<int>(1, 1));
+        CHECK_EQ(f, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("*= Fraction") {
-        auto f = Fraction<int>(2, 3);
-        f *= Fraction<int>(3, 4);
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        auto f = ExtFraction<int>(2, 3);
+        f *= ExtFraction<int>(3, 4);
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("*= T") {
-        auto f = Fraction<int>(1, 2);
+        auto f = ExtFraction<int>(1, 2);
         f *= 3;
-        CHECK_EQ(f, Fraction<int>(3, 2));
+        CHECK_EQ(f, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("/= Fraction") {
-        auto f = Fraction<int>(2, 3);
-        f /= Fraction<int>(3, 4);
-        CHECK_EQ(f, Fraction<int>(8, 9));
+        auto f = ExtFraction<int>(2, 3);
+        f /= ExtFraction<int>(3, 4);
+        CHECK_EQ(f, ExtFraction<int>(8, 9));
     }
 
     SUBCASE("/= T") {
-        auto f = Fraction<int>(3, 2);
+        auto f = ExtFraction<int>(3, 2);
         f /= 3;
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("/= T compatibility with /= Fraction") {
-        auto f = Fraction<int>(1, 2);
+        auto f = ExtFraction<int>(1, 2);
         f /= 2;
-        CHECK_EQ(f, Fraction<int>(1, 4));
+        CHECK_EQ(f, ExtFraction<int>(1, 4));
     }
 }
 
-TEST_CASE("Fraction<int> increment decrement") {
+TEST_CASE("ExtFraction<int> increment decrement") {
     SUBCASE("prefix ++") {
-        auto f = Fraction<int>(1, 2);
-        CHECK_EQ(++f, Fraction<int>(3, 2));
-        CHECK_EQ(f, Fraction<int>(3, 2));
+        auto f = ExtFraction<int>(1, 2);
+        CHECK_EQ(++f, ExtFraction<int>(3, 2));
+        CHECK_EQ(f, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("postfix ++") {
-        auto f = Fraction<int>(1, 2);
-        CHECK_EQ(f++, Fraction<int>(1, 2));
-        CHECK_EQ(f, Fraction<int>(3, 2));
+        auto f = ExtFraction<int>(1, 2);
+        CHECK_EQ(f++, ExtFraction<int>(1, 2));
+        CHECK_EQ(f, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("prefix --") {
-        auto f = Fraction<int>(3, 2);
-        CHECK_EQ(--f, Fraction<int>(1, 2));
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        auto f = ExtFraction<int>(3, 2);
+        CHECK_EQ(--f, ExtFraction<int>(1, 2));
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("postfix --") {
-        auto f = Fraction<int>(3, 2);
-        CHECK_EQ(f--, Fraction<int>(3, 2));
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        auto f = ExtFraction<int>(3, 2);
+        CHECK_EQ(f--, ExtFraction<int>(3, 2));
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("increment zero") {
-        auto f = Fraction<int>(0, 1);
+        auto f = ExtFraction<int>(0, 1);
         ++f;
-        CHECK_EQ(f, Fraction<int>(1, 1));
+        CHECK_EQ(f, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("decrement unity") {
-        auto f = Fraction<int>(1, 1);
+        auto f = ExtFraction<int>(1, 1);
         --f;
-        CHECK_EQ(f, Fraction<int>(0, 1));
+        CHECK_EQ(f, ExtFraction<int>(0, 1));
     }
 
     SUBCASE("multiple increments") {
-        auto f = Fraction<int>(0, 1);
+        auto f = ExtFraction<int>(0, 1);
         ++f;
         ++f;
         ++f;
-        CHECK_EQ(f, Fraction<int>(3, 1));
+        CHECK_EQ(f, ExtFraction<int>(3, 1));
     }
 }
 
-TEST_CASE("Fraction<int> reciprocal") {
+TEST_CASE("ExtFraction<int> reciprocal") {
     SUBCASE("positive fraction") {
-        auto f = Fraction<int>(2, 3);
+        auto f = ExtFraction<int>(2, 3);
         f.reciprocal();
-        CHECK_EQ(f, Fraction<int>(3, 2));
+        CHECK_EQ(f, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("negative fraction") {
-        auto f = Fraction<int>(-2, 3);
+        auto f = ExtFraction<int>(-2, 3);
         f.reciprocal();
-        CHECK_EQ(f, Fraction<int>(-3, 2));
+        CHECK_EQ(f, ExtFraction<int>(-3, 2));
     }
 
     SUBCASE("double reciprocal") {
-        auto f = Fraction<int>(3, 5);
+        auto f = ExtFraction<int>(3, 5);
         f.reciprocal();
         f.reciprocal();
-        CHECK_EQ(f, Fraction<int>(3, 5));
+        CHECK_EQ(f, ExtFraction<int>(3, 5));
     }
 
     SUBCASE("reciprocal of unity") {
-        auto f = Fraction<int>(1, 1);
+        auto f = ExtFraction<int>(1, 1);
         f.reciprocal();
-        CHECK_EQ(f, Fraction<int>(1, 1));
+        CHECK_EQ(f, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("reciprocal keeps denom positive") {
-        auto f = Fraction<int>(1, 2);
+        auto f = ExtFraction<int>(1, 2);
         f.reciprocal();
         CHECK_EQ(f.denom(), 1);
     }
 }
 
-TEST_CASE("Fraction<int> stream output") {
+TEST_CASE("ExtFraction<int> stream output") {
     SUBCASE("basic fraction") {
-        Fraction<int> f(3, 4);
+        ExtFraction<int> f(3, 4);
         std::stringstream ss;
         ss << f;
         CHECK_EQ(ss.str(), "(3/4)");
     }
 
     SUBCASE("negative") {
-        Fraction<int> f(-3, 4);
+        ExtFraction<int> f(-3, 4);
         std::stringstream ss;
         ss << f;
         CHECK_EQ(ss.str(), "(-3/4)");
     }
 
     SUBCASE("zero") {
-        Fraction<int> f(0, 1);
+        ExtFraction<int> f(0, 1);
         std::stringstream ss;
         ss << f;
         CHECK_EQ(ss.str(), "(0/1)");
     }
 
     SUBCASE("unity") {
-        Fraction<int> f(1, 1);
+        ExtFraction<int> f(1, 1);
         std::stringstream ss;
         ss << f;
         CHECK_EQ(ss.str(), "(1/1)");
     }
 
     SUBCASE("multiple in stream") {
-        Fraction<int> a(1, 2);
-        Fraction<int> b(3, 4);
+        ExtFraction<int> a(1, 2);
+        ExtFraction<int> b(3, 4);
         std::stringstream ss;
         ss << a << " + " << b;
         CHECK_EQ(ss.str(), "(1/2) + (3/4)");
     }
 }
 
-TEST_CASE("Fraction<int> with different int types") {
+TEST_CASE("ExtFraction<int> with different int types") {
     SUBCASE("long") {
-        Fraction<long> f(2, 4);
+        ExtFraction<long> f(2, 4);
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
 }
 
-TEST_CASE("Fraction<int> rvalue operators") {
-    Fraction<int> f(1, 2);
+TEST_CASE("ExtFraction<int> rvalue operators") {
+    ExtFraction<int> f(1, 2);
 
     SUBCASE("int&& + Fraction") {
         auto r = 1 + f;
-        CHECK_EQ(r, Fraction<int>(3, 2));
+        CHECK_EQ(r, ExtFraction<int>(3, 2));
     }
 
     SUBCASE("int&& - Fraction") {
         auto r = 1 - f;
-        CHECK_EQ(r, Fraction<int>(1, 2));
+        CHECK_EQ(r, ExtFraction<int>(1, 2));
     }
 
     SUBCASE("int&& * Fraction") {
         auto r = 2 * f;
-        CHECK_EQ(r, Fraction<int>(1, 1));
+        CHECK_EQ(r, ExtFraction<int>(1, 1));
     }
 
     SUBCASE("int&& comparison") {
-        Fraction<int> one(1, 1);
+        ExtFraction<int> one(1, 1);
         CHECK(1 == one);
     }
 }
 
-TEST_CASE("Fraction<int> addition same denominator shortcut") {
+TEST_CASE("ExtFraction<int> addition same denominator shortcut") {
     SUBCASE("+ with same denominator") {
-        Fraction<int> a(1, 4);
-        Fraction<int> b(2, 4);
-        CHECK_EQ(a + b, Fraction<int>(3, 4));
+        ExtFraction<int> a(1, 4);
+        ExtFraction<int> b(2, 4);
+        CHECK_EQ(a + b, ExtFraction<int>(3, 4));
     }
 
     SUBCASE("+= with same denominator") {
-        auto f = Fraction<int>(1, 4);
-        f += Fraction<int>(2, 4);
-        CHECK_EQ(f, Fraction<int>(3, 4));
+        auto f = ExtFraction<int>(1, 4);
+        f += ExtFraction<int>(2, 4);
+        CHECK_EQ(f, ExtFraction<int>(3, 4));
     }
 
     SUBCASE("-= with same denominator") {
-        auto f = Fraction<int>(3, 4);
-        f -= Fraction<int>(1, 4);
-        CHECK_EQ(f, Fraction<int>(1, 2));
+        auto f = ExtFraction<int>(3, 4);
+        f -= ExtFraction<int>(1, 4);
+        CHECK_EQ(f, ExtFraction<int>(1, 2));
     }
 }
 
-TEST_CASE("Fraction<int> complex expressions") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(1, 3);
-    Fraction<int> c(1, 4);
+TEST_CASE("ExtFraction<int> complex expressions") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(1, 3);
+    ExtFraction<int> c(1, 4);
 
     SUBCASE("chain operations") {
-        auto f = Fraction<int>(1, 2);
-        f += Fraction<int>(1, 3);
-        f *= Fraction<int>(2, 5);
-        f -= Fraction<int>(1, 6);
-        f /= Fraction<int>(2, 3);
-        CHECK_EQ(f, Fraction<int>(1, 4));
+        auto f = ExtFraction<int>(1, 2);
+        f += ExtFraction<int>(1, 3);
+        f *= ExtFraction<int>(2, 5);
+        f -= ExtFraction<int>(1, 6);
+        f /= ExtFraction<int>(2, 3);
+        CHECK_EQ(f, ExtFraction<int>(1, 4));
     }
 
     SUBCASE("nested expression") {
         auto r = ((a + b) * c) / a;
-        CHECK_EQ(r, Fraction<int>(5, 12));
+        CHECK_EQ(r, ExtFraction<int>(5, 12));
     }
 }
 
-TEST_CASE("Fraction<int> operator- with T") {
-    Fraction<int> a(1, 2);
+TEST_CASE("ExtFraction<int> operator- with T") {
+    ExtFraction<int> a(1, 2);
 
     SUBCASE("int - Fraction") {
-        CHECK_EQ(1 - a, Fraction<int>(1, 2));
-        CHECK_EQ(0 - a, Fraction<int>(-1, 2));
+        CHECK_EQ(1 - a, ExtFraction<int>(1, 2));
+        CHECK_EQ(0 - a, ExtFraction<int>(-1, 2));
     }
 
     SUBCASE("int&& - Fraction") {
-        CHECK_EQ(3 - a, Fraction<int>(5, 2));
+        CHECK_EQ(3 - a, ExtFraction<int>(5, 2));
     }
 }
 
-TEST_CASE("Fraction<int> operator< Fraction < T edge cases") {
+TEST_CASE("ExtFraction<int> operator< Fraction < T edge cases") {
     SUBCASE("denom == 1 path") {
-        Fraction<int> f(3, 1);
+        ExtFraction<int> f(3, 1);
         CHECK_LT(f, 5);
     }
 
     SUBCASE("denom != 1 && rhs == 0 path") {
-        Fraction<int> neg(-1, 2);
+        ExtFraction<int> neg(-1, 2);
         CHECK_LT(neg, 0);
     }
 
     SUBCASE("denom != 1 && rhs != 0") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         CHECK_LT(f, 1);
         CHECK_FALSE(f < 0);
     }
 }
 
-TEST_CASE("Fraction<int> operator< T < Fraction edge cases") {
+TEST_CASE("ExtFraction<int> operator< T < Fraction edge cases") {
     SUBCASE("rhs denom == 1 path") {
-        Fraction<int> f(3, 1);
+        ExtFraction<int> f(3, 1);
         CHECK_LT(0, f);
     }
 
     SUBCASE("rhs denom != 1 && lhs == 0 path") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         CHECK_LT(0, f);
     }
 
     SUBCASE("rhs denom != 1 && lhs != 0") {
-        Fraction<int> f(1, 2);
+        ExtFraction<int> f(1, 2);
         CHECK_LT(-1, f);
     }
 }
 
-TEST_CASE("Fraction<int> operator> edge cases") {
-    Fraction<int> f(1, 2);
+TEST_CASE("ExtFraction<int> operator> edge cases") {
+    ExtFraction<int> f(1, 2);
 
     SUBCASE("T > Fraction") {
         CHECK_GT(1, f);
@@ -757,17 +756,17 @@ TEST_CASE("Fraction<int> operator> edge cases") {
     }
 }
 
-TEST_CASE("Fraction<int> comparison completeness ordering") {
-    Fraction<int> vals[] = {
-        Fraction<int>(-3, 2),
-        Fraction<int>(-1, 1),
-        Fraction<int>(-1, 2),
-        Fraction<int>(0, 1),
-        Fraction<int>(1, 3),
-        Fraction<int>(1, 2),
-        Fraction<int>(2, 3),
-        Fraction<int>(1, 1),
-        Fraction<int>(3, 2),
+TEST_CASE("ExtFraction<int> comparison completeness ordering") {
+    ExtFraction<int> vals[] = {
+        ExtFraction<int>(-3, 2),
+        ExtFraction<int>(-1, 1),
+        ExtFraction<int>(-1, 2),
+        ExtFraction<int>(0, 1),
+        ExtFraction<int>(1, 3),
+        ExtFraction<int>(1, 2),
+        ExtFraction<int>(2, 3),
+        ExtFraction<int>(1, 1),
+        ExtFraction<int>(3, 2),
     };
 
     for (int i = 0; i < 8; ++i) {
@@ -786,25 +785,25 @@ TEST_CASE("Fraction<int> comparison completeness ordering") {
     }
 }
 
-TEST_CASE("Fraction<long long> reduce and normalize with large numbers") {
+TEST_CASE("ExtFraction<long long> reduce and normalize with large numbers") {
     long long num = 2000000000LL;
     long long den = 4000000000LL;
-    Fraction<long long> f(num, den);
+    ExtFraction<long long> f(num, den);
     CHECK_EQ(f.numer(), 1);
     CHECK_EQ(f.denom(), 2);
 }
 
-TEST_CASE("Fraction<int> cross product for comparison") {
-    Fraction<int> a(1, 2);
-    Fraction<int> b(1, 3);
+TEST_CASE("ExtFraction<int> cross product for comparison") {
+    ExtFraction<int> a(1, 2);
+    ExtFraction<int> b(1, 3);
 
     CHECK_GT(a.cross(b), 0);
     CHECK_LT(b.cross(a), 0);
 }
 
-TEST_CASE("Fraction<int> zero operations") {
-    Fraction<int> zero(0, 1);
-    Fraction<int> pos(3, 4);
+TEST_CASE("ExtFraction<int> zero operations") {
+    ExtFraction<int> zero(0, 1);
+    ExtFraction<int> pos(3, 4);
 
     CHECK_EQ(zero + zero, zero);
     CHECK_EQ(zero - zero, zero);
@@ -817,99 +816,89 @@ TEST_CASE("Fraction<int> zero operations") {
     CHECK_EQ(pos - zero, pos);
 }
 
-TEST_CASE("Fraction<int> unity operations") {
-    Fraction<int> one(1, 1);
-    Fraction<int> pos(3, 4);
+TEST_CASE("ExtFraction<int> unity operations") {
+    ExtFraction<int> one(1, 1);
+    ExtFraction<int> pos(3, 4);
 
     CHECK_EQ(one * one, one);
     CHECK_EQ(one / one, one);
-    CHECK_EQ(one + one, Fraction<int>(2, 1));
-    CHECK_EQ(one - one, Fraction<int>(0, 1));
+    CHECK_EQ(one + one, ExtFraction<int>(2, 1));
+    CHECK_EQ(one - one, ExtFraction<int>(0, 1));
     CHECK_EQ(one * pos, pos);
     CHECK_EQ(pos * one, pos);
-    CHECK_EQ(one / pos, Fraction<int>(4, 3));
+    CHECK_EQ(one / pos, ExtFraction<int>(4, 3));
     CHECK_EQ(pos / one, pos);
 }
 
-TEST_CASE("Fraction<int> negative fractions") {
-    Fraction<int> n1(-1, 2);
-    Fraction<int> n2(-3, 4);
-    Fraction<int> pos(1, 2);
+TEST_CASE("ExtFraction<int> negative fractions") {
+    ExtFraction<int> n1(-1, 2);
+    ExtFraction<int> n2(-3, 4);
+    ExtFraction<int> pos(1, 2);
 
-    CHECK_EQ(n1 + n2, Fraction<int>(-5, 4));
-    CHECK_EQ(n1 - n2, Fraction<int>(1, 4));
-    CHECK_EQ(n1 * n2, Fraction<int>(3, 8));
-    CHECK_EQ(n1 / n2, Fraction<int>(2, 3));
-    CHECK_EQ(n1 + pos, Fraction<int>(0, 1));
-    CHECK_EQ(pos + n1, Fraction<int>(0, 1));
+    CHECK_EQ(n1 + n2, ExtFraction<int>(-5, 4));
+    CHECK_EQ(n1 - n2, ExtFraction<int>(1, 4));
+    CHECK_EQ(n1 * n2, ExtFraction<int>(3, 8));
+    CHECK_EQ(n1 / n2, ExtFraction<int>(2, 3));
+    CHECK_EQ(n1 + pos, ExtFraction<int>(0, 1));
+    CHECK_EQ(pos + n1, ExtFraction<int>(0, 1));
     CHECK_EQ(-n1, pos);
     CHECK_EQ(-pos, n1);
 }
 
-TEST_CASE("Fraction<int> cross with negative") {
-    Fraction<int> n1(-1, 2);
-    Fraction<int> n2(-1, 3);
+TEST_CASE("ExtFraction<int> cross with negative") {
+    ExtFraction<int> n1(-1, 2);
+    ExtFraction<int> n2(-1, 3);
     CHECK_EQ(n1.cross(n2), -1);
     CHECK_EQ(n2.cross(n1), 1);
 }
 
 
 
-TEST_CASE("Fraction<int> divide by self gives unity") {
-    Fraction<int> f(3, 5);
-    CHECK_EQ(f / f, Fraction<int>(1, 1));
+TEST_CASE("ExtFraction<int> divide by self gives unity") {
+    ExtFraction<int> f(3, 5);
+    CHECK_EQ(f / f, ExtFraction<int>(1, 1));
 }
 
-TEST_CASE("Fraction<int> subtract self gives zero") {
-    Fraction<int> f(3, 5);
-    CHECK_EQ(f - f, Fraction<int>(0, 1));
+TEST_CASE("ExtFraction<int> subtract self gives zero") {
+    ExtFraction<int> f(3, 5);
+    CHECK_EQ(f - f, ExtFraction<int>(0, 1));
 }
 
-TEST_CASE("Fraction<int> multiply by reciprocal gives unity") {
-    Fraction<int> f(3, 5);
+TEST_CASE("ExtFraction<int> multiply by reciprocal gives unity") {
+    ExtFraction<int> f(3, 5);
     auto r = f;
     r.reciprocal();
-    CHECK_EQ(f * r, Fraction<int>(1, 1));
+    CHECK_EQ(f * r, ExtFraction<int>(1, 1));
 }
 
-TEST_CASE("Fraction<int> large denominators") {
+TEST_CASE("ExtFraction<int> large denominators") {
     SUBCASE("large denominator addition") {
-        Fraction<int> a(1, 1000000);
-        Fraction<int> b(1, 1000000);
-        CHECK_EQ(a + b, Fraction<int>(1, 500000));
+        ExtFraction<int> a(1, 1000000);
+        ExtFraction<int> b(1, 1000000);
+        CHECK_EQ(a + b, ExtFraction<int>(1, 500000));
     }
 
     SUBCASE("large denominator multiplication") {
-        Fraction<int> a(1, 1000);
-        Fraction<int> b(1, 1000);
-        CHECK_EQ(a * b, Fraction<int>(1, 1000000));
+        ExtFraction<int> a(1, 1000);
+        ExtFraction<int> b(1, 1000);
+        CHECK_EQ(a * b, ExtFraction<int>(1, 1000000));
     }
 }
 
-TEST_CASE("Fraction<int> gcd based addition") {
-    Fraction<int> a(1, 6);
-    Fraction<int> b(1, 4);
-    CHECK_EQ(a + b, Fraction<int>(5, 12));
+TEST_CASE("ExtFraction<int> gcd based addition") {
+    ExtFraction<int> a(1, 6);
+    ExtFraction<int> b(1, 4);
+    CHECK_EQ(a + b, ExtFraction<int>(5, 12));
 }
 
-TEST_CASE("Fraction<int> division 0/0") {
-    Fraction<int> zero(0, 1);
-    Fraction<int> result = zero / zero;
+TEST_CASE("ExtFraction<int> division 0/0") {
+    ExtFraction<int> zero(0, 1);
+    ExtFraction<int> result = zero / zero;
     CHECK_EQ(result.numer(), 0);
     CHECK_EQ(result.denom(), 1);
 }
 
-TEST_CASE("abs free function with unsigned") {
-    CHECK_EQ(abs(5U), 5U);
-    CHECK_EQ(abs(0U), 0U);
-    CHECK_EQ(abs(255U), 255U);
-}
 
-TEST_CASE("abs free function with signed") {
-    CHECK_EQ(abs(5), 5);
-    CHECK_EQ(abs(-5), 5);
-    CHECK_EQ(abs(0), 0);
-}
 
 TEST_CASE("gcd_recur free function") {
     CHECK_EQ(gcd_recur(12, 8), 4);
