@@ -98,7 +98,6 @@ TEST_CASE("ExtFraction<int> keep_denom_positive") {
         CHECK_EQ(f.numer(), 1);
         CHECK_EQ(f.denom(), 2);
     }
-
 }
 
 TEST_CASE("ExtFraction<int> reduce") {
@@ -178,9 +177,7 @@ TEST_CASE("ExtFraction<int> cross product") {
         CHECK_EQ(a.cross(a), 0);
     }
 
-    SUBCASE("anti-symmetry") {
-        CHECK_EQ(a.cross(b), -b.cross(a));
-    }
+    SUBCASE("anti-symmetry") { CHECK_EQ(a.cross(b), -b.cross(a)); }
 
     SUBCASE("with negative") {
         CHECK_EQ(a.cross(neg), 4);
@@ -221,9 +218,7 @@ TEST_CASE("ExtFraction<int> equality") {
         CHECK_EQ(0, zero);
     }
 
-    SUBCASE("negative") {
-        CHECK_FALSE(neg == 1);
-    }
+    SUBCASE("negative") { CHECK_FALSE(neg == 1); }
 
     SUBCASE("inequality") {
         CHECK_NE(a, c);
@@ -410,13 +405,9 @@ TEST_CASE("ExtFraction<int> arithmetic") {
         CHECK_EQ(a / a, ExtFraction<int>(1, 1));
     }
 
-    SUBCASE("division Fraction / T") {
-        CHECK_EQ(a / 2, ExtFraction<int>(1, 4));
-    }
+    SUBCASE("division Fraction / T") { CHECK_EQ(a / 2, ExtFraction<int>(1, 4)); }
 
-    SUBCASE("division T / Fraction") {
-        CHECK_EQ(1 / a, ExtFraction<int>(2, 1));
-    }
+    SUBCASE("division T / Fraction") { CHECK_EQ(1 / a, ExtFraction<int>(2, 1)); }
 
     SUBCASE("negation") {
         CHECK_EQ(-a, neg);
@@ -702,9 +693,7 @@ TEST_CASE("ExtFraction<int> operator- with T") {
         CHECK_EQ(0 - a, ExtFraction<int>(-1, 2));
     }
 
-    SUBCASE("int&& - Fraction") {
-        CHECK_EQ(3 - a, ExtFraction<int>(5, 2));
-    }
+    SUBCASE("int&& - Fraction") { CHECK_EQ(3 - a, ExtFraction<int>(5, 2)); }
 }
 
 TEST_CASE("ExtFraction<int> operator< Fraction < T edge cases") {
@@ -758,15 +747,9 @@ TEST_CASE("ExtFraction<int> operator> edge cases") {
 
 TEST_CASE("ExtFraction<int> comparison completeness ordering") {
     ExtFraction<int> vals[] = {
-        ExtFraction<int>(-3, 2),
-        ExtFraction<int>(-1, 1),
-        ExtFraction<int>(-1, 2),
-        ExtFraction<int>(0, 1),
-        ExtFraction<int>(1, 3),
-        ExtFraction<int>(1, 2),
-        ExtFraction<int>(2, 3),
-        ExtFraction<int>(1, 1),
-        ExtFraction<int>(3, 2),
+        ExtFraction<int>(-3, 2), ExtFraction<int>(-1, 1), ExtFraction<int>(-1, 2),
+        ExtFraction<int>(0, 1),  ExtFraction<int>(1, 3),  ExtFraction<int>(1, 2),
+        ExtFraction<int>(2, 3),  ExtFraction<int>(1, 1),  ExtFraction<int>(3, 2),
     };
 
     for (int i = 0; i < 8; ++i) {
@@ -852,8 +835,6 @@ TEST_CASE("ExtFraction<int> cross with negative") {
     CHECK_EQ(n2.cross(n1), 1);
 }
 
-
-
 TEST_CASE("ExtFraction<int> divide by self gives unity") {
     ExtFraction<int> f(3, 5);
     CHECK_EQ(f / f, ExtFraction<int>(1, 1));
@@ -897,8 +878,6 @@ TEST_CASE("ExtFraction<int> division 0/0") {
     CHECK_EQ(result.numer(), 0);
     CHECK_EQ(result.denom(), 1);
 }
-
-
 
 TEST_CASE("gcd_recur free function") {
     CHECK_EQ(gcd_recur(12, 8), 4);

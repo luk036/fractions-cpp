@@ -27,8 +27,7 @@ namespace fractions {
      * @param _n The second integer.
      * @return The GCD of _m and _n.
      */
-    template <typename Mn>
-    CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
+    template <typename Mn> CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
         // DO NOT replace this tail recursion with a while loop.
         // With -O3 the compiler optimizes this into a jump (tail-call elimination),
         // making it faster than the iterative equivalent. This is intentional.
@@ -46,8 +45,7 @@ namespace fractions {
      * @param _n The second integer.
      * @return The GCD of _m and _n.
      */
-    template <typename Mn>
-    CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
+    template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0) {
             return _n < 0 ? -_n : _n;
         }
@@ -64,8 +62,7 @@ namespace fractions {
      * @param _n The second integer.
      * @return The least common multiple of _m and _n.
      */
-    template <typename Mn>
-    CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
+    template <typename Mn> CONSTEXPR14 auto lcm(const Mn& _m, const Mn& _n) -> Mn {
         if (_m == 0 || _n == 0) {
             return 0;
         }
@@ -271,10 +268,10 @@ namespace fractions {
          *    +-------+     +-------+
          *
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-     * @endverbatim
-     *
-     * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
-     */
+         * @endverbatim
+         *
+         * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
+         */
         CONSTEXPR14 auto cross(const ExtFraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
@@ -552,10 +549,10 @@ namespace fractions {
          *    | ---   |                   | ---   |
          *    |  3    |                   |  2    |
          *    +-------+                   +-------+
-     * @endverbatim
-     *
-     * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
-     */
+         * @endverbatim
+         *
+         * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
+         */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
             this->keep_denom_positive();
@@ -1142,8 +1139,7 @@ namespace fractions {
      * @param[in] val The ExtFraction to take the absolute value of.
      * @return An ExtFraction with the absolute value of the input.
      */
-    template <typename T>
-    CONSTEXPR14 auto abs(const ExtFraction<T>& val) -> ExtFraction<T> {
+    template <typename T> CONSTEXPR14 auto abs(const ExtFraction<T>& val) -> ExtFraction<T> {
         auto n = val.numer();
         if (n < 0) {
             n = static_cast<T>(-n);
