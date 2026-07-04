@@ -3,8 +3,8 @@
  */
 #include <doctest/doctest.h>
 
-#include <fractions/extfractions.hpp>
 #include <fractions/fractions.hpp>
+#include <fractions/extfractions.hpp>
 #include <ostream>
 
 using namespace fractions;
