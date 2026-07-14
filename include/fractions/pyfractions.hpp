@@ -640,7 +640,8 @@ namespace fractions {
         /**
          * Integer division (floor)
          *
-         * @f$ \left\lfloor \frac{a/b}{c/d} \right\rfloor = \left\lfloor \frac{ad}{bc} \right\rfloor @f$
+         * @f$ \left\lfloor \frac{a/b}{c/d} \right\rfloor = \left\lfloor \frac{ad}{bc} \right\rfloor
+         * @f$
          */
         T floor_div(const Fraction& other) const {
             if (other._numerator == 0) {

@@ -343,10 +343,10 @@ namespace fractions {
          *    +-------+     +-------+
          *
          *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-     * @endverbatim
-     *
-     * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
-     */
+         * @endverbatim
+         *
+         * @f$ \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc @f$
+         */
         CONSTEXPR14 auto cross(const Fraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
         }
@@ -622,10 +622,10 @@ namespace fractions {
          *    | ---   |                   | ---   |
          *    |  3    |                   |  2    |
          *    +-------+                   +-------+
-     * @endverbatim
-     *
-     * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
-     */
+         * @endverbatim
+         *
+         * @f$ \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} @f$
+         */
         CONSTEXPR14 void reciprocal() {
             std::swap(this->_numer, this->_denom);
             this->keep_denom_positive();
