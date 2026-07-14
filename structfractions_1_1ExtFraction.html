@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Fractions<span id="projectnumber">&#160;1.1.2;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Fractions<span id="projectnumber">&#160;1.1.3;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -463,7 +463,8 @@ template&lt;typename T &gt; </div>
 *    +-------+     +-------+
 *
 *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-* </pre> 
+* </pre><p>\( \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc \) </p>
+
 </div>
 </div>
 <a id="ac426f1629bfe8b46c9c8b126b4f3d8b8" name="ac426f1629bfe8b46c9c8b126b4f3d8b8"></a>
@@ -684,7 +685,8 @@ template&lt;typename T &gt; </div>
 *    | ---   |             | ---   |
 *    |  6    |             |  3    |
 *    +-------+             +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} \) </p>
+
 </div>
 </div>
 <a id="a1ca28fb0395f72792a8f61d8f2d22e4e" name="a1ca28fb0395f72792a8f61d8f2d22e4e"></a>
@@ -720,7 +722,8 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after multiplication. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after multiplication.</dd></dl>
+<p>\( \frac{a}{b} \cdot c = \frac{ac}{b} \) </p>
 
 </div>
 </div>
@@ -766,7 +769,8 @@ template&lt;typename T &gt; </div>
 *    | ---   |  +  | ---   |  =  | ---   |
 *    |  2    |     |  3    |     |  6    |
 *    +-------+     +-------+     +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \) </p>
+
 </div>
 </div>
 <a id="aaccc89ef25002e90d86552d9fa7dbb73" name="aaccc89ef25002e90d86552d9fa7dbb73"></a>
@@ -862,7 +866,8 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after adding. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after adding.</dd></dl>
+<p>\( \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \) </p>
 
 </div>
 </div>
@@ -928,7 +933,8 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Negates this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> by negating its numerator.</p>
-<p>Returns a new <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> with the negated numerator. </p>
+<p>Returns a new <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> with the negated numerator.</p>
+<p>\( -\frac{a}{b} = \frac{-a}{b} \) </p>
 
 </div>
 </div>
@@ -1099,7 +1105,8 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after subtracting. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after subtracting.</dd></dl>
+<p>\( \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} \) </p>
 
 </div>
 </div>
@@ -1189,7 +1196,8 @@ template&lt;typename T &gt; </div>
 *    | ---   |  /  | ---   |  =  | ---   |
 *    |  2    |     |  3    |     |  4    |
 *    +-------+     +-------+     +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} \) </p>
+
 </div>
 </div>
 <a id="a4872ab1393e5bb5e38b0b90da5eee6b0" name="a4872ab1393e5bb5e38b0b90da5eee6b0"></a>
@@ -1225,7 +1233,8 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after dividing by rhs. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1ExtFraction.html" title="ExtFraction.">ExtFraction</a> after dividing by rhs.</dd></dl>
+<p>\( \frac{a}{b} / c = \frac{a}{bc} \) </p>
 
 </div>
 </div>
@@ -1483,7 +1492,8 @@ template&lt;typename T &gt; </div>
 *    | ---   |                   | ---   |
 *    |  3    |                   |  2    |
 *    +-------+                   +-------+
-* </pre> 
+* </pre><p>\( \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} \) </p>
+
 </div>
 </div>
 <a id="ac1cb967a9b440fe39c47e9b32883a474" name="ac1cb967a9b440fe39c47e9b32883a474"></a>

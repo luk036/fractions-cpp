@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Fractions<span id="projectnumber">&#160;1.1.2;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Fractions<span id="projectnumber">&#160;1.1.3;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -811,6 +811,7 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 </div><div class="memdoc">
 
 <p>Absolute value. </p>
+<p>\( \bigl|\frac{a}{b}\bigr| = \frac{|a|}{b} \)</p>
 <dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> with non-negative numerator. </dd></dl>
 
 </div>
@@ -921,7 +922,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 *    +-------+     +-------+
 *
 *    cross(1/2, 3/4) = 1*4 - 2*3 = -2
-* </pre> 
+* </pre><p>\( \operatorname{cross}\!\bigl(\frac{a}{b},\frac{c}{d}\bigr) = ad - bc \) </p>
+
 </div>
 </div>
 <a id="a7f882c60633c338c47e4f73afbbd9259" name="a7f882c60633c338c47e4f73afbbd9259"></a>
@@ -1036,7 +1038,9 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Integer division (floor) </p>
+<p>Integer division (floor)</p>
+<p>\( \left\lfloor \frac{a/b}{c/d} \right\rfloor = \left\lfloor \frac{ad}{bc} \right\rfloor
+\) </p>
 
 </div>
 </div>
@@ -1343,7 +1347,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Modulo operation </p>
+<p>Modulo operation</p>
+<p>\( \frac{a}{b} \bmod \frac{c}{d} = \frac{(ad) \bmod (bc)}{bd} \) </p>
 
 </div>
 </div>
@@ -1373,6 +1378,7 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 </table>
 </div><div class="memdoc">
 <p>Multiplication - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1</p>
+<p>\( \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} \)</p>
 <p>Uses GCD optimization to reduce before multiplying:</p><ul>
 <li>g1 = gcd(na, db)</li>
 <li>g2 = gcd(nb, da)</li>
@@ -1495,7 +1501,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 *    | ---   |             | ---   |
 *    |  6    |             |  3    |
 *    +-------+             +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd} \) </p>
+
 </div>
 </div>
 <a id="ab1491b9f9f9305f901b79c2d5b91f14b" name="ab1491b9f9f9305f901b79c2d5b91f14b"></a>
@@ -1531,7 +1538,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after multiplication. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after multiplication.</dd></dl>
+<p>\( \frac{a}{b} \cdot c = \frac{ac}{b} \) </p>
 
 </div>
 </div>
@@ -1561,6 +1569,7 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 </table>
 </div><div class="memdoc">
 <p>Addition - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1</p>
+<p>\( \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \)</p>
 <p>Uses GCD optimization to avoid large intermediate values:</p><ul>
 <li>Find g = gcd(da, db)</li>
 <li>Compute result with smaller intermediate values </li>
@@ -1610,7 +1619,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 *    | ---   |  +  | ---   |  =  | ---   |
 *    |  2    |     |  3    |     |  6    |
 *    +-------+     +-------+     +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \) </p>
+
 </div>
 </div>
 <a id="ae3d2b41afaab81168e84e845866f284c" name="ae3d2b41afaab81168e84e845866f284c"></a>
@@ -1764,7 +1774,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after adding. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after adding.</dd></dl>
+<p>\( \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \) </p>
 
 </div>
 </div>
@@ -1860,7 +1871,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 </table>
 </div><div class="memdoc">
 <p>Negates this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> by negating its numerator.</p>
-<p>Returns a new <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> with the negated numerator. </p>
+<p>Returns a new <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> with the negated numerator.</p>
+<p>\( -\frac{a}{b} = \frac{-a}{b} \) </p>
 
 </div>
 </div>
@@ -1889,7 +1901,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Subtraction - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1 </p>
+<p>Subtraction - optimized algorithm following Knuth TAOCP Volume 2, 4.5.1</p>
+<p>\( \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} \) </p>
 
 </div>
 </div>
@@ -2118,7 +2131,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after subtracting. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after subtracting.</dd></dl>
+<p>\( \frac{a}{b} - \frac{c}{d} = \frac{ad - bc}{bd} \) </p>
 
 </div>
 </div>
@@ -2184,7 +2198,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Division - optimized algorithm (inverse of multiplication) </p>
+<p>Division - optimized algorithm (inverse of multiplication)</p>
+<p>\( \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} \) </p>
 
 </div>
 </div>
@@ -2295,7 +2310,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 *    | ---   |  /  | ---   |  =  | ---   |
 *    |  2    |     |  3    |     |  4    |
 *    +-------+     +-------+     +-------+
-* </pre> 
+* </pre><p>\( \frac{a}{b} / \frac{c}{d} = \frac{ad}{bc} \) </p>
+
 </div>
 </div>
 <a id="ad9df6e35ff866c66d4297b2531d675fb" name="ad9df6e35ff866c66d4297b2531d675fb"></a>
@@ -2331,7 +2347,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after dividing by rhs. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this <a class="el" href="structfractions_1_1Fraction.html" title="Fraction.">Fraction</a> after dividing by rhs.</dd></dl>
+<p>\( \frac{a}{b} / c = \frac{a}{bc} \) </p>
 
 </div>
 </div>
@@ -2937,7 +2954,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Power operation (integer exponent only) </p>
+<p>Power operation (integer exponent only)</p>
+<p>\( \left(\frac{a}{b}\right)^n = \frac{a^n}{b^n} \) </p>
 
 </div>
 </div>
@@ -2978,7 +2996,8 @@ template&lt;<a class="el" href="structfractions_1_1Fraction.html#a6d9818f952bea3
 *    | ---   |                   | ---   |
 *    |  3    |                   |  2    |
 *    +-------+                   +-------+
-* </pre> 
+* </pre><p>\( \bigl(\frac{a}{b}\bigr)^{-1} = \frac{b}{a} \) </p>
+
 </div>
 </div>
 <a id="ab15c8796555bd2e784ecc7b778f03837" name="ab15c8796555bd2e784ecc7b778f03837"></a>
