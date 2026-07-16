@@ -216,4 +216,3 @@ TEST_CASE("ExtFraction Special Cases") {
     CHECK_EQ(inf - posf, inf);
     CHECK_EQ(-inf + posf, -inf);
 }
-
