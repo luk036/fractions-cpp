@@ -15,7 +15,7 @@ This file provides context for agentic coding agents operating in this repositor
 
 ```bash
 # Using CMake
-cmake -S . -B build
+cmake -B build
 cmake --build build
 
 # Using xmake
@@ -26,15 +26,15 @@ xmake
 
 ```bash
 # Using CMake (recommended)
-cmake -S test -B build/test
-cmake --build build/test
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
+cmake -B build
+cmake --build build
+ctest --test-dir build --output-on-failure
 
 # Or run the test executable directly
-./build/test/FractionsTests
+./build/FractionsTests
 
 # Run a single test case
-./build/test/FractionsTests -tc="ExtFraction<int> add"
+./build/FractionsTests -tc="ExtFraction<int> add"
 
 # Using xmake
 xmake test
@@ -43,12 +43,12 @@ xmake test
 ### Code Formatting
 
 ```bash
-# Check formatting (CMake)
-cmake -S test -B build/test
-cmake --build build/test --target format
+# Check formatting (CMake, requires clang-format and cmake-format)
+cmake -B build
+cmake --build build --target format
 
 # Apply formatting fixes
-cmake --build build/test --target fix-format
+cmake --build build --target fix-format
 
 # Also supports direct clang-format:
 clang-format -i --style=file source/*.cpp
@@ -57,19 +57,23 @@ clang-format -i --style=file source/*.cpp
 ### Additional Build Options
 
 ```bash
-# Code coverage
-cmake -S test -B build/test -DENABLE_TEST_COVERAGE=1
-cmake --build build/test
+# Code coverage (GCC/Clang, requires gcovr)
+cmake -B build -DFRACTIONS_ENABLE_COVERAGE=1
+cmake --build build --target coverage
 
-# Sanitizers (Address, Memory, Undefined, Thread, Leak)
-cmake -S test -B build/test -DUSE_SANITIZER=Address
+# clang-tidy static analysis
+cmake -B build -DFRACTIONS_ENABLE_CLANG_TIDY=ON
+cmake --build build --target clang-tidy
 
-# Static analyzers (clang-tidy, iwyu, cppcheck)
-cmake -S test -B build/test -DUSE_STATIC_ANALYZER=clang-tidy
+# Benchmarks (requires system Google Benchmark)
+cmake -B build -DFRACTIONS_BUILD_BENCHMARKS=ON
 
-# Build all subprojects at once
-cmake -S all -B build
-cmake --build build
+# Doxygen documentation
+cmake -B build -DFRACTIONS_BUILD_DOCS=ON
+cmake --build build --target GenerateDocs
+
+# Skip tests
+cmake -B build -DFRACTIONS_BUILD_TESTS=OFF
 ```
 
 ## Code Style Guidelines
@@ -163,7 +167,7 @@ friend auto operator<<(Stream& out_stream, const Fraction& frac) -> Stream& {
 - Located in `test/source/`
 - Main test file: `test_frac.cpp`
 - Extended tests: `test_frac_extended.cpp`, `test_pyfractions.cpp`
-- Comprehensive: `test_frac_comprehensive.cpp`, `test_frac_gaps.cpp`
+- Comprehensive: `test_frac_comprehensive.cpp`, `test_coverage_gaps.cpp`
 - Property-based: `test_frac_property.cpp`
 
 ### Test Patterns
@@ -182,13 +186,13 @@ TEST_CASE("Fraction<int> operation") {
 
 ```bash
 # Run tests matching a pattern
-./build/test/FractionsTests -tc="*add*"
+./build/FractionsTests -tc="*add*"
 
 # List all test cases
-./build/test/FractionsTests -ltc
+./build/FractionsTests -ltc
 
 # Exit after first failure
-./build/test/FractionsTests -eaf
+./build/FractionsTests -eaf
 ```
 
 ## Library Structure
