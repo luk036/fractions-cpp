@@ -36,24 +36,12 @@ add_files("test/source/test_frac.cpp")
 add_files("test/source/test_frac_extended.cpp")
 add_files("test/source/test_frac_stress.cpp")
 add_files("test/source/test_frac_comprehensive.cpp")
-add_files("test/source/test_frac_gaps.cpp")
+add_files("test/source/test_coverage_gaps.cpp")
+add_files("test/source/test_frac_property.cpp")
 add_files("test/source/test_pyfractions.cpp")
 add_files("test/source/test_pyfractions_comprehensive.cpp")
 add_packages("doctest", "fmt", "spdlog")
 add_tests("default")
-
--- target("test_pyfractions")
---     set_kind("binary")
---     add_includedirs("include", {public = true})
---     add_files("test/source/test_pyfractions.cpp")
---     add_packages("doctest")
---     add_tests("default")
-
-target("spdlog_example")
-set_kind("binary")
-add_includedirs("include", { public = true })
-add_files("examples/spdlog_example.cpp")
-add_packages("fmt", "spdlog")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
