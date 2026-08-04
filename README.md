@@ -26,7 +26,7 @@ Fractions in C++
 - Reproducible dependency management via [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 - Installable target with automatic versioning information and header generation via [PackageProject.cmake](https://github.com/TheLartians/PackageProject.cmake)
 - Automatic [documentation](https://thelartians.github.io/ModernCppStarter) and deployment with [Doxygen](https://www.doxygen.nl) and [GitHub Pages](https://pages.github.com)
-- Support for [sanitizer tools, and more](#additional-tools)
+- Optional [clang-tidy](#additional-tools) static analysis
 
 ## Usage
 
@@ -44,17 +44,16 @@ Fractions in C++
 Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
-During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
-
+A single `CMakeLists.txt` at the project root defines the library, tests, standalone executable and optional targets.
+During development it is usually convenient to [build everything at once](#build-everything-at-once).
 ### Build and run the standalone target
 
-Use the following command to build and run the executable target.
+Use the following command from the project's root directory to build and run the executable target.
 
 ```bash
-cmake -S standalone -B build/standalone
-cmake --build build/standalone
-./build/standalone/Fractions --help
+cmake -B build
+cmake --build build
+./build/Fractions --help
 ```
 
 ### Build and run test suite
@@ -62,15 +61,16 @@ cmake --build build/standalone
 Use the following commands from the project's root directory to run the test suite.
 
 ```bash
-cmake -S test -B build/test
-cmake --build build/test
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
+cmake -B build
+cmake --build build
+ctest --test-dir build --output-on-failure
 
 # or simply call the executable:
-./build/test/FractionsTests
+./build/FractionsTests
 ```
 
-To collect code coverage information, run CMake with the `-DENABLE_TEST_COVERAGE=1` option.
+To collect code coverage information, run CMake with the `-DFRACTIONS_ENABLE_COVERAGE=1` option
+and build the `coverage` target (GCC/Clang, requires gcovr).
 
 ### Run clang-format
 
@@ -78,13 +78,13 @@ Use the following commands from the project's root directory to check and fix C+
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S test -B build/test
+cmake -B build
 
 # view changes
-cmake --build build/test --target format
+cmake --build build --target format
 
 # apply changes
-cmake --build build/test --target fix-format
+cmake --build build --target fix-format
 ```
 
 See [Format.cmake](https://github.com/TheLartians/Format.cmake) for details.
@@ -100,51 +100,54 @@ The documentation is automatically built and [published](https://thelartians.git
 To manually build documentation, call the following command.
 
 ```bash
-cmake -S documentation -B build/doc
-cmake --build build/doc --target GenerateDocs
+cmake -B build -DFRACTIONS_BUILD_DOCS=ON
+cmake --build build --target GenerateDocs
 # view the docs
-open build/doc/doxygen/html/index.html
+open build/doxygen/html/index.html
 ```
 
-To build the documentation locally, you will need Doxygen, jinja2 and Pygments installed on your system.
+To build the documentation locally, you will need Doxygen and Graphviz installed on your system.
 
 ### Build everything at once {#build-everything-at-once}
 
-The project also includes an `all` directory that allows building all targets at the same time.
-This is useful during development, as it exposes all subprojects to your IDE and avoids redundant builds of the library.
+A single build configuration from the project root builds the library, tests and standalone together.
+This is useful during development, as it exposes all targets to your IDE and avoids redundant builds of the library.
 
 ```bash
-cmake -S all -B build
+cmake -B build
 cmake --build build
 
 # run tests
-./build/test/FractionsTests
-# format code
-cmake --build build --target fix-format
+./build/FractionsTests
 # run standalone
-./build/standalone/Fractions --help
-# build docs
+./build/Fractions --help
+# build docs (requires -DFRACTIONS_BUILD_DOCS=ON at configure time)
 cmake --build build --target GenerateDocs
 ```
 
 ### Additional tools {#additional-tools}
 
-The test and standalone subprojects include the [tools.cmake](cmake/tools.cmake) file which is used to import additional tools on-demand through CMake configuration arguments.
-The following are currently supported.
+The following optional tools can be enabled through CMake configuration arguments.
 
-#### Sanitizers
+#### clang-tidy
 
-Sanitizers can be enabled by configuring CMake with `-DUSE_SANITIZER=<Address | Memory | MemoryWithOrigins | Undefined | Thread | Leak | 'Address;Undefined'>`.
+Static analysis with clang-tidy can be enabled by configuring CMake with `-DFRACTIONS_ENABLE_CLANG_TIDY=ON`
+and building the `clang-tidy` target:
 
-#### Static Analyzers
+```bash
+cmake -B build -DFRACTIONS_ENABLE_CLANG_TIDY=ON
+cmake --build build --target clang-tidy
+```
 
-Static Analyzers can be enabled by setting `-DUSE_STATIC_ANALYZER=<clang-tidy | iwyu | cppcheck>`, or a combination of those in quotation marks, separated by semicolons.
-By default, analyzers will automatically find configuration files such as `.clang-format`.
-Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_ARGS`, `IWYU_ARGS` or `CPPCHECK_ARGS` variables.
+#### Code coverage
 
-#### Ccache
+Coverage reporting (GCC/Clang, requires gcovr) can be enabled with `-DFRACTIONS_ENABLE_COVERAGE=1`:
 
-Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
+```bash
+cmake -B build -DFRACTIONS_ENABLE_COVERAGE=1
+cmake --build build
+cmake --build build --target coverage
+```
 
 ## ❓ FAQ
 
@@ -159,10 +162,7 @@ Simply remove the standalone / documentation directory and according github work
 
 > Can I build the standalone and tests at the same time? / How can I tell my IDE about all subprojects?
 
-To keep the template modular, all subprojects derived from the library have been separated into their own CMake modules.
-This approach makes it trivial for third-party projects to re-use the projects library code.
-To allow IDEs to see the full scope of the project, the template includes the `all` directory that will create a single build for all subprojects.
-Use this as the main directory for best IDE support.
+All targets are defined in the single root `CMakeLists.txt`, so a single `cmake -B build` configuration exposes the library, tests and standalone to your IDE at once.
 
 > I see you are using `GLOB` to add source files in CMakeLists.txt. Isn't that evil?
 
@@ -172,7 +172,7 @@ I personally prefer the `GLOB` solution for its simplicity, but feel free to cha
 > I want create additional targets that depend on my library. Should I modify the main CMakeLists to include them?
 
 Avoid including derived projects from the libraries CMakeLists (even though it is a common sight in the C++ world), as this effectively inverts the dependency tree and makes the build system hard to reason about.
-Instead, create a new directory or project with a CMakeLists that adds the library as a dependency (e.g. like the [standalone](standalone/CMakeLists.txt) directory).
+Instead, create a new directory or project with a CMakeLists that adds the library as a dependency (e.g. like the [test_installed](test_installed/CMakeLists.txt) directory).
 Depending type it might make sense move these components into a separate repositories and reference a specific commit or version of the library.
 This has the advantage that individual libraries and components can be improved and updated independently.
 
@@ -198,6 +198,7 @@ Perhaps the [MiniCppStarter](https://github.com/TheLartians/MiniCppStarter) is s
 
 ## Related projects and alternatives
 
+- [**fractions-simple**](https://github.com/luk036/fractions-simple): Simplified header-only variant (xmake/CMake, lighter CI)
 - [**ModernCppStarter & PVS-Studio Static Code Analyzer**](https://github.com/viva64/pvs-studio-cmake-examples/tree/master/modern-cpp-starter): Official instructions on how to use the ModernCppStarter with the PVS-Studio Static Code Analyzer.
 - [**cpp-best-practices/gui_starter_template**](https://github.com/cpp-best-practices/gui_starter_template/): A popular C++ starter project, created in 2017.
 - [**filipdutescu/modern-cpp-template**](https://github.com/filipdutescu/modern-cpp-template): A recent starter using a more traditional approach for CMake structure and dependency management.
