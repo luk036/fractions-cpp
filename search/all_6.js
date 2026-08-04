@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['faq_0',['❓ FAQ',['../index.html#autotoc_md11',1,'']]],
+  ['faq_0',['❓ FAQ',['../index.html#autotoc_md10',1,'']]],
   ['features_1',['✨ Features',['../index.html#autotoc_md1',1,'']]],
   ['floor_2',['floor',['../structfractions_1_1Fraction.html#a46f2d4a40f507edfb60fe15e2fa6e418',1,'fractions::Fraction']]],
   ['floor_5fdiv_3',['floor_div',['../structfractions_1_1Fraction.html#a7ea3a860c67f2293d917a3c2ad6aebb5',1,'fractions::Fraction']]],
