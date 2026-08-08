@@ -65,7 +65,7 @@ cmake --build build --target coverage
 cmake -B build -DFRACTIONS_ENABLE_CLANG_TIDY=ON
 cmake --build build --target clang-tidy
 
-# Benchmarks (requires system Google Benchmark)
+# Benchmarks (nanobench)
 cmake -B build -DFRACTIONS_BUILD_BENCHMARKS=ON
 
 # Doxygen documentation

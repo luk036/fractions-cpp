@@ -2,10 +2,12 @@
  *  Distributed under the MIT License (See accompanying file /LICENSE )
  */
 #include <doctest/doctest.h>
-#include <rapidcheck.h>
 
-#include <fractions/extfractions.hpp>
-#include <sstream>
+#ifdef RAPIDCHECK_H
+#    include <rapidcheck.h>
+
+#    include <fractions/extfractions.hpp>
+#    include <sstream>
 
 using namespace fractions;
 
@@ -385,3 +387,4 @@ TEST_CASE("Property-based tests for GCD and LCM functions") {
         });
     }
 }
+#endif

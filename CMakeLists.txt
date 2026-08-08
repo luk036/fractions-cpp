@@ -31,7 +31,7 @@ endfunction()
 # Options
 # ---------------------------------------------------------------------------
 option(FRACTIONS_BUILD_TESTS "Build tests" ON)
-option(FRACTIONS_BUILD_BENCHMARKS "Build benchmarks (requires system Google Benchmark)" OFF)
+option(FRACTIONS_BUILD_BENCHMARKS "Build benchmarks (nanobench)" OFF)
 option(FRACTIONS_BUILD_DOCS "Build Doxygen documentation" OFF)
 option(FRACTIONS_ENABLE_CLANG_TIDY "Enable clang-tidy analysis" OFF)
 option(FRACTIONS_ENABLE_COVERAGE "Enable coverage reporting" OFF)
@@ -176,17 +176,37 @@ if(FRACTIONS_BUILD_TESTS)
   add_executable(FractionsTests ${TEST_SOURCES})
   target_link_libraries(FractionsTests PRIVATE doctest::doctest Fractions::Fractions rapidcheck)
   target_include_directories(FractionsTests PRIVATE ${RapidCheck_SOURCE_DIR}/include)
+  target_compile_definitions(FractionsTests PRIVATE RAPIDCHECK_H)
   set_target_properties(FractionsTests PROPERTIES CXX_STANDARD 17)
   target_enable_warnings(FractionsTests)
   add_test(NAME FractionsTests COMMAND FractionsTests)
 endif()
 
 # ---------------------------------------------------------------------------
-# Benchmarks (requires system Google Benchmark; opt-in)
+# Benchmarks (nanobench; opt-in)
 # ---------------------------------------------------------------------------
 
 if(FRACTIONS_BUILD_BENCHMARKS)
-  find_package(benchmark REQUIRED)
+  set(NANOBENCH_VERSION 4.3.11)
+  set(NANOBENCH_DIR "${CMAKE_BINARY_DIR}/_deps/nanobench")
+  set(NANOBENCH_HEADER "${NANOBENCH_DIR}/nanobench.h")
+
+  if(NOT EXISTS "${NANOBENCH_HEADER}")
+    file(MAKE_DIRECTORY "${NANOBENCH_DIR}")
+    file(
+      DOWNLOAD
+      "https://raw.githubusercontent.com/martinus/nanobench/v${NANOBENCH_VERSION}/src/include/nanobench.h"
+      "${NANOBENCH_HEADER}"
+      STATUS download_status
+    )
+    list(GET download_status 0 status_code)
+    if(NOT status_code EQUAL 0)
+      message(FATAL_ERROR "Failed to download nanobench (status ${status_code})")
+    endif()
+  endif()
+
+  add_library(nanobench INTERFACE)
+  target_include_directories(nanobench SYSTEM INTERFACE "${NANOBENCH_DIR}")
 
   file(GLOB_RECURSE ALL_BENCH_CPP CONFIGURE_DEPENDS "bench/*.cpp")
   foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
@@ -195,12 +215,8 @@ if(FRACTIONS_BUILD_BENCHMARKS)
 
     add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
     set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC} CXX_STANDARD 17)
-    target_link_libraries(
-      ${TARGET_NAME} PRIVATE Fractions::Fractions benchmark::benchmark benchmark::benchmark_main
-    )
-    set_target_properties(
-      ${TARGET_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    )
+    target_link_libraries(${TARGET_NAME} PRIVATE Fractions::Fractions nanobench)
+    set_target_properties(${TARGET_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
   endforeach()
 endif()
 
