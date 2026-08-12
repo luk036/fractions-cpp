@@ -232,10 +232,7 @@ static void bench_complex(ankerl::nanobench::Bench& b) {
 
 int main() {
     ankerl::nanobench::Bench bench;
-    bench.title("fractions-cpp benchmarks")
-        .unit("iteration")
-        .warmup(100)
-        .minEpochIterations(5000);
+    bench.title("fractions-cpp benchmarks").unit("iteration").warmup(100).minEpochIterations(5000);
 
     bench_construction(bench);
     bench_addition(bench);
