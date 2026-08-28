@@ -3,7 +3,8 @@
  * Benchmark comparison between Fraction and ExtFraction implementations
  */
 
-#include <benchmark/benchmark.h>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
 
 #include "fractions/extfractions.hpp"
 #include "fractions/pyfractions.hpp"
@@ -15,258 +16,229 @@ using fractions::Fraction;
 // Construction Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Construction(benchmark::State& state) {
-    for (auto _ : state) {
+static void bench_construction(ankerl::nanobench::Bench& b) {
+    b.run("ExtFraction<int64_t> construction", [&] {
         ExtFraction<int64_t> f(123456789, 987654321);
-        benchmark::DoNotOptimize(f);
-    }
-}
+        ankerl::nanobench::doNotOptimizeAway(f);
+    });
 
-static void BM_Fraction_Construction(benchmark::State& state) {
-    for (auto _ : state) {
+    b.run("Fraction<int64_t> construction", [&] {
         Fraction<int64_t> f(123456789, 987654321);
-        benchmark::DoNotOptimize(f);
-    }
+        ankerl::nanobench::doNotOptimizeAway(f);
+    });
 }
 
 // ============================================================================
 // Addition Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Addition(benchmark::State& state) {
+static void bench_addition(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> f1(1, 2);
     ExtFraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
-        auto result = f1 + f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
 
-static void BM_Fraction_Addition(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
+    b.run("ExtFraction<int64_t> addition 1/2 + 1/3", [&] {
         auto result = f1 + f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-static void BM_ExtFraction_Addition_Large(benchmark::State& state) {
-    ExtFraction<int64_t> f1(123456789, 987654321);
-    ExtFraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        auto result = f1 + f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    Fraction<int64_t> g1(1, 2);
+    Fraction<int64_t> g2(1, 3);
 
-static void BM_Fraction_Addition_Large(benchmark::State& state) {
-    Fraction<int64_t> f1(123456789, 987654321);
-    Fraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        auto result = f1 + f2;
-        benchmark::DoNotOptimize(result);
-    }
+    b.run("Fraction<int64_t> addition 1/2 + 1/3", [&] {
+        auto result = g1 + g2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    ExtFraction<int64_t> h1(123456789, 987654321);
+    ExtFraction<int64_t> h2(111111111, 999999999);
+
+    b.run("ExtFraction<int64_t> addition large", [&] {
+        auto result = h1 + h2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> i1(123456789, 987654321);
+    Fraction<int64_t> i2(111111111, 999999999);
+
+    b.run("Fraction<int64_t> addition large", [&] {
+        auto result = i1 + i2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
 // Subtraction Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Subtraction(benchmark::State& state) {
+static void bench_subtraction(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> f1(1, 2);
     ExtFraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
-        auto result = f1 - f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
 
-static void BM_Fraction_Subtraction(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
+    b.run("ExtFraction<int64_t> subtraction 1/2 - 1/3", [&] {
         auto result = f1 - f2;
-        benchmark::DoNotOptimize(result);
-    }
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> g1(1, 2);
+    Fraction<int64_t> g2(1, 3);
+
+    b.run("Fraction<int64_t> subtraction 1/2 - 1/3", [&] {
+        auto result = g1 - g2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
 // Multiplication Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Multiplication(benchmark::State& state) {
+static void bench_multiplication(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> f1(1, 2);
     ExtFraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
-        auto result = f1 * f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
 
-static void BM_Fraction_Multiplication(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
+    b.run("ExtFraction<int64_t> multiplication 1/2 * 1/3", [&] {
         auto result = f1 * f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-static void BM_ExtFraction_Multiplication_Large(benchmark::State& state) {
-    ExtFraction<int64_t> f1(123456789, 987654321);
-    ExtFraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        auto result = f1 * f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    Fraction<int64_t> g1(1, 2);
+    Fraction<int64_t> g2(1, 3);
 
-static void BM_Fraction_Multiplication_Large(benchmark::State& state) {
-    Fraction<int64_t> f1(123456789, 987654321);
-    Fraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        auto result = f1 * f2;
-        benchmark::DoNotOptimize(result);
-    }
+    b.run("Fraction<int64_t> multiplication 1/2 * 1/3", [&] {
+        auto result = g1 * g2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    ExtFraction<int64_t> h1(123456789, 987654321);
+    ExtFraction<int64_t> h2(111111111, 999999999);
+
+    b.run("ExtFraction<int64_t> multiplication large", [&] {
+        auto result = h1 * h2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> i1(123456789, 987654321);
+    Fraction<int64_t> i2(111111111, 999999999);
+
+    b.run("Fraction<int64_t> multiplication large", [&] {
+        auto result = i1 * i2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
 // Division Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Division(benchmark::State& state) {
+static void bench_division(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> f1(1, 2);
     ExtFraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
-        auto result = f1 / f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
 
-static void BM_Fraction_Division(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
+    b.run("ExtFraction<int64_t> division 1/2 / 1/3", [&] {
         auto result = f1 / f2;
-        benchmark::DoNotOptimize(result);
-    }
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> g1(1, 2);
+    Fraction<int64_t> g2(1, 3);
+
+    b.run("Fraction<int64_t> division 1/2 / 1/3", [&] {
+        auto result = g1 / g2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
 // Comparison Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_LessThan(benchmark::State& state) {
+static void bench_comparison(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> f1(1, 2);
     ExtFraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
+
+    b.run("ExtFraction<int64_t> less-than 1/2 < 1/3", [&] {
         bool result = f1 < f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-static void BM_Fraction_LessThan(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(1, 3);
-    for (auto _ : state) {
-        bool result = f1 < f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    Fraction<int64_t> g1(1, 2);
+    Fraction<int64_t> g2(1, 3);
 
-static void BM_ExtFraction_LessThan_Large(benchmark::State& state) {
-    ExtFraction<int64_t> f1(123456789, 987654321);
-    ExtFraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        bool result = f1 < f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    b.run("Fraction<int64_t> less-than 1/2 < 1/3", [&] {
+        bool result = g1 < g2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-static void BM_Fraction_LessThan_Large(benchmark::State& state) {
-    Fraction<int64_t> f1(123456789, 987654321);
-    Fraction<int64_t> f2(111111111, 999999999);
-    for (auto _ : state) {
-        bool result = f1 < f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    ExtFraction<int64_t> h1(123456789, 987654321);
+    ExtFraction<int64_t> h2(111111111, 999999999);
 
-static void BM_ExtFraction_Equality(benchmark::State& state) {
-    ExtFraction<int64_t> f1(1, 2);
-    ExtFraction<int64_t> f2(2, 4);
-    for (auto _ : state) {
-        bool result = f1 == f2;
-        benchmark::DoNotOptimize(result);
-    }
-}
+    b.run("ExtFraction<int64_t> less-than large", [&] {
+        bool result = h1 < h2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-static void BM_Fraction_Equality(benchmark::State& state) {
-    Fraction<int64_t> f1(1, 2);
-    Fraction<int64_t> f2(2, 4);
-    for (auto _ : state) {
-        bool result = f1 == f2;
-        benchmark::DoNotOptimize(result);
-    }
+    Fraction<int64_t> i1(123456789, 987654321);
+    Fraction<int64_t> i2(111111111, 999999999);
+
+    b.run("Fraction<int64_t> less-than large", [&] {
+        bool result = i1 < i2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    ExtFraction<int64_t> j1(1, 2);
+    ExtFraction<int64_t> j2(2, 4);
+
+    b.run("ExtFraction<int64_t> equality 1/2 == 2/4", [&] {
+        bool result = j1 == j2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> k1(1, 2);
+    Fraction<int64_t> k2(2, 4);
+
+    b.run("Fraction<int64_t> equality 1/2 == 2/4", [&] {
+        bool result = k1 == k2;
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
 // Complex Operation Benchmarks
 // ============================================================================
 
-static void BM_ExtFraction_Complex_Operation(benchmark::State& state) {
+static void bench_complex(ankerl::nanobench::Bench& b) {
     ExtFraction<int64_t> a(1, 2);
-    ExtFraction<int64_t> b(1, 3);
+    ExtFraction<int64_t> b_val(1, 3);
     ExtFraction<int64_t> c(1, 4);
-    for (auto _ : state) {
-        auto result = (a + b) * (c - ExtFraction<int64_t>(1, 6));
-        benchmark::DoNotOptimize(result);
-    }
-}
 
-static void BM_Fraction_Complex_Operation(benchmark::State& state) {
-    Fraction<int64_t> a(1, 2);
-    Fraction<int64_t> b(1, 3);
-    Fraction<int64_t> c(1, 4);
-    for (auto _ : state) {
-        auto result = (a + b) * (c - Fraction<int64_t>(1, 6));
-        benchmark::DoNotOptimize(result);
-    }
+    b.run("ExtFraction<int64_t> complex (1/2 + 1/3) * (1/4 - 1/6)", [&] {
+        auto result = (a + b_val) * (c - ExtFraction<int64_t>(1, 6));
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
+
+    Fraction<int64_t> d(1, 2);
+    Fraction<int64_t> e(1, 3);
+    Fraction<int64_t> f(1, 4);
+
+    b.run("Fraction<int64_t> complex (1/2 + 1/3) * (1/4 - 1/6)", [&] {
+        auto result = (d + e) * (f - Fraction<int64_t>(1, 6));
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
 
 // ============================================================================
-// Register benchmarks
+// Main
 // ============================================================================
 
-BENCHMARK(BM_ExtFraction_Construction);
-BENCHMARK(BM_Fraction_Construction);
+int main() {
+    ankerl::nanobench::Bench bench;
+    bench.title("fractions-cpp benchmarks").unit("iteration").warmup(100).minEpochIterations(5000);
 
-BENCHMARK(BM_ExtFraction_Addition);
-BENCHMARK(BM_Fraction_Addition);
-BENCHMARK(BM_ExtFraction_Addition_Large);
-BENCHMARK(BM_Fraction_Addition_Large);
-
-BENCHMARK(BM_ExtFraction_Subtraction);
-BENCHMARK(BM_Fraction_Subtraction);
-
-BENCHMARK(BM_ExtFraction_Multiplication);
-BENCHMARK(BM_Fraction_Multiplication);
-BENCHMARK(BM_ExtFraction_Multiplication_Large);
-BENCHMARK(BM_Fraction_Multiplication_Large);
-
-BENCHMARK(BM_ExtFraction_Division);
-BENCHMARK(BM_Fraction_Division);
-
-BENCHMARK(BM_ExtFraction_LessThan);
-BENCHMARK(BM_Fraction_LessThan);
-BENCHMARK(BM_ExtFraction_LessThan_Large);
-BENCHMARK(BM_Fraction_LessThan_Large);
-
-BENCHMARK(BM_ExtFraction_Equality);
-BENCHMARK(BM_Fraction_Equality);
-
-BENCHMARK(BM_ExtFraction_Complex_Operation);
-BENCHMARK(BM_Fraction_Complex_Operation);
-
-BENCHMARK_MAIN();
+    bench_construction(bench);
+    bench_addition(bench);
+    bench_subtraction(bench);
+    bench_multiplication(bench);
+    bench_division(bench);
+    bench_comparison(bench);
+    bench_complex(bench);
+}

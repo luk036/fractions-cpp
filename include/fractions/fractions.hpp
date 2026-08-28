@@ -300,6 +300,60 @@ namespace fractions {
         CONSTEXPR14 Fraction() : _numer(0), _denom(1) {}
 
         /**
+         * Constructs a Fraction from a numerator and denominator without normalizing.
+         *
+         * The caller must ensure the resulting fraction is in a valid state.
+         * Intended for performance-critical paths where normalization is handled
+         * separately.
+         *
+         * Example:
+         * @verbatim
+         * Fraction<int> f = Fraction<int>::from_raw(2, 6); // f = 2/6 (not reduced)
+         * @endverbatim
+         * @param[in] num The numerator.
+         * @param[in] den The denominator.
+         * @return The raw (possibly unnormalized) fraction.
+         */
+        static CONSTEXPR14 auto from_raw(T num, T den) -> Fraction {
+            Fraction f;
+            f._numer = std::move(num);
+            f._denom = std::move(den);
+            return f;
+        }
+
+        /**
+         * Constructs a normalized Fraction from a numerator and denominator.
+         *
+         * The denominator is made positive and the fraction is reduced to
+         * lowest terms.
+         *
+         * Example:
+         * @verbatim
+         * Fraction<int> f = Fraction<int>::from(2, 6); // f = 1/3
+         * @endverbatim
+         * @param[in] num The numerator.
+         * @param[in] den The denominator.
+         * @return The normalized fraction.
+         */
+        static CONSTEXPR14 auto from(T num, T den) -> Fraction {
+            return Fraction(std::move(num), std::move(den));
+        }
+
+        /**
+         * Returns the fraction zero (0/1).
+         *
+         * @return A Fraction equal to zero.
+         */
+        static CONSTEXPR14 auto zero() -> Fraction { return Fraction(0, 1); }
+
+        /**
+         * Returns the fraction one (1/1).
+         *
+         * @return A Fraction equal to one.
+         */
+        static CONSTEXPR14 auto one() -> Fraction { return Fraction(1, 1); }
+
+        /**
          * Gets the numerator of the fraction.
          *
          * @return A const reference to the numerator.
@@ -312,6 +366,92 @@ namespace fractions {
          * @return A const reference to the denominator.
          */
         CONSTEXPR14 auto denom() const noexcept -> const T& { return _denom; }
+
+        /**
+         * Checks whether this fraction equals zero.
+         *
+         * A fraction is zero when its numerator is zero and its denominator
+         * is non-zero: 0/d = 0.
+         *
+         * @return True if the fraction equals zero, false otherwise.
+         */
+        CONSTEXPR14 auto is_zero() const -> bool { return _numer == 0 && _denom != 0; }
+
+        /**
+         * Checks whether this fraction equals one.
+         *
+         * A fraction equals one when numerator and denominator are equal
+         * and non-zero: n/n = 1.
+         *
+         * @return True if the fraction equals one, false otherwise.
+         */
+        CONSTEXPR14 auto is_one() const -> bool { return _numer == _denom && _numer != 0; }
+
+        /**
+         * Checks whether this fraction represents infinity.
+         *
+         * Infinity occurs when the denominator is zero and the numerator
+         * is non-zero: n/0 = infinity.
+         *
+         * @return True if the fraction is infinite, false otherwise.
+         */
+        CONSTEXPR14 auto is_infinite() const -> bool { return _numer != 0 && _denom == 0; }
+
+        /**
+         * Checks whether this fraction is NaN (Not-a-Number).
+         *
+         * NaN occurs when both numerator and denominator are zero:
+         * 0/0 is undefined.
+         *
+         * @return True if the fraction is NaN, false otherwise.
+         */
+        CONSTEXPR14 auto is_nan() const -> bool { return _numer == 0 && _denom == 0; }
+
+        /**
+         * Checks whether this fraction is strictly positive.
+         *
+         * @return True if the fraction is positive, false otherwise.
+         */
+        CONSTEXPR14 auto is_positive() const -> bool { return _numer > 0; }
+
+        /**
+         * Checks whether this fraction is strictly negative.
+         *
+         * @return True if the fraction is negative, false otherwise.
+         */
+        CONSTEXPR14 auto is_negative() const -> bool { return _numer < 0; }
+
+        /**
+         * Sets this fraction to zero (0/1).
+         */
+        CONSTEXPR14 void set_zero() {
+            _numer = 0;
+            _denom = 1;
+        }
+
+        /**
+         * Sets this fraction to one (1/1).
+         */
+        CONSTEXPR14 void set_one() {
+            _numer = 1;
+            _denom = 1;
+        }
+
+        /**
+         * Sets this fraction to positive infinity (1/0).
+         */
+        CONSTEXPR14 void set_infinite() {
+            _numer = 1;
+            _denom = 0;
+        }
+
+        /**
+         * Sets this fraction to NaN (0/0).
+         */
+        CONSTEXPR14 void set_nan() {
+            _numer = 0;
+            _denom = 0;
+        }
 
         /**
          * Computes the cross product of this fraction and another fraction.
@@ -349,6 +489,42 @@ namespace fractions {
          */
         CONSTEXPR14 auto cross(const Fraction& rhs) const -> T {
             return this->_numer * rhs._denom - this->_denom * rhs._numer;
+        }
+
+        /**
+         * Returns the absolute value of this fraction.
+         *
+         * @f$ \left|\frac{a}{b}\right| = \frac{|a|}{b} @f$
+         *
+         * @return The absolute value of the fraction.
+         */
+        CONSTEXPR14 auto abs() const -> Fraction { return is_negative() ? -*this : *this; }
+
+        /**
+         * Returns the signum (sign) of this fraction.
+         *
+         * @f$ \operatorname{sgn}\!\left(\frac{a}{b}\right) =
+         *     \begin{cases} 1 & a > 0 \\ 0 & a = 0 \\ -1 & a < 0 \end{cases} @f$
+         *
+         * @return 1 for positive fractions, -1 for negative fractions, 0 for zero.
+         */
+        CONSTEXPR14 auto signum() const -> Fraction {
+            if (is_positive()) return one();
+            if (is_zero()) return zero();
+            return -one();
+        }
+
+        /**
+         * Returns the multiplicative inverse of this fraction.
+         *
+         * @f$ \left(\frac{a}{b}\right)^{-1} = \frac{b}{a} @f$
+         *
+         * @return The reciprocal fraction.
+         */
+        CONSTEXPR14 auto inv() const -> Fraction {
+            Fraction r = *this;
+            r.reciprocal();
+            return r;
         }
 
         /** @name Comparison operators
@@ -563,6 +739,14 @@ namespace fractions {
         CONSTEXPR14 auto operator>=(const T& rhs) const -> bool { return !(*this < rhs); }
 
         /**
+         * Compares this fraction to a T integer for inequality.
+         *
+         * @param rhs The T integer to compare against.
+         * @return True if this fraction is not equal to the integer, false otherwise.
+         */
+        CONSTEXPR14 auto operator!=(const T& rhs) const -> bool { return !(*this == rhs); }
+
+        /**
          * Compares a T integer to a Fraction for greater than.
          *
          * This is a friend function that allows comparing a T integer on the left
@@ -602,6 +786,17 @@ namespace fractions {
          */
         friend CONSTEXPR14 auto operator>=(const T& lhs, const Fraction& rhs) -> bool {
             return !(lhs < rhs);
+        }
+
+        /**
+         * Compares a T integer to a Fraction for inequality.
+         *
+         * @param lhs The T integer on the left hand side.
+         * @param rhs The Fraction on the right hand side.
+         * @return True if lhs is not equal to rhs, false otherwise.
+         */
+        friend CONSTEXPR14 auto operator!=(const T& lhs, const Fraction& rhs) -> bool {
+            return !(lhs == rhs);
         }
 
         ///@}
