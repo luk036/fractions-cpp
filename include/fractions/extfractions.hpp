@@ -601,7 +601,7 @@ namespace fractions {
             rhs.reduce();
             this->_numer *= rhs._numer;
             this->_denom *= rhs._denom;
-            this->normalize();
+            this->keep_denom_positive();
             return *this;
         }
 
@@ -710,7 +710,7 @@ namespace fractions {
             rhs.reduce();
             this->_numer *= rhs._denom;
             this->_denom *= rhs._numer;
-            this->normalize();
+            this->keep_denom_positive();
             return *this;
         }
 
@@ -811,23 +811,17 @@ namespace fractions {
          */
         CONSTEXPR14 auto operator+(const ExtFraction& other) const -> ExtFraction {
             if (this->_denom == other._denom) {
-                ExtFraction result(this->_numer + other._numer, this->_denom);
-                result.normalize();
-                return result;
+                return ExtFraction(this->_numer + other._numer, this->_denom);
             }
             const auto common = gcd(this->_denom, other._denom);
             if (common == 0) {
-                ExtFraction result(other._denom * this->_numer + this->_denom * other._numer, 0);
-                result.normalize();
-                return result;
+                return ExtFraction(other._denom * this->_numer + this->_denom * other._numer, 0);
             }
             const auto left = this->_denom / common;
             const auto right = other._denom / common;
             auto denom = this->_denom * right;
             auto numer = right * this->_numer + left * other._numer;
-            ExtFraction result(std::move(numer), std::move(denom));
-            result.normalize();
-            return result;
+            return ExtFraction(std::move(numer), std::move(denom));
         }
 
         /**
@@ -903,18 +897,24 @@ namespace fractions {
                 return *this;
             }
 
-            auto other{rhs};
-            std::swap(this->_denom, other._numer);
-            auto common_n = this->reduce();
-            auto common_d = other.reduce();
-            std::swap(this->_denom, other._numer);
-            this->_numer = this->_numer * other._denom + this->_denom * other._numer;
-            this->_denom *= other._denom;
-            std::swap(this->_denom, common_d);
-            this->reduce();
-            this->_numer *= common_n;
-            this->_denom *= common_d;
-            this->reduce();
+            const auto common = gcd(this->_denom, rhs._denom);
+            if (common == 1) {
+                this->_numer = rhs._denom * this->_numer + this->_denom * rhs._numer;
+                this->_denom *= rhs._denom;
+                this->keep_denom_positive();
+                return *this;
+            }
+            if (common == 0) {
+                this->_numer = rhs._denom * this->_numer + this->_denom * rhs._numer;
+                this->_denom = 0;
+                this->normalize();
+                return *this;
+            }
+            const auto left = this->_denom / common;
+            const auto right = rhs._denom / common;
+            this->_numer = right * this->_numer + left * rhs._numer;
+            this->_denom *= right;
+            this->normalize();
             return *this;
         }
 
@@ -940,18 +940,24 @@ namespace fractions {
                 return *this;
             }
 
-            auto other{rhs};
-            std::swap(this->_denom, other._numer);
-            auto common_n = this->reduce();
-            auto common_d = other.reduce();
-            std::swap(this->_denom, other._numer);
-            this->_numer = this->cross(other);
-            this->_denom *= other._denom;
-            std::swap(this->_denom, common_d);
-            this->reduce();
-            this->_numer *= common_n;
-            this->_denom *= common_d;
-            this->reduce();
+            const auto common = gcd(this->_denom, rhs._denom);
+            if (common == 1) {
+                this->_numer = rhs._denom * this->_numer - this->_denom * rhs._numer;
+                this->_denom *= rhs._denom;
+                this->keep_denom_positive();
+                return *this;
+            }
+            if (common == 0) {
+                this->_numer = rhs._denom * this->_numer - this->_denom * rhs._numer;
+                this->_denom = 0;
+                this->normalize();
+                return *this;
+            }
+            const auto left = this->_denom / common;
+            const auto right = rhs._denom / common;
+            this->_numer = right * this->_numer - left * rhs._numer;
+            this->_denom *= right;
+            this->normalize();
             return *this;
         }
 
