@@ -73,6 +73,32 @@ namespace fractions {
         }
 
         /**
+         * @brief Returns whether the product `a * b` would overflow `T`.
+         *
+         * Uses the compiler overflow intrinsic when available so that the common
+         * in-range case costs a single multiply instead of an integer division.
+         * A zero factor can never overflow, which also avoids the division by
+         * zero a `|a| > max / |b|` style test would perform.
+         *
+         * @param[in] a First factor.
+         * @param[in] b Second factor.
+         * @return true if `a * b` overflows `T`, false otherwise.
+         */
+        static bool _mul_overflows(T a, T b) {
+#if defined(__GNUC__) || defined(__clang__)
+            T result;
+            return __builtin_mul_overflow(a, b, &result);
+#else
+            if (a == 0 || b == 0) {
+                return false;
+            }
+            T abs_a = a < 0 ? static_cast<T>(-a) : a;
+            T abs_b = b < 0 ? static_cast<T>(-b) : b;
+            return abs_a > std::numeric_limits<T>::max() / abs_b;
+#endif
+        }
+
+        /**
          * @brief Internal constructor for pre-normalized values (bypasses normalization).
          * @param[in] numerator The numerator value.
          * @param[in] denominator The denominator value.
@@ -219,8 +245,7 @@ namespace fractions {
 
             if (g == 1) {
                 // Check for overflow before multiplication
-                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
-                    || std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                if (_mul_overflows(na, db) || _mul_overflows(da, nb)) {
                     // Use floating point as fallback
                     double result = static_cast<double>(na) / static_cast<double>(da)
                                     + static_cast<double>(nb) / static_cast<double>(db);
@@ -240,8 +265,7 @@ namespace fractions {
             T db_div_g = db / g;
 
             // Check for overflow in t calculation
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g)
-                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+            if (_mul_overflows(na, db_div_g) || _mul_overflows(nb, s)) {
                 // Use floating point as fallback
                 double result = static_cast<double>(na) / static_cast<double>(da)
                                 + static_cast<double>(nb) / static_cast<double>(db);
@@ -258,7 +282,7 @@ namespace fractions {
 
             if (g2 == 1) {
                 // Check for overflow in denominator
-                if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db)) {
+                if (_mul_overflows(s, db)) {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
@@ -272,7 +296,7 @@ namespace fractions {
             }
 
             T db_div_g2 = db / g2;
-            if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db_div_g2)) {
+            if (_mul_overflows(s, db_div_g2)) {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
@@ -301,8 +325,7 @@ namespace fractions {
 
             if (g == 1) {
                 // Check for overflow before multiplication
-                if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
-                    || std::abs(da) > std::numeric_limits<T>::max() / std::abs(nb)) {
+                if (_mul_overflows(na, db) || _mul_overflows(da, nb)) {
                     // Use floating point as fallback
                     double result = static_cast<double>(na) / static_cast<double>(da)
                                     - static_cast<double>(nb) / static_cast<double>(db);
@@ -322,8 +345,7 @@ namespace fractions {
             T db_div_g = db / g;
 
             // Check for overflow in t calculation
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db_div_g)
-                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(s)) {
+            if (_mul_overflows(na, db_div_g) || _mul_overflows(nb, s)) {
                 // Use floating point as fallback
                 double result = static_cast<double>(na) / static_cast<double>(da)
                                 - static_cast<double>(nb) / static_cast<double>(db);
@@ -340,7 +362,7 @@ namespace fractions {
 
             if (g2 == 1) {
                 // Check for overflow in denominator
-                if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db)) {
+                if (_mul_overflows(s, db)) {
                     const T max_den = std::numeric_limits<T>::max() / 1000;
                     T approx_den = std::min(max_den, db);
                     if (approx_den < 0) approx_den = -approx_den;
@@ -354,7 +376,7 @@ namespace fractions {
             }
 
             T db_div_g2 = db / g2;
-            if (std::abs(s) > std::numeric_limits<T>::max() / std::abs(db_div_g2)) {
+            if (_mul_overflows(s, db_div_g2)) {
                 const T max_den = std::numeric_limits<T>::max() / 1000;
                 T approx_den = std::min(max_den, db_div_g2);
                 if (approx_den < 0) approx_den = -approx_den;
@@ -397,8 +419,7 @@ namespace fractions {
             }
 
             // Check for overflow before final multiplication
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(nb)
-                || std::abs(db) > std::numeric_limits<T>::max() / std::abs(da)) {
+            if (_mul_overflows(na, nb) || _mul_overflows(db, da)) {
                 // Use floating point as fallback
                 double result = (static_cast<double>(na) * static_cast<double>(nb))
                                 / (static_cast<double>(db) * static_cast<double>(da));
@@ -443,8 +464,7 @@ namespace fractions {
             }
 
             // Check for overflow before multiplication
-            if (std::abs(na) > std::numeric_limits<T>::max() / std::abs(db)
-                || std::abs(nb) > std::numeric_limits<T>::max() / std::abs(da)) {
+            if (_mul_overflows(na, db) || _mul_overflows(nb, da)) {
                 // Use floating point as fallback
                 double result = (static_cast<double>(na) * static_cast<double>(db))
                                 / (static_cast<double>(nb) * static_cast<double>(da));
@@ -586,8 +606,7 @@ namespace fractions {
                 }
 
                 // Check if multiplication would still overflow
-                if (na <= std::numeric_limits<T>::max() / db
-                    && nb <= std::numeric_limits<T>::max() / da) {
+                if (!_mul_overflows(na, db) && !_mul_overflows(nb, da)) {
                     // Safe to use cross-multiplication
                     return na * db < nb * da;
                 }
@@ -650,9 +669,8 @@ namespace fractions {
 
             // To avoid overflow, we can use floating point division for large numbers
             // or carefully check for overflow before multiplication
-            if (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(other._denominator)
-                || std::abs(_denominator)
-                       > std::numeric_limits<T>::max() / std::abs(other._numerator)) {
+            if (_mul_overflows(_numerator, other._denominator)
+                || _mul_overflows(_denominator, other._numerator)) {
                 // Use floating point to avoid overflow
                 double result
                     = static_cast<double>(_numerator) * static_cast<double>(other._denominator)
@@ -691,10 +709,9 @@ namespace fractions {
             T db = other._denominator;
 
             // Check for potential overflow in multiplications
-            bool overflow_risk
-                = (std::abs(_numerator) > std::numeric_limits<T>::max() / std::abs(db)
-                   || std::abs(other._numerator) > std::numeric_limits<T>::max() / std::abs(da)
-                   || std::abs(da) > std::numeric_limits<T>::max() / std::abs(db));
+            bool overflow_risk = _mul_overflows(_numerator, db)
+                                 || _mul_overflows(other._numerator, da)
+                                 || _mul_overflows(da, db);
 
             if (overflow_risk) {
                 // Use floating point arithmetic to avoid overflow
