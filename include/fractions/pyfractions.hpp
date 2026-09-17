@@ -710,8 +710,7 @@ namespace fractions {
 
             // Check for potential overflow in multiplications
             bool overflow_risk = _mul_overflows(_numerator, db)
-                                 || _mul_overflows(other._numerator, da)
-                                 || _mul_overflows(da, db);
+                                 || _mul_overflows(other._numerator, da) || _mul_overflows(da, db);
 
             if (overflow_risk) {
                 // Use floating point arithmetic to avoid overflow
