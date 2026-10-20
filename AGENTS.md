@@ -120,6 +120,10 @@ template <typename T> auto abs(const T& val_a) ->
     typename std::enable_if<std::is_unsigned<T>::value, T>::type { ... }
 ```
 
+> ⚠️ Exception: `gcd` / `gcd_recur` must **not** be function templates. Use concrete
+> non-template overloads so the compiler can unroll the recursion — see
+> [GCD Implementation (Performance-Critical)](#gcd-implementation-performance-critical).
+
 **Member initialization** (prefer in-class initializers):
 ```cpp
 CONSTEXPR14 Fraction() : _numer(0), _denom(1) {}
@@ -230,6 +234,56 @@ This library ALLOWS zero denominators:
 - Use cross-multiplication for comparison: `a/b < c/d` → `a*d < b*c`
 - LCM for addition: `(a*lcm(b,d)/b) + (c*lcm(b,d)/d)`
 - GCD reduction for simplification
+
+### GCD Implementation (Performance-Critical)
+
+`gcd` / `gcd_recur` must be **non-template overloads**, never function templates.
+
+A recursive *function template* such as `gcd_recur(const Mn&, const Mn&)` has a
+dependently-typed recursive call, so the optimizer sees an ordinary call instead of a
+self-loop. It therefore cannot inline or partially unroll the `%` chain, and every
+normalization / reduction / comparison pays for real function calls.
+
+**Rules:**
+
+- Define one overload per integer type: `int`, `unsigned int`, `long`, `unsigned long`,
+  **`long long`**, **`unsigned long long`**. The 64-bit signed/unsigned overloads are
+  required so that `int64_t` resolves on Windows (LLP64, where `int64_t` is `long long`)
+  as well as on Linux/macOS.
+- Keep `gcd_recur` and `gcd` as **free functions** — in `namespace fractions` for
+  `fractions.hpp`, and in `namespace fractions::detail` for `pyfractions.hpp`. In
+  `pyfractions.hpp` the class calls `detail::gcd(a, b)`; do **not** make gcd a member of
+  the `Fraction` class template.
+- `pyfractions.hpp`'s gcd must be **structurally identical** to `fractions.hpp`'s
+  (same bodies, same overload set) so both benefit from identical inlining.
+- `Fraction` is declared `template <typename T = int64_t> struct Fraction`.
+
+**Correct** (concrete overloads, unrollable):
+```cpp
+CONSTEXPR14 auto gcd_recur(long long _m, long long _n) -> long long {
+    if (_n == 0) {
+        return abs(_m);
+    }
+    return gcd_recur(_n, _m % _n);  // concrete self-call -> optimizer can unroll
+}
+
+CONSTEXPR14 auto gcd(long long _m, long long _n) -> long long {
+    if (_m == 0) {
+        return abs(_n);
+    }
+    return gcd_recur(_m, _n);
+}
+```
+
+**Wrong** (function template, not unrollable — do not use):
+```cpp
+template <typename T>
+CONSTEXPR14 auto gcd_recur(const T& _m, const T& _n) -> T { ... }
+```
+
+**Verification:** compiling a `Fraction<long long>` construction with `g++ -O3` should emit
+**0 call instructions to gcd** and only a handful of `idivq` (partial unroll) in the
+assembly. If you see recursive `call` instructions, the overload/inlining was lost.
 
 ## Dependencies
 
