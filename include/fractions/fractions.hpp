@@ -4,8 +4,13 @@
  *  This is a C++ Library header.
  */
 
+#include <cstdint>
 #include <type_traits>
 #include <utility>
+
+#if defined(_MSC_VER) && defined(_M_X64)
+#    include <intrin.h>
+#endif
 
 // #include "common_concepts.h"
 
@@ -16,6 +21,76 @@
 #endif
 
 namespace fractions {
+
+#ifndef FRACTIONS_DETAIL_COMPARE_INCLUDED
+#    define FRACTIONS_DETAIL_COMPARE_INCLUDED
+    namespace detail {
+
+        template <typename T> CONSTEXPR14 auto is_negative(T val, std::true_type) -> bool {
+            return val < 0;
+        }
+
+        template <typename T> CONSTEXPR14 auto is_negative(T, std::false_type) -> bool {
+            return false;
+        }
+
+        template <typename T> CONSTEXPR14 auto is_negative(T val) -> bool {
+            return is_negative(val, std::is_signed<T>{});
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val, std::true_type)
+            -> unsigned long long {
+            return val < 0 ? 0ULL - static_cast<unsigned long long>(val)
+                           : static_cast<unsigned long long>(val);
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val, std::false_type)
+            -> unsigned long long {
+            return static_cast<unsigned long long>(val);
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val) -> unsigned long long {
+            return magnitude(val, std::is_signed<T>{});
+        }
+
+#    if defined(_MSC_VER) && defined(_M_X64)
+        inline auto compare_u128(unsigned long long ah, unsigned long long al,
+                                 unsigned long long bh, unsigned long long bl) -> int {
+            if (ah != bh) {
+                return ah < bh ? -1 : 1;
+            }
+            if (al != bl) {
+                return al < bl ? -1 : 1;
+            }
+            return 0;
+        }
+#    endif
+
+        template <typename T> CONSTEXPR14 auto less_than_frac(T an, T ad, T bn, T bd) -> bool {
+#    if defined(__SIZEOF_INT128__)
+            __extension__ typedef __int128 wide;
+            return static_cast<wide>(an) * static_cast<wide>(bd)
+                   < static_cast<wide>(bn) * static_cast<wide>(ad);
+#    elif defined(_MSC_VER) && defined(_M_X64)
+            const bool neg_a = is_negative(an);
+            const bool neg_b = is_negative(bn);
+            if (neg_a != neg_b) {
+                return neg_a;
+            }
+            unsigned long long hi_a = 0;
+            unsigned long long hi_b = 0;
+            const unsigned long long lo_a
+                = _umul128(magnitude(an), static_cast<unsigned long long>(bd), &hi_a);
+            const unsigned long long lo_b
+                = _umul128(magnitude(bn), static_cast<unsigned long long>(ad), &hi_b);
+            const int cmp = compare_u128(hi_a, lo_a, hi_b, lo_b);
+            return neg_a ? cmp > 0 : cmp < 0;
+#    else
+            return false;
+#    endif
+        }
+    }  // namespace detail
+#endif
 
     /**
      * Returns the absolute value of the input.
@@ -87,7 +162,42 @@ namespace fractions {
      *
      * @f$ \gcd(m,n) = \gcd(n, m \bmod n) @f$, with @f$ \gcd(m,0) = |m| @f$
      */
-    template <typename Mn> CONSTEXPR14 auto gcd_recur(const Mn& _m, const Mn& _n) -> Mn {
+    CONSTEXPR14 auto gcd_recur(unsigned long _m, unsigned long _n) -> unsigned long {
+        if (_n == 0) {
+            return _m;
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(long _m, long _n) -> long {
+        if (_n == 0) {
+            return abs(_m);
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(unsigned int _m, unsigned int _n) -> unsigned int {
+        if (_n == 0) {
+            return _m;
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(int _m, int _n) -> int {
+        if (_n == 0) {
+            return abs(_m);
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(unsigned long long _m, unsigned long long _n) -> unsigned long long {
+        if (_n == 0) {
+            return _m;
+        }
+        return gcd_recur(_n, _m % _n);
+    }
+
+    CONSTEXPR14 auto gcd_recur(long long _m, long long _n) -> long long {
         if (_n == 0) {
             return abs(_m);
         }
@@ -110,7 +220,42 @@ namespace fractions {
      *
      * @f$ \gcd(m,n) = \gcd(|m|,|n|) @f$
      */
-    template <typename Mn> CONSTEXPR14 auto gcd(const Mn& _m, const Mn& _n) -> Mn {
+    CONSTEXPR14 auto gcd(unsigned long _m, unsigned long _n) -> unsigned long {
+        if (_m == 0) {
+            return _n;
+        }
+        return gcd_recur(_m, _n);
+    }
+
+    CONSTEXPR14 auto gcd(long _m, long _n) -> long {
+        if (_m == 0) {
+            return abs(_n);
+        }
+        return gcd_recur(_m, _n);
+    }
+
+    CONSTEXPR14 auto gcd(unsigned int _m, unsigned int _n) -> unsigned int {
+        if (_m == 0) {
+            return _n;
+        }
+        return gcd_recur(_m, _n);
+    }
+
+    CONSTEXPR14 auto gcd(int _m, int _n) -> int {
+        if (_m == 0) {
+            return abs(_n);
+        }
+        return gcd_recur(_m, _n);
+    }
+
+    CONSTEXPR14 auto gcd(unsigned long long _m, unsigned long long _n) -> unsigned long long {
+        if (_m == 0) {
+            return _n;
+        }
+        return gcd_recur(_m, _n);
+    }
+
+    CONSTEXPR14 auto gcd(long long _m, long long _n) -> long long {
         if (_m == 0) {
             return abs(_n);
         }
@@ -170,7 +315,7 @@ namespace fractions {
      *    b = denominator
      * @endverbatim
      */
-    template <typename T> struct Fraction {
+    template <typename T = int64_t> struct Fraction {
         T _numer;  /// numerator
         T _denom;  /// denominator
 
@@ -661,6 +806,11 @@ namespace fractions {
             if (lhs._denom == rhs._denom) {
                 return lhs._numer < rhs._numer;
             }
+#if defined(__SIZEOF_INT128__) || (defined(_MSC_VER) && defined(_M_X64))
+            if (lhs._denom > 0 && rhs._denom > 0) {
+                return detail::less_than_frac(lhs._numer, lhs._denom, rhs._numer, rhs._denom);
+            }
+#endif
             auto lhs2{lhs};
             auto rhs2{rhs};
             std::swap(lhs2._denom, rhs2._numer);
@@ -900,10 +1050,14 @@ namespace fractions {
          * @f$ \frac{a}{b} \cdot c = \frac{ac}{b} @f$
          */
         CONSTEXPR14 auto operator*=(T rhs) -> Fraction& {
+            if (this->_denom == 1) {
+                this->_numer *= rhs;
+                return *this;
+            }
             std::swap(this->_numer, rhs);
             this->reduce();
             this->_numer *= rhs;
-            this->normalize();
+            this->keep_denom_positive();
             return *this;
         }
 
@@ -1088,7 +1242,11 @@ namespace fractions {
             const auto right = other._denom / common;
             auto denom = this->_denom * right;
             auto numer = right * this->_numer + left * other._numer;
-            return Fraction(std::move(numer), std::move(denom));
+            if (common == 1) {
+                return Fraction::from_raw(numer, denom);
+            }
+            const auto g = gcd(numer, common);
+            return Fraction::from_raw(numer / g, denom / g);
         }
 
         /**
@@ -1239,18 +1397,7 @@ namespace fractions {
          * @return A reference to this Fraction after adding.
          */
         CONSTEXPR14 auto operator+=(const T& rhs) -> Fraction& {
-            if (this->_denom == 1) {
-                this->_numer += rhs;
-                return *this;
-            }
-
-            auto other{rhs};
-            std::swap(this->_denom, other);
-            auto common_n = this->reduce();
-            std::swap(this->_denom, other);
-            this->_numer += other * this->_denom;
-            this->_numer *= common_n;
-            this->reduce();
+            this->_numer += rhs * this->_denom;
             return *this;
         }
 
@@ -1314,18 +1461,7 @@ namespace fractions {
          * @return A reference to this fraction after subtracting.
          */
         inline auto operator-=(const T& rhs) -> Fraction& {
-            if (this->_denom == 1) {
-                this->_numer -= rhs;
-                return *this;
-            }
-
-            auto other{rhs};
-            std::swap(this->_denom, other);
-            auto common_n = this->reduce();
-            std::swap(this->_denom, other);
-            this->_numer -= other * this->_denom;
-            this->_numer *= common_n;
-            this->reduce();
+            this->_numer -= rhs * this->_denom;
             return *this;
         }
 

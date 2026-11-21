@@ -12,7 +12,12 @@
 #include <limits>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 #include <utility>
+
+#if defined(_MSC_VER) && defined(_M_X64)
+#    include <intrin.h>
+#endif
 
 #if __cpp_constexpr >= 201304
 #    define CONSTEXPR14 constexpr
@@ -21,6 +26,101 @@
 #endif
 
 namespace fractions {
+
+    namespace detail {
+
+        CONSTEXPR14 auto abs(long _val) -> long { return (_val < 0) ? -_val : _val; }
+
+        CONSTEXPR14 auto abs(int _val) -> int { return (_val < 0) ? -_val : _val; }
+
+        CONSTEXPR14 auto abs(long long _val) -> long long { return (_val < 0) ? -_val : _val; }
+
+        CONSTEXPR14 auto gcd_recur(unsigned long _m, unsigned long _n) -> unsigned long {
+            if (_n == 0) {
+                return _m;
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd_recur(long _m, long _n) -> long {
+            if (_n == 0) {
+                return abs(_m);
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd_recur(unsigned int _m, unsigned int _n) -> unsigned int {
+            if (_n == 0) {
+                return _m;
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd_recur(int _m, int _n) -> int {
+            if (_n == 0) {
+                return abs(_m);
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd_recur(unsigned long long _m, unsigned long long _n)
+            -> unsigned long long {
+            if (_n == 0) {
+                return _m;
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd_recur(long long _m, long long _n) -> long long {
+            if (_n == 0) {
+                return abs(_m);
+            }
+            return gcd_recur(_n, _m % _n);
+        }
+
+        CONSTEXPR14 auto gcd(unsigned long _m, unsigned long _n) -> unsigned long {
+            if (_m == 0) {
+                return _n;
+            }
+            return gcd_recur(_m, _n);
+        }
+
+        CONSTEXPR14 auto gcd(long _m, long _n) -> long {
+            if (_m == 0) {
+                return abs(_n);
+            }
+            return gcd_recur(_m, _n);
+        }
+
+        CONSTEXPR14 auto gcd(unsigned int _m, unsigned int _n) -> unsigned int {
+            if (_m == 0) {
+                return _n;
+            }
+            return gcd_recur(_m, _n);
+        }
+
+        CONSTEXPR14 auto gcd(int _m, int _n) -> int {
+            if (_m == 0) {
+                return abs(_n);
+            }
+            return gcd_recur(_m, _n);
+        }
+
+        CONSTEXPR14 auto gcd(unsigned long long _m, unsigned long long _n) -> unsigned long long {
+            if (_m == 0) {
+                return _n;
+            }
+            return gcd_recur(_m, _n);
+        }
+
+        CONSTEXPR14 auto gcd(long long _m, long long _n) -> long long {
+            if (_m == 0) {
+                return abs(_n);
+            }
+            return gcd_recur(_m, _n);
+        }
+
+    }  // namespace detail
 
     /**
      * @brief Fraction class - C++ port of Python's fractions.Fraction
@@ -52,25 +152,47 @@ namespace fractions {
         T _numerator;
         T _denominator;
 
-        /**
-         * @brief Compute the greatest common divisor of two integers.
-         *
-         * @f$ \gcd(a,b) = \gcd(|a|,|b|) @f$ using Euclid's algorithm.
-         *
-         * @param[in] a First integer.
-         * @param[in] b Second integer.
-         * @return GCD of a and b.
-         */
-        static CONSTEXPR14 T _gcd(T a, T b) {
-            a = a < 0 ? -a : a;
-            b = b < 0 ? -b : b;
-            while (b != 0) {
-                T temp = b;
-                b = a % b;
-                a = temp;
-            }
-            return a;
+        template <typename U> static CONSTEXPR14 auto _is_negative_impl(U val, std::true_type)
+            -> bool {
+            return val < 0;
         }
+
+        template <typename U> static CONSTEXPR14 auto _is_negative_impl(U, std::false_type)
+            -> bool {
+            return false;
+        }
+
+        template <typename U> static CONSTEXPR14 auto _is_negative(U val) -> bool {
+            return _is_negative_impl(val, std::is_signed<U>{});
+        }
+
+        template <typename U> static CONSTEXPR14 auto _abs_u64_impl(U val, std::true_type)
+            -> unsigned long long {
+            return val < 0 ? 0ULL - static_cast<unsigned long long>(val)
+                           : static_cast<unsigned long long>(val);
+        }
+
+        template <typename U> static CONSTEXPR14 auto _abs_u64_impl(U val, std::false_type)
+            -> unsigned long long {
+            return static_cast<unsigned long long>(val);
+        }
+
+        template <typename U> static CONSTEXPR14 auto _abs_u64(U val) -> unsigned long long {
+            return _abs_u64_impl(val, std::is_signed<U>{});
+        }
+
+#if defined(_MSC_VER) && defined(_M_X64)
+        static auto _compare_u128(unsigned long long ah, unsigned long long al,
+                                  unsigned long long bh, unsigned long long bl) -> int {
+            if (ah != bh) {
+                return ah < bh ? -1 : 1;
+            }
+            if (al != bl) {
+                return al < bl ? -1 : 1;
+            }
+            return 0;
+        }
+#endif
 
         /**
          * @brief Returns whether the product `a * b` would overflow `T`.
@@ -88,6 +210,17 @@ namespace fractions {
 #if defined(__GNUC__) || defined(__clang__)
             T result;
             return __builtin_mul_overflow(a, b, &result);
+#elif defined(_MSC_VER) && defined(_M_X64)
+            if (a == 0 || b == 0) {
+                return false;
+            }
+            unsigned long long hi = 0;
+            const unsigned long long lo = _umul128(_abs_u64(a), _abs_u64(b), &hi);
+            const unsigned long long positive_max
+                = static_cast<unsigned long long>(std::numeric_limits<T>::max());
+            const unsigned long long limit
+                = _is_negative(a) != _is_negative(b) ? positive_max + 1 : positive_max;
+            return hi != 0 || lo > limit;
 #else
             if (a == 0 || b == 0) {
                 return false;
@@ -133,7 +266,7 @@ namespace fractions {
                 throw std::runtime_error("Fraction(" + std::to_string(numerator) + ", 0)");
             }
 
-            T g = _gcd(numerator, denominator);
+            T g = detail::gcd(numerator, denominator);
             _numerator = numerator / g;
             _denominator = denominator / g;
 
@@ -241,7 +374,7 @@ namespace fractions {
             T nb = other._numerator;
             T db = other._denominator;
 
-            T g = _gcd(da, db);
+            T g = detail::gcd(da, db);
 
             if (g == 1) {
                 // Check for overflow before multiplication
@@ -255,10 +388,10 @@ namespace fractions {
                     if (approx_den < 0) approx_den = -approx_den;
                     T approx_num
                         = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                    T g_approx = _gcd(approx_num, approx_den);
-                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                    T g_approx = detail::gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx, true);
                 }
-                return Fraction(na * db + da * nb, da * db);
+                return Fraction(na * db + da * nb, da * db, true);
             }
 
             T s = da / g;
@@ -273,12 +406,12 @@ namespace fractions {
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
             T t = na * db_div_g + nb * s;
-            T g2 = _gcd(t, g);
+            T g2 = detail::gcd(t, g);
 
             if (g2 == 1) {
                 // Check for overflow in denominator
@@ -289,10 +422,10 @@ namespace fractions {
                     T approx_num = static_cast<T>(
                         std::round((static_cast<double>(t) / static_cast<double>(s))
                                    * static_cast<double>(approx_den)));
-                    T g_approx = _gcd(approx_num, approx_den);
-                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                    T g_approx = detail::gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx, true);
                 }
-                return Fraction(t, s * db);
+                return Fraction(t, s * db, true);
             }
 
             T db_div_g2 = db / g2;
@@ -303,11 +436,11 @@ namespace fractions {
                 T approx_num = static_cast<T>(
                     std::round((static_cast<double>(t / g2) / static_cast<double>(s))
                                * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
-            return Fraction(t / g2, s * db_div_g2);
+            return Fraction(t / g2, s * db_div_g2, true);
         }
 
         /**
@@ -321,7 +454,7 @@ namespace fractions {
             T nb = other._numerator;
             T db = other._denominator;
 
-            T g = _gcd(da, db);
+            T g = detail::gcd(da, db);
 
             if (g == 1) {
                 // Check for overflow before multiplication
@@ -335,10 +468,10 @@ namespace fractions {
                     if (approx_den < 0) approx_den = -approx_den;
                     T approx_num
                         = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                    T g_approx = _gcd(approx_num, approx_den);
-                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                    T g_approx = detail::gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx, true);
                 }
-                return Fraction(na * db - da * nb, da * db);
+                return Fraction(na * db - da * nb, da * db, true);
             }
 
             T s = da / g;
@@ -353,12 +486,12 @@ namespace fractions {
                 T approx_den = std::min(s * db, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
             T t = na * db_div_g - nb * s;
-            T g2 = _gcd(t, g);
+            T g2 = detail::gcd(t, g);
 
             if (g2 == 1) {
                 // Check for overflow in denominator
@@ -369,10 +502,10 @@ namespace fractions {
                     T approx_num = static_cast<T>(
                         std::round((static_cast<double>(t) / static_cast<double>(s))
                                    * static_cast<double>(approx_den)));
-                    T g_approx = _gcd(approx_num, approx_den);
-                    return Fraction(approx_num / g_approx, approx_den / g_approx);
+                    T g_approx = detail::gcd(approx_num, approx_den);
+                    return Fraction(approx_num / g_approx, approx_den / g_approx, true);
                 }
-                return Fraction(t, s * db);
+                return Fraction(t, s * db, true);
             }
 
             T db_div_g2 = db / g2;
@@ -383,11 +516,11 @@ namespace fractions {
                 T approx_num = static_cast<T>(
                     std::round((static_cast<double>(t / g2) / static_cast<double>(s))
                                * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
-            return Fraction(t / g2, s * db_div_g2);
+            return Fraction(t / g2, s * db_div_g2, true);
         }
 
         /**
@@ -406,13 +539,13 @@ namespace fractions {
             T nb = other._numerator;
             T db = other._denominator;
 
-            T g1 = _gcd(na, db);
+            T g1 = detail::gcd(na, db);
             if (g1 > 1) {
                 na /= g1;
                 db /= g1;
             }
 
-            T g2 = _gcd(nb, da);
+            T g2 = detail::gcd(nb, da);
             if (g2 > 1) {
                 nb /= g2;
                 da /= g2;
@@ -428,11 +561,11 @@ namespace fractions {
                 T approx_den = std::min(db * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
-            return Fraction(na * nb, db * da);
+            return Fraction(na * nb, db * da, true);
         }
 
         /**
@@ -451,13 +584,13 @@ namespace fractions {
             T na = _numerator;
             T da = _denominator;
 
-            T g1 = _gcd(na, nb);
+            T g1 = detail::gcd(na, nb);
             if (g1 > 1) {
                 na /= g1;
                 nb /= g1;
             }
 
-            T g2 = _gcd(db, da);
+            T g2 = detail::gcd(db, da);
             if (g2 > 1) {
                 da /= g2;
                 db /= g2;
@@ -473,8 +606,8 @@ namespace fractions {
                 T approx_den = std::min(nb * da, max_den);
                 if (approx_den < 0) approx_den = -approx_den;
                 T approx_num = static_cast<T>(std::round(result * static_cast<double>(approx_den)));
-                T g_approx = _gcd(approx_num, approx_den);
-                return Fraction(approx_num / g_approx, approx_den / g_approx);
+                T g_approx = detail::gcd(approx_num, approx_den);
+                return Fraction(approx_num / g_approx, approx_den / g_approx, true);
             }
 
             T n = na * db;
@@ -485,7 +618,7 @@ namespace fractions {
                 d = -d;
             }
 
-            return Fraction(n, d);
+            return Fraction(n, d, true);
         }
 
         /**
@@ -556,6 +689,33 @@ namespace fractions {
          * Less than comparison (overflow-safe)
          */
         bool operator<(const Fraction& other) const {
+#if defined(__SIZEOF_INT128__)
+            if (_denominator > 0 && other._denominator > 0
+                && !(_is_negative(_numerator) && _is_negative(other._numerator))) {
+                __extension__ typedef __int128 wide;
+                return static_cast<wide>(_numerator) * other._denominator
+                       < static_cast<wide>(other._numerator) * _denominator;
+            }
+#elif defined(_MSC_VER) && defined(_M_X64)
+            if (_denominator > 0 && other._denominator > 0
+                && !(_is_negative(_numerator) && _is_negative(other._numerator))) {
+                const bool neg_a = _is_negative(_numerator);
+                const bool neg_b = _is_negative(other._numerator);
+                if (neg_a != neg_b) {
+                    return neg_a;
+                }
+                unsigned long long hi_a = 0;
+                unsigned long long hi_b = 0;
+                const unsigned long long lo_a
+                    = _umul128(_abs_u64(_numerator),
+                               static_cast<unsigned long long>(other._denominator), &hi_a);
+                const unsigned long long lo_b
+                    = _umul128(_abs_u64(other._numerator),
+                               static_cast<unsigned long long>(_denominator), &hi_b);
+                const int cmp = _compare_u128(hi_a, lo_a, hi_b, lo_b);
+                return neg_a ? cmp > 0 : cmp < 0;
+            }
+#endif
             T na = _numerator;
             T da = _denominator;
             T nb = other._numerator;
@@ -593,13 +753,13 @@ namespace fractions {
                 }
 
                 // Try to cancel common factors to reduce numbers
-                T g1 = _gcd(na, nb);
+                T g1 = detail::gcd(na, nb);
                 if (g1 > 1) {
                     na /= g1;
                     nb /= g1;
                 }
 
-                T g2 = _gcd(da, db);
+                T g2 = detail::gcd(da, db);
                 if (g2 > 1) {
                     da /= g2;
                     db /= g2;
@@ -727,7 +887,7 @@ namespace fractions {
                     = static_cast<T>(std::round(result * static_cast<double>(new_denominator)));
 
                 // Normalize the result
-                T g = _gcd(new_numerator, new_denominator);
+                T g = detail::gcd(new_numerator, new_denominator);
                 return Fraction(new_numerator / g, new_denominator / g);
             }
 

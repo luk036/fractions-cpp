@@ -7,6 +7,10 @@
 #include <type_traits>
 #include <utility>
 
+#if defined(_MSC_VER) && defined(_M_X64)
+#    include <intrin.h>
+#endif
+
 // #include "common_concepts.h"
 
 #if __cpp_constexpr >= 201304
@@ -16,6 +20,76 @@
 #endif
 
 namespace fractions {
+
+#ifndef FRACTIONS_DETAIL_COMPARE_INCLUDED
+#    define FRACTIONS_DETAIL_COMPARE_INCLUDED
+    namespace detail {
+
+        template <typename T> CONSTEXPR14 auto is_negative(T val, std::true_type) -> bool {
+            return val < 0;
+        }
+
+        template <typename T> CONSTEXPR14 auto is_negative(T, std::false_type) -> bool {
+            return false;
+        }
+
+        template <typename T> CONSTEXPR14 auto is_negative(T val) -> bool {
+            return is_negative(val, std::is_signed<T>{});
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val, std::true_type)
+            -> unsigned long long {
+            return val < 0 ? 0ULL - static_cast<unsigned long long>(val)
+                           : static_cast<unsigned long long>(val);
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val, std::false_type)
+            -> unsigned long long {
+            return static_cast<unsigned long long>(val);
+        }
+
+        template <typename T> CONSTEXPR14 auto magnitude(T val) -> unsigned long long {
+            return magnitude(val, std::is_signed<T>{});
+        }
+
+#    if defined(_MSC_VER) && defined(_M_X64)
+        inline auto compare_u128(unsigned long long ah, unsigned long long al,
+                                 unsigned long long bh, unsigned long long bl) -> int {
+            if (ah != bh) {
+                return ah < bh ? -1 : 1;
+            }
+            if (al != bl) {
+                return al < bl ? -1 : 1;
+            }
+            return 0;
+        }
+#    endif
+
+        template <typename T> CONSTEXPR14 auto less_than_frac(T an, T ad, T bn, T bd) -> bool {
+#    if defined(__SIZEOF_INT128__)
+            __extension__ typedef __int128 wide;
+            return static_cast<wide>(an) * static_cast<wide>(bd)
+                   < static_cast<wide>(bn) * static_cast<wide>(ad);
+#    elif defined(_MSC_VER) && defined(_M_X64)
+            const bool neg_a = is_negative(an);
+            const bool neg_b = is_negative(bn);
+            if (neg_a != neg_b) {
+                return neg_a;
+            }
+            unsigned long long hi_a = 0;
+            unsigned long long hi_b = 0;
+            const unsigned long long lo_a
+                = _umul128(magnitude(an), static_cast<unsigned long long>(bd), &hi_a);
+            const unsigned long long lo_b
+                = _umul128(magnitude(bn), static_cast<unsigned long long>(ad), &hi_b);
+            const int cmp = compare_u128(hi_a, lo_a, hi_b, lo_b);
+            return neg_a ? cmp > 0 : cmp < 0;
+#    else
+            return false;
+#    endif
+        }
+    }  // namespace detail
+#endif
 
 #ifndef FRACTIONS_FRACTIONS_HPP_INCLUDED
     /**
@@ -410,6 +484,11 @@ namespace fractions {
             if (lhs._denom == rhs._denom) {
                 return lhs._numer < rhs._numer;
             }
+#if defined(__SIZEOF_INT128__) || (defined(_MSC_VER) && defined(_M_X64))
+            if (lhs._denom > 0 && rhs._denom > 0) {
+                return detail::less_than_frac(lhs._numer, lhs._denom, rhs._numer, rhs._denom);
+            }
+#endif
             auto lhs2{lhs};
             auto rhs2{rhs};
             std::swap(lhs2._denom, rhs2._numer);
@@ -632,10 +711,14 @@ namespace fractions {
          * @f$ \frac{a}{b} \cdot c = \frac{ac}{b} @f$
          */
         CONSTEXPR14 auto operator*=(T rhs) -> ExtFraction& {
+            if (this->_denom == 1) {
+                this->_numer *= rhs;
+                return *this;
+            }
             std::swap(this->_numer, rhs);
             this->reduce();
             this->_numer *= rhs;
-            this->normalize();
+            this->keep_denom_positive();
             return *this;
         }
 
@@ -821,7 +904,16 @@ namespace fractions {
             const auto right = other._denom / common;
             auto denom = this->_denom * right;
             auto numer = right * this->_numer + left * other._numer;
-            return ExtFraction(std::move(numer), std::move(denom));
+            ExtFraction result;
+            if (common == 1) {
+                result._numer = numer;
+                result._denom = denom;
+                return result;
+            }
+            const auto g = gcd(numer, common);
+            result._numer = numer / g;
+            result._denom = denom / g;
+            return result;
         }
 
         /**
@@ -972,18 +1064,7 @@ namespace fractions {
          * @return A reference to this ExtFraction after adding.
          */
         CONSTEXPR14 auto operator+=(const T& rhs) -> ExtFraction& {
-            if (this->_denom == 1) {
-                this->_numer += rhs;
-                return *this;
-            }
-
-            auto other{rhs};
-            std::swap(this->_denom, other);
-            auto common_n = this->reduce();
-            std::swap(this->_denom, other);
-            this->_numer += other * this->_denom;
-            this->_numer *= common_n;
-            this->reduce();
+            this->_numer += rhs * this->_denom;
             return *this;
         }
 
@@ -1047,18 +1128,7 @@ namespace fractions {
          * @return A reference to this fraction after subtracting.
          */
         auto operator-=(const T& rhs) -> ExtFraction& {
-            if (this->_denom == 1) {
-                this->_numer -= rhs;
-                return *this;
-            }
-
-            auto other{rhs};
-            std::swap(this->_denom, other);
-            auto common_n = this->reduce();
-            std::swap(this->_denom, other);
-            this->_numer -= other * this->_denom;
-            this->_numer *= common_n;
-            this->reduce();
+            this->_numer -= rhs * this->_denom;
             return *this;
         }
 
