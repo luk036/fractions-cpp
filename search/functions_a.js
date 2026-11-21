@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['normalize_0',['normalize',['../structfractions_1_1ExtFraction.html#a995d6959bc5c36e646e32d0419cf9a70',1,'fractions::ExtFraction::normalize()'],['../structfractions_1_1Fraction.html#a7180ccb2898b05535ab6d5dd156c4bc1',1,'fractions::Fraction::normalize()']]],
-  ['numer_1',['numer',['../structfractions_1_1ExtFraction.html#a4ed3fd320ed4d32b8a847c5a8871b118',1,'fractions::ExtFraction::numer()'],['../structfractions_1_1Fraction.html#ab604e8a6bdff0f8a97cbf87a32116ed3',1,'fractions::Fraction::numer() const noexcept -&gt; const T &amp;']]],
-  ['numerator_2',['numerator',['../structfractions_1_1Fraction.html#a048836360cceb6aff3ab9d1172ad61d6',1,'fractions::Fraction']]]
+  ['magnitude_0',['magnitude',['../namespacefractions_1_1detail.html#ae10e876f930d138b31b880f24f7d4a07',1,'fractions::detail::magnitude(T val, std::true_type) -&gt; unsigned long long'],['../namespacefractions_1_1detail.html#abad65b9f16aca341c79aacf0dc28ea8d',1,'fractions::detail::magnitude(T val, std::false_type) -&gt; unsigned long long'],['../namespacefractions_1_1detail.html#a3b32f1eb5550a195648364a07140422e',1,'fractions::detail::magnitude(T val) -&gt; unsigned long long']]]
 ];

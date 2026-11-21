@@ -4,12 +4,12 @@ var indexSectionsWithContent =
   1: "ef",
   2: "f",
   3: "aefpr",
-  4: "acdefghiklnoprstz~",
+  4: "acdefghiklmnoprstz~",
   5: "_",
   6: "v",
   7: "o",
   8: "cf",
-  9: "af"
+  9: "abcdefhmnoprstuy✨❓➗"
 };
 
 var indexSectionNames =
