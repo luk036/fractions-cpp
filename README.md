@@ -41,20 +41,11 @@ Fractions in C++
 - Add [your project's codecov token](https://docs.codecov.io/docs/quick-start) to your project's github secrets under `CODECOV_TOKEN`
 - Happy coding!
 
-Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
+Eventually, you can remove any unused files, such as the bench directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-A single `CMakeLists.txt` at the project root defines the library, tests, standalone executable and optional targets.
+A single `CMakeLists.txt` at the project root defines the library, tests and optional targets.
 During development it is usually convenient to [build everything at once](#build-everything-at-once).
-### Build and run the standalone target
-
-Use the following command from the project's root directory to build and run the executable target.
-
-```bash
-cmake -B build
-cmake --build build
-./build/Fractions --help
-```
 
 ### Build and run test suite
 
@@ -110,7 +101,7 @@ To build the documentation locally, you will need Doxygen and Graphviz installed
 
 ### Build everything at once {#build-everything-at-once}
 
-A single build configuration from the project root builds the library, tests and standalone together.
+A single build configuration from the project root builds the library and tests together.
 This is useful during development, as it exposes all targets to your IDE and avoids redundant builds of the library.
 
 ```bash
@@ -119,8 +110,6 @@ cmake --build build
 
 # run tests
 ./build/FractionsTests
-# run standalone
-./build/Fractions --help
 # build docs (requires -DFRACTIONS_BUILD_DOCS=ON at configure time)
 cmake --build build --target GenerateDocs
 ```
@@ -156,13 +145,13 @@ cmake --build build --target coverage
 Yes, however you will need to change the library type to an `INTERFACE` library as documented in the [CMakeLists.txt](CMakeLists.txt).
 See [here](https://github.com/TheLartians/StaticTypeInfo) for an example header-only library based on the template.
 
-> I don't need a standalone target / documentation. How can I get rid of it?
+> I don't need a documentation target. How can I get rid of it?
 
-Simply remove the standalone / documentation directory and according github workflow file.
+Simply remove the documentation directory and the according github workflow file.
 
-> Can I build the standalone and tests at the same time? / How can I tell my IDE about all subprojects?
+> How can I tell my IDE about all subprojects?
 
-All targets are defined in the single root `CMakeLists.txt`, so a single `cmake -B build` configuration exposes the library, tests and standalone to your IDE at once.
+All targets are defined in the single root `CMakeLists.txt`, so a single `cmake -B build` configuration exposes the library and tests to your IDE at once.
 
 > I see you are using `GLOB` to add source files in CMakeLists.txt. Isn't that evil?
 

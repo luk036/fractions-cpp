@@ -142,32 +142,6 @@ packageProject(
 )
 
 # ---------------------------------------------------------------------------
-# Standalone executable
-# ---------------------------------------------------------------------------
-
-# cxxopts is a header-only CLI parser used by the standalone example. Prefer a consumer- or
-# system-provided cxxopts; only fall back to CPM when no cxxopts target is available.
-find_package(cxxopts 3.3 CONFIG QUIET)
-if(NOT cxxopts_FOUND AND NOT TARGET cxxopts::cxxopts)
-  CPMAddPackage(
-    GITHUB_REPOSITORY jarro2783/cxxopts
-    VERSION 3.3.1
-    OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
-  )
-endif()
-# keep third-party headers out of our -Werror scope
-if(TARGET cxxopts::cxxopts)
-  get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
-endif()
-
-file(GLOB FRACTIONS_STANDALONE_SOURCES CONFIGURE_DEPENDS "standalone/source/*.cpp")
-add_executable(FractionsStandalone ${FRACTIONS_STANDALONE_SOURCES})
-set_target_properties(FractionsStandalone PROPERTIES OUTPUT_NAME "Fractions" CXX_STANDARD 17)
-target_include_directories(FractionsStandalone SYSTEM PRIVATE ${CXXOPTS_INCLUDE_DIRS})
-target_link_libraries(FractionsStandalone PRIVATE Fractions::Fractions cxxopts::cxxopts)
-target_enable_warnings(FractionsStandalone)
-
-# ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
 
@@ -301,12 +275,12 @@ endif()
 
 if(FRACTIONS_ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
   # Every target that links the instrumented library also needs the coverage runtime at link time.
-  foreach(COVERAGE_TARGET Fractions FractionsTests FractionsStandalone)
+  foreach(COVERAGE_TARGET Fractions FractionsTests)
     if(TARGET ${COVERAGE_TARGET})
       target_compile_options(${COVERAGE_TARGET} PRIVATE -O0 -g -fprofile-arcs -ftest-coverage)
     endif()
   endforeach()
-  foreach(COVERAGE_EXEC FractionsTests FractionsStandalone)
+  foreach(COVERAGE_EXEC FractionsTests)
     if(TARGET ${COVERAGE_EXEC})
       target_link_options(${COVERAGE_EXEC} PRIVATE -fprofile-arcs -ftest-coverage)
     endif()
@@ -327,7 +301,7 @@ if(FRACTIONS_ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleC
       COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/coverage
       COMMAND
         ${GCOVR_PATH} --root ${PROJECT_SOURCE_DIR} --html-details
-        ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/ ${extra_gcovr_args}
+        ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/ --exclude-unreachable-branches --exclude-throw-branches ${extra_gcovr_args} --gcov-ignore-parse-errors=negative_hits.warn --gcov-ignore-parse-errors=suspicious_hits.warn
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       COMMENT "Generating coverage report in ${CMAKE_BINARY_DIR}/coverage/index.html"
     )
